@@ -15,11 +15,12 @@ const Hero = () => {
               variants={FadeRight(0.6)}
               initial="hidden"
               animate="visible"
-              className="text-5xl lg:text-6xl font-bold leading-relaxed xl:leading-loose font-averia"
+              className="text-5xl lg:text-6xl font-bold leading-snug xl:leading-normal font-averia"
             >
               <span className="text-secondary">Frescura</span>
               <br />
-              directa a tu puerta
+              directa
+              <br />a tu puerta
             </motion.h1>
             <motion.p
               variants={FadeRight(0.9)}
@@ -64,7 +65,7 @@ const Hero = () => {
             className="w-[350px] md:w-[550px] drop-shadow"
           />
         </div>
-        <div className="absolute top-14 md:top-0 right-1/2 blur-sm opacity-80 rotate-[90deg]">
+        <div className="absolute top-14 md:top-0 right-1/2 blur-sm opacity-80 rotate-[40deg]">
           <motion.img
             initial={{ opacity: 0, x: -200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
