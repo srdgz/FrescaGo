@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-
-import { RiLeafFill, RiShoppingBasketLine, RiMenu3Fill } from "react-icons/ri";
 import ResponsiveMenu from "./ResponsiveMenu";
+import { RiLeafFill, RiShoppingCart2Line, RiMenu3Fill } from "react-icons/ri";
+import { motion } from "framer-motion";
 
 const NavbarMenu = [
   {
@@ -37,7 +37,12 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <div className="container flex justify-between items-center py-4 md:pt-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="container flex justify-between items-center py-4 md:pt-4"
+        >
           <div className="text-2xl flex items-center gap-2 font-bold">
             <p className="text-primary">
               Fresca<span className="text-secondary">Go</span>
@@ -57,14 +62,14 @@ const Navbar = () => {
                 </li>
               ))}
               <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
-                <RiShoppingBasketLine />
+                <RiShoppingCart2Line />
               </button>
             </ul>
           </div>
           <div className="md:hidden" onClick={() => setOpen(!open)}>
             <RiMenu3Fill className="text-4xl" />
           </div>
-        </div>
+        </motion.div>
       </nav>
       <ResponsiveMenu open={open} />
     </>
