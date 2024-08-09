@@ -45,7 +45,7 @@ const Hero = () => {
               animate="visible"
               className="flex justify-center md:justify-start"
             >
-              <button className="primary-btn flex items-center gap-2">
+              <button className="primary-btn flex items-center gap-2 mb-6">
                 <span>
                   <RiShoppingBasketLine />
                 </span>
