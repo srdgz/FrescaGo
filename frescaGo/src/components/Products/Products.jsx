@@ -134,7 +134,7 @@ const Products = () => {
             <motion.div
               variants={FadeLeft(product.delay)}
               initial="hidden"
-              whileInView={"visible"}
+              whileInView="visible"
               whileHover={{ scale: 1.1 }}
               className="bg-white rounded-3xl px-4 py-4 shadow-[0_0_22px_0_rgba(0,0,0,0.15)] flex flex-row justify-around items-center gap-3"
             >
