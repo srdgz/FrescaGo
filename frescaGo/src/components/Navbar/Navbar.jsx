@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
+import Logo from "../Utils/Logo";
 import { NavbarMenu } from "../../data/data";
 import {
   RiLeafFill,
@@ -21,12 +22,7 @@ const Navbar = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="container flex justify-between items-center py-4 md:pt-4"
         >
-          <div className="text-2xl flex items-center gap-2 font-bold">
-            <p className="text-primary">
-              Fresca<span className="text-secondary">Go</span>
-            </p>
-            <RiLeafFill className="text-green-500" />
-          </div>
+          <Logo />
           <div className="hidden md:block">
             <ul className="flex items-center gap-6 text-gray-600">
               {NavbarMenu.map((menu) => (
