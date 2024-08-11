@@ -88,7 +88,7 @@ const BannerSecond = () => {
             transition={{ duration: 1, delay: 0.2 }}
             src={BannerPlato}
             alt="Imagen promocional de la app"
-            className="w-[550px] md:max-w-[550px] h-full object-cover drop-shadow"
+            className="w-[450px] md:max-w-[500px] h-full object-cover drop-shadow"
           />
         </div>
       </div>

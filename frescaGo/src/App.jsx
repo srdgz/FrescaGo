@@ -5,6 +5,7 @@ import Products from "./components/Products/Products";
 import Banner from "./components/Banners/Banner";
 import BannerSecond from "./components/Banners/BannerSecond";
 import BannerThird from "./components/Banners/BannerThird";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Banner />
         <BannerSecond />
         <BannerThird />
+        <Footer />
       </main>
     </>
   );
