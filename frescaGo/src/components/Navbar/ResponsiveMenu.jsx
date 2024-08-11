@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 
 function ResponsiveMenu({ open }) {
   return (
@@ -19,6 +20,10 @@ function ResponsiveMenu({ open }) {
               <li>Nosotros</li>
               <li>Tienda</li>
               <li>Contacto</li>
+              <li className="flex flex-row gap-12">
+                <RiShoppingCart2Line />
+                <RiUserLine />
+              </li>
             </ul>
           </div>
         </motion.div>

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
-import { RiLeafFill, RiShoppingCart2Line, RiMenu3Fill } from "react-icons/ri";
+import {
+  RiLeafFill,
+  RiShoppingCart2Line,
+  RiMenu3Fill,
+  RiUserLine,
+} from "react-icons/ri";
 import { motion } from "framer-motion";
 
 const NavbarMenu = [
@@ -63,6 +68,9 @@ const Navbar = () => {
               ))}
               <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
                 <RiShoppingCart2Line />
+              </button>
+              <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
+                <RiUserLine />
               </button>
             </ul>
           </div>
