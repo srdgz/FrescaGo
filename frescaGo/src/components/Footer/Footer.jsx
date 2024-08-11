@@ -22,7 +22,7 @@ const Footer = () => {
           </p>
           <RiLeafFill className="text-green-500" />
         </div>
-        <div className="text-3xl flex items-center gap-4 mt-6 text-gray-700">
+        <div className="text-3xl flex items-center gap-4 text-gray-700">
           <RiFacebookCircleFill />
           <RiTwitterFill />
           <RiInstagramFill />
