@@ -52,6 +52,8 @@ const BannerSecond = () => {
               variants={FadeUp(1.5)}
               initial="hidden"
               animate="visible"
+              whileInView="visible"
+              viewport={{ once: true }}
               className="flex justify-center md:justify-start space-x-4"
             >
               <a
