@@ -89,7 +89,7 @@ const BannerSecond = () => {
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             src={BannerPlato}
-            alt="Imagen promocional de la app"
+            alt="Imagen promocional de la app FrescaGo"
             className="w-[450px] md:max-w-[500px] h-full object-cover drop-shadow"
           />
         </div>

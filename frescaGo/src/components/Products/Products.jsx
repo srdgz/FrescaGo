@@ -27,7 +27,7 @@ const Products = () => {
             >
               <img
                 src={product.img}
-                alt=""
+                alt="FrescaGo producto"
                 className="w-[60px] mb-4 scale-110 transform justify-center"
               />
               <div>

@@ -57,7 +57,7 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             src={heroEnsalada}
-            alt=""
+            alt="FrescaGo ensalada"
             className="w-[350px] md:w-[550px] drop-shadow"
           />
         </div>
@@ -67,7 +67,7 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
             src={heroHoja}
-            alt=""
+            alt="FrescaGo hoja"
             className="w-full md:max-w-[300px]"
           />
         </div>

@@ -15,7 +15,7 @@ const Banner = () => {
             transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
             viewport={{ once: true }}
             src={BannerSplash}
-            alt=""
+            alt="FrescaGo fruit splash"
             className="w-[300px] md:max-w-[400px] h-full object-cover drop-shadow"
           />
         </div>
