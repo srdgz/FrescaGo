@@ -1,3 +1,31 @@
+export const NavbarMenu = [
+  {
+    id: 1,
+    title: "Inicio",
+    link: "/",
+  },
+  {
+    id: 2,
+    title: "Productos",
+    link: "#",
+  },
+  {
+    id: 3,
+    title: "Nosotros",
+    link: "#",
+  },
+  {
+    id: 4,
+    title: "Tienda",
+    link: "#",
+  },
+  {
+    id: 5,
+    title: "Contacto",
+    link: "#",
+  },
+];
+
 export const GeneralProductsData = [
   {
     id: 1,

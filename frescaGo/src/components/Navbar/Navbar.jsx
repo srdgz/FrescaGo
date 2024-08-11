@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
+import { NavbarMenu } from "../../data/data";
 import {
   RiLeafFill,
   RiShoppingCart2Line,
@@ -7,34 +8,6 @@ import {
   RiUserLine,
 } from "react-icons/ri";
 import { motion } from "framer-motion";
-
-const NavbarMenu = [
-  {
-    id: 1,
-    title: "Inicio",
-    link: "/",
-  },
-  {
-    id: 2,
-    title: "Productos",
-    link: "#",
-  },
-  {
-    id: 3,
-    title: "Nosotros",
-    link: "#",
-  },
-  {
-    id: 4,
-    title: "Tienda",
-    link: "#",
-  },
-  {
-    id: 5,
-    title: "Contacto",
-    link: "#",
-  },
-];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
