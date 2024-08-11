@@ -1,5 +1,6 @@
 import React from "react";
 import BannerSplash from "../../assets/banner-frutas.png";
+import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeUp } from "../../utility/animation";
 
@@ -77,7 +78,7 @@ const Banner = () => {
               viewport={{ once: true }}
               className="flex justify-center md:justify-start"
             >
-              <button className="primary-btn ">Saber más</button>
+              <Button text="Saber más" />
             </motion.div>
           </div>
         </div>

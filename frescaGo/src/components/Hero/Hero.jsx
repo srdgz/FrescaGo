@@ -1,6 +1,7 @@
 import React from "react";
 import heroEnsalada from "../../assets/hero-ensalada.png";
 import heroHoja from "../../assets/hero-hoja.png";
+import Button from "../Utils/Button";
 import { RiShoppingBasketLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { FadeRight } from "../../utility/animation";
@@ -46,12 +47,7 @@ const Hero = () => {
               animate="visible"
               className="flex justify-center md:justify-start"
             >
-              <button className="primary-btn flex items-center gap-2 mb-6">
-                <span>
-                  <RiShoppingBasketLine />
-                </span>
-                Pide ahora
-              </button>
+              <Button text="Pide ahora" icon={<RiShoppingBasketLine />} />
             </motion.div>
           </div>
         </div>

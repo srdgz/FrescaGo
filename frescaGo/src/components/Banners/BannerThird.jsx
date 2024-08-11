@@ -1,5 +1,6 @@
 import React from "react";
 import BannerBg from "../../assets/banner-bg.jpg";
+import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../../utility/animation";
 import { RiShoppingBasketLine } from "react-icons/ri";
@@ -47,12 +48,7 @@ const BannerThird = () => {
               animate="visible"
               className="flex justify-center md:justify-start"
             >
-              <button className="primary-btn flex items-center gap-2 mb-6">
-                <span>
-                  <RiShoppingBasketLine />
-                </span>
-                Haz tu pedido
-              </button>
+              <Button text="Haz tu pedido" icon={<RiShoppingBasketLine />} />
             </motion.div>
           </div>
         </div>
