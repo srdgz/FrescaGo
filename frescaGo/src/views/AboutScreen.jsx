@@ -1,5 +1,7 @@
 import React from "react";
 import AboutImage from "../assets/nosotros.jpg";
+import { motion } from "framer-motion";
+import { FadeLeft } from "../utility/animation";
 
 const AboutScreen = () => {
   return (
@@ -60,7 +62,10 @@ const AboutScreen = () => {
             </ul>
           </div>
           <div className="flex justify-center items-center">
-            <img
+            <motion.img
+              variants={FadeLeft(0.5)}
+              initial="hidden"
+              whileInView="visible"
               src={AboutImage}
               alt="Sobre FrescaGo"
               className="rounded-3xl shadow-lg w-full object-cover"
