@@ -1,10 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 import { NavbarMenu } from "../../data/data";
 
-function ResponsiveMenu({ open }) {
+function ResponsiveMenu({ open, setOpen }) {
+  const navigate = useNavigate();
+
+  const handleNavigation = (link) => {
+    navigate(link);
+    setOpen(false);
+  };
+
   return (
     <AnimatePresence mode="wait">
       {open && (
@@ -19,9 +26,9 @@ function ResponsiveMenu({ open }) {
             <ul className="flex flex-col items-center gap-10">
               {NavbarMenu.map((menu) => (
                 <li key={menu.id}>
-                  <Link to={menu.link} onClick={() => setOpen(false)}>
+                  <button onClick={() => handleNavigation(menu.link)}>
                     {menu.title}
-                  </Link>
+                  </button>
                 </li>
               ))}
               <li className="flex flex-row gap-12">

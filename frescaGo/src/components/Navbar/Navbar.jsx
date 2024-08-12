@@ -44,7 +44,7 @@ const Navbar = () => {
           </div>
         </motion.div>
       </nav>
-      <ResponsiveMenu open={open} />
+      <ResponsiveMenu open={open} setOpen={setOpen} />
     </>
   );
 };
