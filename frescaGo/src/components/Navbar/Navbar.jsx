@@ -4,6 +4,7 @@ import Logo from "../Utils/Logo";
 import { NavbarMenu } from "../../data/data";
 import { RiShoppingCart2Line, RiMenu3Fill, RiUserLine } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -22,12 +23,12 @@ const Navbar = () => {
             <ul className="flex items-center gap-6 text-gray-600">
               {NavbarMenu.map((menu) => (
                 <li key={menu.id}>
-                  <a
-                    href={menu.link}
+                  <Link
+                    to={menu.link}
                     className="inline-block py-1 px-3 hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444] font-semibold"
                   >
                     {menu.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
