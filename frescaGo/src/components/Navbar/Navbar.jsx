@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
 import Logo from "../Utils/Logo";
 import { NavbarMenu } from "../../data/data";
-import {
-  RiLeafFill,
-  RiShoppingCart2Line,
-  RiMenu3Fill,
-  RiUserLine,
-} from "react-icons/ri";
+import { RiShoppingCart2Line, RiMenu3Fill, RiUserLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 
 const Navbar = () => {

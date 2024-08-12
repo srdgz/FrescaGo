@@ -7,22 +7,22 @@ export const NavbarMenu = [
   {
     id: 2,
     title: "Productos",
-    link: "#",
+    link: "/productos",
   },
   {
     id: 3,
     title: "Nosotros",
-    link: "#",
+    link: "/nosotros",
   },
   {
     id: 4,
     title: "Tienda",
-    link: "#",
+    link: "/tienda",
   },
   {
     id: 5,
     title: "Contacto",
-    link: "#",
+    link: "/contacto",
   },
 ];
 
