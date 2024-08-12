@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
+import { NavbarMenu } from "../../data/data";
 
 function ResponsiveMenu({ open }) {
   return (
@@ -15,11 +17,13 @@ function ResponsiveMenu({ open }) {
         >
           <div className="text-xl font-semibold  bg-primary text-white py-10 m-6 rounded-3xl">
             <ul className="flex flex-col items-center gap-10">
-              <li>Inicio</li>
-              <li>Productos</li>
-              <li>Nosotros</li>
-              <li>Tienda</li>
-              <li>Contacto</li>
+              {NavbarMenu.map((menu) => (
+                <li key={menu.id}>
+                  <Link to={menu.link} onClick={() => setOpen(false)}>
+                    {menu.title}
+                  </Link>
+                </li>
+              ))}
               <li className="flex flex-row gap-12">
                 <RiShoppingCart2Line />
                 <RiUserLine />
