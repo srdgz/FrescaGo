@@ -78,7 +78,7 @@ const Banner = () => {
               viewport={{ once: true }}
               className="flex justify-center md:justify-start"
             >
-              <Button text="Saber más" />
+              <Button text="Saber más" to="/nosotros" />
             </motion.div>
           </div>
         </div>

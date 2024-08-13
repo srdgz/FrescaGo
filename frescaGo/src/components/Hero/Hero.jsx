@@ -47,7 +47,11 @@ const Hero = () => {
               animate="visible"
               className="flex justify-center md:justify-start"
             >
-              <Button text="Pide ahora" icon={<RiShoppingBasketLine />} />
+              <Button
+                text="Pide ahora"
+                to="/tienda"
+                icon={<RiShoppingBasketLine />}
+              />
             </motion.div>
           </div>
         </div>

@@ -49,7 +49,11 @@ const BannerThird = () => {
               animate="visible"
               className="flex justify-center md:justify-start"
             >
-              <Button text="Haz tu pedido" icon={<RiShoppingBasketLine />} />
+              <Button
+                text="Haz tu pedido"
+                to="/tienda"
+                icon={<RiShoppingBasketLine />}
+              />
             </motion.div>
           </div>
         </div>

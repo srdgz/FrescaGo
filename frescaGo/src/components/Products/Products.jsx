@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../../utility/animation";
-import { GeneralProductsData } from "../../data/data";
+import { config } from "../../../config";
+import { getData } from "../../lib";
 
 const Products = () => {
+  const [generalProductsData, setGeneralProductsData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const endpoint = `${config?.baseUrl}/destacados`;
+      try {
+        const data = await getData(endpoint);
+        setGeneralProductsData(data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <section>
       <div className="container pt-12 pb-20">
@@ -16,7 +32,7 @@ const Products = () => {
           Algunos de nuestros productos
         </motion.h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {GeneralProductsData.map((product) => (
+          {generalProductsData.map((product) => (
             <motion.div
               key={product.id}
               variants={FadeLeft(product.delay)}
