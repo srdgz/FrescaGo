@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import { FadeLeft } from "../../utility/animation";
 import { config } from "../../../config";
 import { getData } from "../../lib";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
   const [generalProductsData, setGeneralProductsData] = useState([]);
 
   useEffect(() => {
@@ -20,6 +22,10 @@ const Products = () => {
     fetchData();
   }, []);
 
+  const handleProducts = () => {
+    navigate("/productos");
+  };
+
   return (
     <section>
       <div className="container pt-12 pb-20">
@@ -34,6 +40,7 @@ const Products = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {generalProductsData.map((product) => (
             <motion.div
+              onClick={handleProducts}
               key={product.id}
               variants={FadeLeft(product.delay)}
               initial="hidden"

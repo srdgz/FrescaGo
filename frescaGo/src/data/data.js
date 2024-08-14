@@ -15,11 +15,6 @@ export const NavbarMenu = [
     link: "/nosotros",
   },
   {
-    id: 4,
-    title: "Tienda",
-    link: "/tienda",
-  },
-  {
     id: 5,
     title: "Contacto",
     link: "/contacto",

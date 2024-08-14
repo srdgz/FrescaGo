@@ -5,9 +5,11 @@ import { NavbarMenu } from "../../data/data";
 import { RiShoppingCart2Line, RiMenu3Fill, RiUserLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { store } from "../../lib/store";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { cartProduct, currentUser } = store();
 
   return (
     <>
@@ -31,12 +33,23 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
-              <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
-                <RiShoppingCart2Line />
-              </button>
-              <button className="text-2xl hover:bg-primary hover:text-white rounded-full p-2 duration-200">
-                <RiUserLine />
-              </button>
+              <Link to={"/tienda"} className="relative block">
+                <RiShoppingCart2Line className="hover:text-primary duration-200 text-2xl" />
+                <span className="inline-flex items-center justify-center bg-primary text-white absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
+                  {cartProduct?.length > 0 ? cartProduct?.length : "0"}
+                </span>
+              </Link>
+              <Link to={"/usuario"}>
+                {currentUser ? (
+                  <img
+                    src={currentUser?.avatar}
+                    alt="profileImg"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <RiUserLine className="hover:text-primary duration-200 text-2xl" />
+                )}
+              </Link>
             </ul>
           </div>
           <div className="md:hidden" onClick={() => setOpen(!open)}>

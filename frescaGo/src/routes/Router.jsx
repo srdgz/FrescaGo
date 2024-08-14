@@ -2,8 +2,12 @@ import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import HomeScreen from "../views/HomeScreen";
+import ProductsScreen from "../views/ProductsScreen";
+import SingleProductScreen from "../views/SingleProductScreen";
+import ShopScreen from "../views/ShopScreen";
 import AboutScreen from "../views/AboutScreen";
 import ContactScreen from "../views/ContactScreen";
+import UserScreen from "../views/UserScreen";
 import ErrorScreen from "../views/ErrorScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -13,8 +17,12 @@ const Router = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
+        <Route path="/productos" element={<ProductsScreen />} />
+        <Route path="/productos/:id" element={<SingleProductScreen />} />
         <Route path="/nosotros" element={<AboutScreen />} />
         <Route path="/contacto" element={<ContactScreen />} />
+        <Route path="/tienda" element={<ShopScreen />} />
+        <Route path="/usuario" element={<UserScreen />} />
         <Route path="*" element={<ErrorScreen />} />
       </Routes>
       <Footer />

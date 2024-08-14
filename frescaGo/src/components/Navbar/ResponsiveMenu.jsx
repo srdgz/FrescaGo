@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 import { NavbarMenu } from "../../data/data";
@@ -32,8 +32,12 @@ function ResponsiveMenu({ open, setOpen }) {
                 </li>
               ))}
               <li className="flex flex-row gap-12">
-                <RiShoppingCart2Line />
-                <RiUserLine />
+                <Link to="/tienda">
+                  <RiShoppingCart2Line />
+                </Link>
+                <Link to="/usuario">
+                  <RiUserLine />
+                </Link>
               </li>
             </ul>
           </div>

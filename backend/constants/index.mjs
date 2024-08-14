@@ -301,7 +301,7 @@ export const products = [
   },
   {
     id: 2028,
-    title: "Cesta variada de frutas",
+    title: "Cesta de frutas",
     price: "15,99€",
     image:
       "https://comefruta.es/wp-content/uploads/mix-temporada.-melocoto%CC%81n-calanda-510x340.jpg",
@@ -311,7 +311,7 @@ export const products = [
   },
   {
     id: 2029,
-    title: "Cesta variada de verduras",
+    title: "Cesta de verduras",
     price: "22,99€",
     image: "https://comefruta.es/wp-content/uploads/mix-ensalada-510x364.jpg",
     quantity: 1,
@@ -320,7 +320,7 @@ export const products = [
   },
   {
     id: 2030,
-    title: "Cesta mix de frutas y verduras",
+    title: "Cesta mix",
     price: "27,99",
     image:
       "https://comefruta.es/wp-content/uploads/2024/01/mix_masa_muscular_5kg-510x510.jpg",
