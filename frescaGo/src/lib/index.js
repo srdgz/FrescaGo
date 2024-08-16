@@ -4,6 +4,7 @@ export const getData = async (endpoint) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
       },
     });
     if (!response.ok) {

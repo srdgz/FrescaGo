@@ -3,9 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 import { NavbarMenu } from "../../data/data";
+import { store } from "../../lib/store";
 
 function ResponsiveMenu({ open, setOpen }) {
   const navigate = useNavigate();
+  const { cartProduct, currentUser } = store();
 
   const handleNavigation = (link) => {
     navigate(link);
@@ -31,13 +33,27 @@ function ResponsiveMenu({ open, setOpen }) {
                   </button>
                 </li>
               ))}
-              <li className="flex flex-row gap-12">
-                <Link to="/tienda">
-                  <RiShoppingCart2Line />
-                </Link>
-                <Link to="/usuario">
-                  <RiUserLine />
-                </Link>
+              <li className="flex flex-row gap-12 items-center">
+                <button
+                  onClick={() => handleNavigation("/tienda")}
+                  className="relative"
+                >
+                  <RiShoppingCart2Line className="text-2xl" />
+                  <span className="inline-flex items-center justify-center bg-white text-primary absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
+                    {cartProduct?.length > 0 ? cartProduct?.length : "0"}
+                  </span>
+                </button>
+                <button onClick={() => handleNavigation("/usuario")}>
+                  {currentUser ? (
+                    <img
+                      src={currentUser?.avatar}
+                      alt="profileImg"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <RiUserLine className="text-2xl" />
+                  )}
+                </button>
               </li>
             </ul>
           </div>

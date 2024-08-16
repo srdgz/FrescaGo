@@ -33,13 +33,13 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
-              <Link to={"/tienda"} className="relative block">
+              <Link to="/tienda" className="relative block">
                 <RiShoppingCart2Line className="hover:text-primary duration-200 text-2xl" />
                 <span className="inline-flex items-center justify-center bg-primary text-white absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
                   {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                 </span>
               </Link>
-              <Link to={"/usuario"}>
+              <Link to="/usuario">
                 {currentUser ? (
                   <img
                     src={currentUser?.avatar}

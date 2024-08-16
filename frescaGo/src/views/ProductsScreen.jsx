@@ -25,11 +25,30 @@ const ProductsScreen = () => {
       }
     };
 
+    // const fetchProducts = async () => {
+    //   try {
+    //     setLoading(true);
+    //     const productsData = await getData(`${config?.baseUrl}/productos`);
+    //     setProducts(productsData);
+    //   } catch (error) {
+    //     console.error("Error fetching products: ", error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const productsData = await getData(`${config?.baseUrl}/productos`);
-        setProducts(productsData);
+        const processedProducts = productsData.map((product) => ({
+          ...product,
+          price:
+            typeof product.price === "string"
+              ? parseFloat(product.price.replace("€/kg", "").replace(",", "."))
+              : product.price,
+        }));
+        setProducts(processedProducts);
       } catch (error) {
         console.error("Error fetching products: ", error);
       } finally {
@@ -67,28 +86,30 @@ const ProductsScreen = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {category.products.map((product) => (
                 <motion.div
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.05 }}
                   onClick={() => handleProduct(product.id)}
                   key={product.id}
-                  className="bg-white rounded-3xl px-4 py-4 shadow-[0_0_22px_0_rgba(0,0,0,0.15)]"
+                  className="bg-white rounded-3xl px-4 py-4 shadow-[0_0_22px_0_rgba(0,0,0,0.15)] cursor-pointer"
                 >
-                  <div className="flex flex-row justify-around items-center gap-3">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-[60px] scale-110 transform"
-                    />
-                    <h3 className="text-lg font-semibold">{product.title}</h3>
-                    <p className="text-lg font-semibold text-secondary">
-                      {product.price}
-                    </p>
-                  </div>
-                  <div className="flex justify-center mt-4">
-                    <AddToCartBtn
-                      product={product}
-                      title="Comprar"
-                      className="bg-primary hover:bg-primary text-white p-3 text-md rounded-full shadow-lg transition duration-200"
-                    />
+                  <div className="flex flex-row gap-6 justify-evenly">
+                    <div className="flex justify-center items-center">
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-[100px] object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-between">
+                      <h3 className="text-lg font-semibold">{product.title}</h3>
+                      <p className="text-lg font-semibold text-secondary">
+                        {product.price}€/Kg
+                      </p>
+                      <AddToCartBtn
+                        product={product}
+                        title="Comprar"
+                        className="bg-primary hover:bg-primary text-white h-[40px] w-[120px] flex items-center justify-center text-md rounded-full shadow-lg transition duration-200 mt-2"
+                      />
+                    </div>
                   </div>
                 </motion.div>
               ))}

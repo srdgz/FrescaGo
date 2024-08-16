@@ -23,7 +23,14 @@ const SingleProductScreen = () => {
         setLoading(true);
         const data = await getData(`${config?.baseUrl}/productos/${id}`);
         if (id) {
-          setProductData(data);
+          const processedProduct = {
+            ...data,
+            price:
+              typeof data.price === "string"
+                ? parseFloat(data.price.replace("€/kg", "").replace(",", "."))
+                : data.price,
+          };
+          setProductData(processedProduct);
         }
       } catch (error) {
         console.error("Error fetching data", error);
@@ -48,13 +55,14 @@ const SingleProductScreen = () => {
                 className="w-auto max-w-xs object-cover"
               />
             </div>
+
             <div className="flex flex-col justify-between">
               <div>
                 <h1 className="text-3xl font-bold text-gray-800">
                   {productData.title}
                 </h1>
                 <p className="text-2xl font-semibold text-secondary mt-4">
-                  {productData.price}
+                  {productData.price}€/Kg
                 </p>
                 <p className="text-gray-500 mt-2">
                   Categoría:{" "}
