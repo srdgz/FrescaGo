@@ -15,15 +15,7 @@ const ShopScreen = () => {
 
   useEffect(() => {
     const total = cartProduct.reduce((sum, product) => {
-      const price =
-        typeof product?.price === "string"
-          ? parseFloat(product.price.replace(",", "."))
-          : product?.price;
-      const quantity =
-        typeof product?.quantity === "string"
-          ? parseInt(product.quantity, 10)
-          : product?.quantity;
-      return sum + (price || 0) * (quantity || 0);
+      return sum + product?.price * product?.quantity;
     }, 0);
     setTotalAmt(total);
   }, [cartProduct]);
@@ -71,7 +63,7 @@ const ShopScreen = () => {
                       />
                     </dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      {shippingAmt.toFixed(2)}€
+                      {shippingAmt}€
                     </dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">

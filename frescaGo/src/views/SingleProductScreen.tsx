@@ -23,14 +23,7 @@ const SingleProductScreen = () => {
         setLoading(true);
         const data = await getData(`${config?.baseUrl}/productos/${id}`);
         if (id) {
-          const processedProduct = {
-            ...data,
-            price:
-              typeof data.price === "string"
-                ? parseFloat(data.price.replace("€/kg", "").replace(",", "."))
-                : data.price,
-          };
-          setProductData(processedProduct);
+          setProductData(data);
         }
       } catch (error) {
         console.error("Error fetching data", error);

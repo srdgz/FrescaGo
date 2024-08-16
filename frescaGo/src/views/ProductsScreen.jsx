@@ -25,30 +25,11 @@ const ProductsScreen = () => {
       }
     };
 
-    // const fetchProducts = async () => {
-    //   try {
-    //     setLoading(true);
-    //     const productsData = await getData(`${config?.baseUrl}/productos`);
-    //     setProducts(productsData);
-    //   } catch (error) {
-    //     console.error("Error fetching products: ", error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const productsData = await getData(`${config?.baseUrl}/productos`);
-        const processedProducts = productsData.map((product) => ({
-          ...product,
-          price:
-            typeof product.price === "string"
-              ? parseFloat(product.price.replace("€/kg", "").replace(",", "."))
-              : product.price,
-        }));
-        setProducts(processedProducts);
+        setProducts(productsData);
       } catch (error) {
         console.error("Error fetching products: ", error);
       } finally {

@@ -15,17 +15,6 @@ const CartProduct = ({ product }) => {
     }
   };
 
-  const price =
-    typeof product?.price === "string"
-      ? parseFloat(product.price.replace(",", "."))
-      : product?.price;
-  const quantity =
-    typeof product?.quantity === "string"
-      ? parseInt(product.quantity, 10)
-      : product?.quantity;
-
-  const totalPrice = (price || 0) * (quantity || 0);
-
   return (
     <div className="flex py-6 sm:py-10">
       <Link to={`/productos/${product?.id}`}>
@@ -47,7 +36,7 @@ const CartProduct = ({ product }) => {
             </p>
             <div className="flex items-center gap-6 mt-2">
               <p className="text-lg font-semibold text-gray-800">
-                {totalPrice.toFixed(2)}€
+                {(product?.price * product?.quantity).toFixed(2)}€
               </p>
               <AddToCartBtn product={product} />
             </div>
