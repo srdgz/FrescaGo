@@ -8,6 +8,9 @@ import ShopScreen from "../views/ShopScreen";
 import AboutScreen from "../views/AboutScreen";
 import ContactScreen from "../views/ContactScreen";
 import UserScreen from "../views/UserScreen";
+import OrdersScreen from "../views/OrdersScreen";
+import SuccessScreen from "../views/SuccessScreen";
+import CancelScreen from "../views/CancelScreen";
 import ErrorScreen from "../views/ErrorScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -23,6 +26,9 @@ const Router = () => {
         <Route path="/contacto" element={<ContactScreen />} />
         <Route path="/tienda" element={<ShopScreen />} />
         <Route path="/usuario" element={<UserScreen />} />
+        <Route path="/success" element={<SuccessScreen />} />
+        <Route path="/cancel" element={<CancelScreen />} />
+        <Route path="/pedidos" element={<OrdersScreen />} />
         <Route path="*" element={<ErrorScreen />} />
       </Routes>
       <Footer />

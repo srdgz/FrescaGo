@@ -20,7 +20,7 @@ router.post("/checkout", async (req, res) => {
       quantity: item.quantity,
       price_data: {
         currency: "eur",
-        unit_amount: item.price * 100,
+        unit_amount: Math.round(item.price * 100),
         product_data: {
           name: item.title,
           description: item.category,

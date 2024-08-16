@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../Utils/Button";
 import toast from "react-hot-toast";
 import { auth } from "../../lib/firebase";
 
@@ -40,21 +41,14 @@ const UserInfo = ({ currentUser }) => {
               onClick={() =>
                 toast.error("Esta opción aún no se ha implementado")
               }
-              className="rounded-md bg-primary px-8 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-dark"
+              className="primary-btn flex items-center gap-2 mb-6"
             >
               Editar perfil
             </button>
-            <button
-              onClick={() =>
-                toast.error("Esta opción aún no se ha implementado")
-              }
-              className="rounded-md bg-primary px-8 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-dark"
-            >
-              Dirección
-            </button>
+            <Button text="Mis pedidos" to="/pedidos" />
             <button
               onClick={() => auth.signOut()}
-              className="rounded-md bg-primary px-8 py-2.5 text-sm font-semibold text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-dark"
+              className="primary-btn flex items-center gap-2 mb-6"
             >
               Cerrar sesión
             </button>

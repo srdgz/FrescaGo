@@ -20,6 +20,7 @@ const CheckoutBtn = ({ products }) => {
       }),
     });
     const checkoutSession = await response.json();
+    console.log(checkoutSession);
     const result = await stripe?.redirectToCheckout({
       sessionId: checkoutSession.id,
     });
