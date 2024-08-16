@@ -3,12 +3,12 @@ const checkConfig = (server) => {
   switch (server) {
     case "production":
       config = {
-        baseUrl: "https://adminfrescago-srdgzs-projects.vercel.app",
+        baseUrl: import.meta.env.VITE_BASE_URL_PRODUCTION,
       };
       break;
     case "local":
       config = {
-        baseUrl: "http://localhost:8000",
+        baseUrl: import.meta.env.VITE_BASE_URL_LOCAL,
       };
       break;
     default:
