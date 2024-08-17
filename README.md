@@ -2,9 +2,9 @@
 
 FrescaGo is a spanish modern e-commerce platform built using React, Tailwind CSS and Framer Motion for the frontend, Node.js and Express for the backend, Firebase for authentication and database, and Stripe for payment processing.
 
-![FrescaGo homescreen](image.png)
-![FrescaGo userscreen](image-1.png)
-![FrescaGo mobile](image-2.png)
+![FrescaGo homescreen](./frescaGo/src/assets/image.png)
+![FrescaGo userscreen](./frescaGo//src/assets/image-1.png)
+![FrescaGo mobile](./frescaGo/src/assets/image-2.png)
 
 ### ✨Features
 
