@@ -25,7 +25,6 @@ const Orders = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const orderData = docSnap.data()?.orders || [];
-          console.log(orderData);
           setOrders(orderData);
         } else {
           console.log("¡Aún no tienes pedidos!");
@@ -70,8 +69,6 @@ const Orders = () => {
                     (acc, item) => acc + (item?.price * item?.quantity || 0),
                     0
                   );
-                  //   const shippingCost = 4.99;
-                  //   const totalAmt = totalProducts + shippingCost;
                   return (
                     <Disclosure
                       as="div"
