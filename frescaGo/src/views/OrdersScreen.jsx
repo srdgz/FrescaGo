@@ -25,6 +25,7 @@ const Orders = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const orderData = docSnap.data()?.orders || [];
+          console.log(orderData);
           setOrders(orderData);
         } else {
           console.log("¡Aún no tienes pedidos!");
@@ -45,8 +46,10 @@ const Orders = () => {
           <Loading />
         ) : orders.length > 0 ? (
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold mt-1">Detalles del pedido</h2>
-            <p className="text-gray-600">
+            <h2 className="text-2xl text-secondary font-bold my-2">
+              Detalles del pedido
+            </h2>
+            <p className="text-gray-600 mb-2">
               Nombre del cliente:{" "}
               <span className="text-black font-semibold">
                 {currentUser?.firstName} {currentUser?.lastName}
@@ -63,11 +66,12 @@ const Orders = () => {
             <div className="flex flex-col gap-3">
               <div className="space-y-6 divide-y divide-gray-900/10">
                 {orders.map((order) => {
-                  const totalAmt = order?.orderItems.reduce(
-                    (acc, item) =>
-                      acc + (item?.discountedPrice * item?.quantity || 0),
+                  const totalProducts = order?.orderItems.reduce(
+                    (acc, item) => acc + (item?.price * item?.quantity || 0),
                     0
                   );
+                  //   const shippingCost = 4.99;
+                  //   const totalAmt = totalProducts + shippingCost;
                   return (
                     <Disclosure
                       as="div"
@@ -84,7 +88,13 @@ const Orders = () => {
                                   {order?.paymentId}
                                 </span>
                               </span>
-                              <span>{open ? <FaMinus /> : <FaPlus />}</span>
+                              <span>
+                                {open ? (
+                                  <FaMinus className="text-secondary" />
+                                ) : (
+                                  <FaPlus className="text-secondary" />
+                                )}
+                              </span>
                             </DisclosureButton>
                           </dt>
                           <DisclosurePanel as="dd" className="mt-5 pr-12">
@@ -112,17 +122,23 @@ const Orders = () => {
                                 <p className="text-gray-600">
                                   Importe del pedido:{" "}
                                   <span className="text-black font-medium">
-                                    {totalAmt}
+                                    {totalProducts.toFixed(2)}€
+                                  </span>
+                                </p>
+                                <p className="text-gray-600">
+                                  Importe del envío:{" "}
+                                  <span className="text-black font-medium">
+                                    4.99€
                                   </span>
                                 </p>
                               </div>
                               {order?.orderItems?.map((item) => (
                                 <div
-                                  key={item?._id}
+                                  key={item?.id}
                                   className="flex space-x-6 border-b border-gray-200 py-3"
                                 >
                                   <Link
-                                    to={`/product/${item?._id}`}
+                                    to={`/productos/${item?.id}`}
                                     className="h-20 w-20 flex-none sm:h-40 sm:w-40 rounded-lg bg-gray-100 border border-gray-300 hover:border-skyText overflow-hidden"
                                   >
                                     <img
@@ -134,13 +150,13 @@ const Orders = () => {
                                   <div className="flex flex-auto flex-col">
                                     <div>
                                       <Link
-                                        to={`/product/${item?._id}`}
+                                        to={`/productos/${item?.id}`}
                                         className="font-medium text-gray-900"
                                       >
-                                        {item?.name}
+                                        {item?.title}
                                       </Link>
                                       <p className="mt-2 text-sm text-gray-900">
-                                        {item?.description}
+                                        {item?.category}
                                       </p>
                                     </div>
                                     <div className="mt-6 flex flex-1 items-end">
@@ -154,13 +170,11 @@ const Orders = () => {
                                           </dd>
                                         </div>
                                         <div className="flex pl-4 sm:pl-6">
-                                          <dt className="text-black font-bold">
+                                          <dt className="font-medium text-gray-900">
                                             Precio
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
-                                            <span className="text-black font-bold">
-                                              {item?.price}
-                                            </span>
+                                            <span>{item?.price}€</span>
                                           </dd>
                                         </div>
                                         <div className="flex pl-4 sm:pl-6">
@@ -168,8 +182,8 @@ const Orders = () => {
                                             Subtotal
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
-                                            <span className="text-black font-bold">
-                                              {item?.price * item?.quantity}
+                                            <span>
+                                              {item?.price * item?.quantity}€
                                             </span>
                                           </dd>
                                         </div>
