@@ -83,7 +83,7 @@ const ProductsScreen = () => {
                     <div className="flex flex-col justify-between">
                       <h3 className="text-lg font-semibold">{product.title}</h3>
                       <p className="text-lg font-semibold text-secondary">
-                        {product.price}€/Kg
+                        {product.price.toFixed(2)}€/Kg
                       </p>
                       <AddToCartBtn
                         product={product}

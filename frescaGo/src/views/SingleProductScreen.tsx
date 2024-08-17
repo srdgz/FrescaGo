@@ -9,7 +9,7 @@ const SingleProductScreen = () => {
   const [productData, setProductData] = useState({
     id: null,
     title: "",
-    price: "",
+    price: 0,
     image: "",
     category: "",
     base: "",
@@ -55,7 +55,7 @@ const SingleProductScreen = () => {
                   {productData.title}
                 </h1>
                 <p className="text-2xl font-semibold text-secondary mt-4">
-                  {productData.price}€/Kg
+                  {productData.price.toFixed(2)}€/Kg
                 </p>
                 <p className="text-gray-500 mt-2">
                   Categoría:{" "}

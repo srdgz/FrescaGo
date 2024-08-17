@@ -45,7 +45,7 @@ const Orders = () => {
           <Loading />
         ) : orders.length > 0 ? (
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl text-secondary font-bold my-2">
+            <h2 className="text-2xl md:text-3xl text-secondary font-bold my-2">
               Detalles del pedido
             </h2>
             <p className="text-gray-600 mb-2">
@@ -79,50 +79,54 @@ const Orders = () => {
                         <>
                           <dt>
                             <DisclosureButton className="flex w-full items-center justify-between text-left text-gray-900">
-                              <span className="text-base font-semibold leading-7">
+                              <span className="flex-1 text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-7 truncate">
                                 Número de seguimiento:{" "}
-                                <span className="font-normal">
+                                <span className="font-normal break-words">
                                   {order?.paymentId}
                                 </span>
                               </span>
-                              <span>
+                              <span className="ml-4 sm:ml-6">
                                 {open ? (
-                                  <FaMinus className="text-secondary" />
+                                  <FaMinus className="text-secondary text-sm sm:text-base md:text-lg" />
                                 ) : (
-                                  <FaPlus className="text-secondary" />
+                                  <FaPlus className="text-secondary text-sm sm:text-base md:text-lg" />
                                 )}
                               </span>
                             </DisclosureButton>
                           </dt>
-                          <DisclosurePanel as="dd" className="mt-5 pr-12">
-                            <div className="flex flex-col gap-2 bg-[#f4f4f480] p-5 border border-gray-200">
-                              <p className="text-base font-semibold">
+
+                          <DisclosurePanel
+                            as="dd"
+                            className="mt-5 pr-4 sm:pr-6 md:pr-8 lg:pr-12"
+                          >
+                            <div className="flex flex-col gap-2 bg-[#f4f4f480] p-4 sm:p-5 md:p-6 border border-gray-200">
+                              <p className="text-sm sm:text-base font-semibold">
                                 Tu pedido{" "}
-                                <span className="text-skyText">
+                                <span className="text-secondary">
                                   #{order?.paymentId.substring(0, 20)}...
                                 </span>{" "}
                                 ha sido enviado y estará contigo pronto.
                               </p>
                               <div className="flex flex-col gap-1">
-                                <p className="text-gray-600">
+                                <p className="text-sm sm:text-base text-gray-600">
                                   Cantidad de artículos en el pedido:{" "}
                                   <span className="text-black font-medium">
                                     {order?.orderItems?.length}
                                   </span>
                                 </p>
-                                <p className="text-gray-600">
+                                <p className="text-sm sm:text-base text-gray-600">
                                   Estado del pago:{" "}
                                   <span className="text-black font-medium">
                                     Pagado por Stripe
                                   </span>
                                 </p>
-                                <p className="text-gray-600">
+                                <p className="text-sm sm:text-base text-gray-600">
                                   Importe del pedido:{" "}
                                   <span className="text-black font-medium">
                                     {totalProducts.toFixed(2)}€
                                   </span>
                                 </p>
-                                <p className="text-gray-600">
+                                <p className="text-sm sm:text-base text-gray-600">
                                   Importe del envío:{" "}
                                   <span className="text-black font-medium">
                                     4.99€
@@ -132,11 +136,11 @@ const Orders = () => {
                               {order?.orderItems?.map((item) => (
                                 <div
                                   key={item?.id}
-                                  className="flex space-x-6 border-b border-gray-200 py-3"
+                                  className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 border-b border-gray-200 py-3"
                                 >
                                   <Link
                                     to={`/productos/${item?.id}`}
-                                    className="h-20 w-20 flex-none sm:h-40 sm:w-40 rounded-lg bg-gray-100 border border-gray-300 hover:border-skyText overflow-hidden"
+                                    className="h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 flex-none rounded-lg bg-gray-100 border border-gray-300 hover:border-skyText overflow-hidden"
                                   >
                                     <img
                                       src={item?.image}
@@ -148,16 +152,16 @@ const Orders = () => {
                                     <div>
                                       <Link
                                         to={`/productos/${item?.id}`}
-                                        className="font-medium text-gray-900"
+                                        className="font-medium text-gray-900 text-sm sm:text-base"
                                       >
                                         {item?.title}
                                       </Link>
-                                      <p className="mt-2 text-sm text-gray-900">
+                                      <p className="mt-2 text-xs sm:text-sm md:text-base text-gray-900">
                                         {item?.category}
                                       </p>
                                     </div>
-                                    <div className="mt-6 flex flex-1 items-end">
-                                      <dl className="flex space-x-4 divide-x divide-gray-200 text-sm sm:space-x-6">
+                                    <div className="mt-4 sm:mt-6 flex flex-1 items-end">
+                                      <dl className="flex flex-wrap space-x-4 divide-x divide-gray-200 text-xs sm:text-sm md:text-base">
                                         <div className="flex">
                                           <dt className="font-medium text-gray-900">
                                             Cantidad
@@ -171,7 +175,9 @@ const Orders = () => {
                                             Precio
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
-                                            <span>{item?.price}€</span>
+                                            <span>
+                                              {(item?.price).toFixed(2)}€
+                                            </span>
                                           </dd>
                                         </div>
                                         <div className="flex pl-4 sm:pl-6">
@@ -180,7 +186,10 @@ const Orders = () => {
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
                                             <span>
-                                              {item?.price * item?.quantity}€
+                                              {(
+                                                item?.price * item?.quantity
+                                              ).toFixed(2)}
+                                              €
                                             </span>
                                           </dd>
                                         </div>
