@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Label from "../Utils/Label";
 import Login from "./Login";
 import upload from "../../lib/upload";
 import { MdPhotoLibrary } from "react-icons/md";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -15,6 +16,7 @@ const Registration = () => {
     file: null,
     url: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -74,11 +76,8 @@ const Registration = () => {
   return (
     <div>
       {!login ? (
-        <div className="bg-secondary/10 rounded-lg">
-          <form
-            onSubmit={handleRegistration}
-            className="max-w-5xl mx-auto pt-10 px-10 lg:px-0 text-secondary"
-          >
+        <div className="bg-secondary/10 rounded-lg max-w-md lg:max-w-3xl mx-auto my-14 p-6 sm:p-10 md:p-14">
+          <form onSubmit={handleRegistration} className="text-secondary">
             <div className="border-b border-gray-200 pb-5">
               <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
                 Crear una cuenta
@@ -87,76 +86,84 @@ const Registration = () => {
                 Proporcione la información requerida para registrarse.
               </p>
             </div>
-            <div className="border-b border-gray-200 pb-5">
-              <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
-                <div className="sm:col-span-3">
-                  <Label title="Nombre" htmlFor="firstName" />
-                  <input
-                    type="text"
-                    name="firstName"
-                    className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
-                  />
+            <div className="mt-5 grid grid-cols-1 gap-y-5 lg:grid-cols-2 lg:gap-x-6">
+              <div>
+                <Label title="Nombre" htmlFor="firstName" />
+                <input
+                  type="text"
+                  name="firstName"
+                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                />
+              </div>
+              <div>
+                <Label title="Apellido" htmlFor="lastName" />
+                <input
+                  type="text"
+                  name="lastName"
+                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                />
+              </div>
+              <div className="col-span-full lg:col-span-2">
+                <Label title="Email" htmlFor="email" />
+                <input
+                  type="email"
+                  name="email"
+                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                />
+              </div>
+              <div className="relative col-span-full lg:col-span-2">
+                <Label title="Contraseña" htmlFor="password" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                />
+                <div
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <AiOutlineEyeInvisible className="text-gray-500 text-2xl hover:text-secondary" />
+                  ) : (
+                    <AiOutlineEye className="text-gray-500 text-2xl hover:text-secondary" />
+                  )}
                 </div>
-                <div className="sm:col-span-3">
-                  <Label title="Apellido" htmlFor="lastName" />
-                  <input
-                    type="text"
-                    name="lastName"
-                    className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
-                  />
-                </div>
-                <div className="sm:col-span-4">
-                  <Label title="Email" htmlFor="email" />
-                  <input
-                    type="email"
-                    name="email"
-                    className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
-                  />
-                </div>
-                <div className="sm:col-span-4">
-                  <Label title="Contraseña" htmlFor="password" />
-                  <input
-                    type="password"
-                    name="password"
-                    className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
-                  />
-                </div>
-                <div className="col-span-full">
-                  <div className="mt-2 flex items-center gap-x-3">
-                    <div className="flex-1">
-                      <Label title="Foto de perfil" />
-                      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-4">
-                        <div className="flex flex-col items-center text-center">
-                          <div className="w-14 h-14 border border-gray-300 rounded-full p-1">
-                            {avatar?.url ? (
-                              <img
-                                src={avatar.url}
-                                alt="userImage"
-                                className="w-full h-full rounded-full object-cover"
-                              />
-                            ) : (
-                              <MdPhotoLibrary className="mx-auto h-full w-full text-gray-400" />
-                            )}
-                          </div>
-                          <div className="mt-4 flex items-center mb-1 text-sm leading-6 text-gray-600">
-                            <label htmlFor="file-upload">
-                              <span className="relative cursor-pointer rounded-md px-2 py-1 bg-secondary text-white hover:bg-primary-dark">
-                                Subir archivo
-                              </span>
-                              <input
-                                type="file"
-                                name="file-upload"
-                                id="file-upload"
-                                className="sr-only"
-                                onChange={handleAvatar}
-                              />
-                            </label>
-                            <p className="pl-1">o arrastra y suelta aquí</p>
-                          </div>
-                          <p className="text-xs leading-5 text-gray-500">
-                            PNG, JPG, GIF hasta 10MB
-                          </p>
+              </div>
+              <div className="col-span-full lg:col-span-2">
+                <div className="mt-2 flex items-center gap-x-3">
+                  <div className="flex-1">
+                    <Label title="Foto de perfil" />
+                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-4">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-14 h-14 border border-gray-300 rounded-full p-1">
+                          {avatar?.url ? (
+                            <img
+                              src={avatar.url}
+                              alt="userImage"
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          ) : (
+                            <MdPhotoLibrary className="mx-auto h-full w-full text-gray-400" />
+                          )}
                         </div>
+                        <div className="mt-4 flex items-center mb-1 text-sm leading-6 text-gray-600">
+                          <label htmlFor="file-upload">
+                            <span className="relative cursor-pointer rounded-md px-2 py-1 bg-secondary text-white hover:bg-primary-dark">
+                              Subir archivo
+                            </span>
+                            <input
+                              type="file"
+                              name="file-upload"
+                              id="file-upload"
+                              className="sr-only"
+                              onChange={handleAvatar}
+                            />
+                          </label>
+                          <p className="pl-1">o arrastra y suelta aquí</p>
+                        </div>
+                        <p className="text-xs leading-5 text-gray-500">
+                          PNG, JPG, GIF hasta 10MB
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -180,7 +187,7 @@ const Registration = () => {
               {loading ? "Cargando..." : "Registrar"}
             </button>
           </form>
-          <p className="text-sm leading-6 text-gray-600 text-center mt-4 py-10">
+          <p className="text-sm leading-6 text-gray-600 text-center mt-4">
             ¿Ya tienes una cuenta?{" "}
             <button
               onClick={() => setLogin(true)}

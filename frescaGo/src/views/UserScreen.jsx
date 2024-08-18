@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Loading from "../components/Utils/Loading";
-import Login from "../components/Auth/Login";
+import Registration from "../components/Auth/Registration";
 import UserInfo from "../components/Auth/UserInfo";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firebase";
@@ -23,7 +23,11 @@ const UserScreen = () => {
   return (
     <main className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
-        {currentUser ? <UserInfo currentUser={currentUser} /> : <Login />}
+        {currentUser ? (
+          <UserInfo currentUser={currentUser} />
+        ) : (
+          <Registration />
+        )}
       </section>
     </main>
   );
