@@ -46,7 +46,11 @@ function ResponsiveMenu({ open, setOpen }) {
                 <button onClick={() => handleNavigation("/usuario")}>
                   {currentUser ? (
                     <img
-                      src={currentUser?.avatar}
+                      src={
+                        currentUser?.avatar
+                          ? currentUser?.avatar
+                          : "https://i.ibb.co/qMpPq5Z/user.png"
+                      }
                       alt="profileImg"
                       className="w-8 h-8 rounded-full object-cover"
                     />

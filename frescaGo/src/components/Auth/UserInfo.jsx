@@ -13,7 +13,7 @@ const UserInfo = ({ currentUser }) => {
               src={
                 currentUser?.avatar
                   ? currentUser?.avatar
-                  : "https://i.ibb.co/mJRkRRV/png-clipart-profile-logo-computer-icons-user-user-blue-heroes-thumbnail.png"
+                  : "https://i.ibb.co/qMpPq5Z/user.png"
               }
               alt="userImage"
               className="w-40 h-40 rounded-full border border-gray-300 object-cover p-1"
