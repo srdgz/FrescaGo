@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Utils/Loading";
 import AddToCartBtn from "../components/Utils/AddToCartBtn";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { config } from "../../config";
 import { getData } from "../lib";
 import { RiArrowLeftCircleLine } from "react-icons/ri";
@@ -18,6 +18,7 @@ const SingleProductScreen = () => {
   });
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +41,14 @@ const SingleProductScreen = () => {
 
   return (
     <main className="overflow-x-hidden">
-      <section className="container py-12 md:py-40">
+      <section className="container py-12 md:py-40 relative">
+        <button
+          onClick={() => navigate(-1)}
+          className="absolute top-4 left-4 lg:top-12 lg:left-24 flex items-center text-gray-600 hover:text-secondary transition duration-200"
+        >
+          <RiArrowLeftCircleLine className="text-3xl mr-2" /> Volver atrás
+        </button>
+
         {productData && productData.id && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
             <div className="flex justify-center">
