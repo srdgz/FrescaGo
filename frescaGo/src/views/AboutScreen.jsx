@@ -1,4 +1,3 @@
-import React from "react";
 import AboutImage from "../assets/nosotros.jpg";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../utility/animation";

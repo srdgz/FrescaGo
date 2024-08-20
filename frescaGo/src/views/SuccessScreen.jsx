@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../components/Utils/Loading";
 import Button from "../components/Utils/Button";
 import toast from "react-hot-toast";
@@ -48,6 +48,7 @@ const SuccessScreen = () => {
           toast.success("Pago realizado correctamente");
           resetCart();
         } catch (error) {
+          console.error(error);
           toast.error("Error al guardar el pedido");
         } finally {
           setLoading(false);
@@ -55,7 +56,7 @@ const SuccessScreen = () => {
       };
       saveOrder();
     }
-  }, [sessionId, navigate, currentUser, cartProduct]);
+  }, [sessionId, navigate, currentUser, cartProduct, resetCart]);
 
   return (
     <main className="overflow-x-hidden">

@@ -4,6 +4,7 @@ import AddToCartBtn from "../components/Utils/AddToCartBtn";
 import { useParams } from "react-router-dom";
 import { config } from "../../config";
 import { getData } from "../lib";
+import { RiArrowLeftCircleLine } from "react-icons/ri";
 
 const SingleProductScreen = () => {
   const [productData, setProductData] = useState({
@@ -13,6 +14,7 @@ const SingleProductScreen = () => {
     image: "",
     category: "",
     base: "",
+    quantity: 1,
   });
   const [loading, setLoading] = useState(false);
   const { id } = useParams();

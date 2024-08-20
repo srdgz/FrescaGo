@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import { store } from "../../lib/store";
@@ -62,6 +63,19 @@ const AddToCartBtn = ({ className, title, product }) => {
       )}
     </>
   );
+};
+
+AddToCartBtn.propTypes = {
+  className: PropTypes.string,
+  title: PropTypes.string,
+  product: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.string,
+    price: PropTypes.number,
+    quantity: PropTypes.number,
+    image: PropTypes.string,
+    category: PropTypes.string,
+  }).isRequired,
 };
 
 export default AddToCartBtn;

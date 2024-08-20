@@ -1,10 +1,6 @@
-import React from "react";
 import Button from "../components/Utils/Button";
-import { useLocation } from "react-router-dom";
 
 const CancelScreen = () => {
-  const location = useLocation();
-
   return (
     <main className="overflow-x-hidden">
       <section className="container py-12 md:py-24">

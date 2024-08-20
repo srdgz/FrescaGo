@@ -1,4 +1,3 @@
-import React from "react";
 import Loading from "../components/Utils/Loading";
 import {
   Disclosure,
@@ -176,7 +175,7 @@ const Orders = () => {
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
                                             <span>
-                                              {(item?.price).toFixed(2)}€
+                                              {item.price.toFixed(2)}€
                                             </span>
                                           </dd>
                                         </div>

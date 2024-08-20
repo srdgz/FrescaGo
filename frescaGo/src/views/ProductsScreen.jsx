@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AddToCartBtn from "../components/Utils/AddToCartBtn";
 import Loading from "../components/Utils/Loading";
 import { config } from "../../config";

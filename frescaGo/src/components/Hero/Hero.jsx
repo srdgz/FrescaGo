@@ -1,4 +1,3 @@
-import React from "react";
 import heroEnsalada from "../../assets/hero-ensalada.png";
 import heroHoja from "../../assets/hero-hoja.png";
 import Button from "../Utils/Button";

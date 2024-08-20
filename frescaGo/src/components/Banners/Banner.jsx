@@ -1,4 +1,3 @@
-import React from "react";
 import BannerSplash from "../../assets/banner-frutas.png";
 import Button from "../Utils/Button";
 import { motion } from "framer-motion";

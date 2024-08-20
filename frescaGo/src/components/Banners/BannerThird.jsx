@@ -1,4 +1,3 @@
-import React from "react";
 import BannerBg from "../../assets/banner-bg.jpg";
 import Button from "../Utils/Button";
 import { motion } from "framer-motion";

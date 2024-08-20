@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CartProduct from "../components/Products/CartProduct";
 import CheckoutBtn from "../components/Utils/CheckoutBtn";
 import Button from "../components/Utils/Button";
@@ -8,7 +8,7 @@ import { RiQuestionLine } from "react-icons/ri";
 
 const ShopScreen = () => {
   const [totalAmt, setTotalAmt] = useState(0);
-  const { cartProduct, currentUser } = store();
+  const { cartProduct } = store();
   const navigate = useNavigate();
 
   const shippingAmt = 4.99;

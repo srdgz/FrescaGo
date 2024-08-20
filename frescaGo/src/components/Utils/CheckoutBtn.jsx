@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { loadStripe } from "@stripe/stripe-js";
 import { store } from "../../lib/store";
 import { config } from "../../../config";
@@ -51,6 +52,19 @@ const CheckoutBtn = ({ products }) => {
       )}
     </div>
   );
+};
+
+CheckoutBtn.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      quantity: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default CheckoutBtn;

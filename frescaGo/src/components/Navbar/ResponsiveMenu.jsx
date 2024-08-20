@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 import { NavbarMenu } from "../../data/data";
@@ -62,5 +62,10 @@ function ResponsiveMenu({ open, setOpen }) {
     </AnimatePresence>
   );
 }
+
+ResponsiveMenu.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};
 
 export default ResponsiveMenu;

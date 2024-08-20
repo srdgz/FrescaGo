@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import AddToCartBtn from "../Utils/AddToCartBtn";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -55,6 +55,17 @@ const CartProduct = ({ product }) => {
       </div>
     </div>
   );
+};
+
+CartProduct.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default CartProduct;

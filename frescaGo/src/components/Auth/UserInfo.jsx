@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import Button from "../Utils/Button";
 import toast from "react-hot-toast";
 import { auth } from "../../lib/firebase";
@@ -76,6 +76,14 @@ const UserInfo = ({ currentUser }) => {
       </section>
     </main>
   );
+};
+
+UserInfo.propTypes = {
+  currentUser: PropTypes.shape({
+    avatar: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+  }),
 };
 
 export default UserInfo;
