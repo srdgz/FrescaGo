@@ -57,7 +57,7 @@ const CheckoutBtn = ({ products }) => {
 CheckoutBtn.propTypes = {
   products: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
       quantity: PropTypes.number.isRequired,

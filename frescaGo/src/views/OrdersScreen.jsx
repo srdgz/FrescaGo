@@ -1,4 +1,5 @@
 import Loading from "../components/Utils/Loading";
+import Button from "../components/Utils/Button";
 import {
   Disclosure,
   DisclosureButton,
@@ -26,10 +27,10 @@ const Orders = () => {
           const orderData = docSnap.data()?.orders || [];
           setOrders(orderData);
         } else {
-          console.log("¡Aún no tienes pedidos!");
+          console.warn("No orders yet");
         }
       } catch (error) {
-        console.log("Error al obtener los datos", error);
+        console.error("Error fetching data: ", error);
       } finally {
         setLoading(false);
       }
@@ -208,16 +209,17 @@ const Orders = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center">
-            <p className="text-2xl font-semibold">Aún no tienes pedidos</p>
-            <p>No has realizado ninguna compra con nosotros</p>
-            <Link
-              to={"/product"}
-              className="mt-2 bg-gray-800 text-gray-100 px-6 py-2 rounded-md hover:bg-black hover:text-white duration-200"
-            >
-              Ir de compras
-            </Link>
-          </div>
+          <main className="overflow-x-hidden">
+            <section className="container py-12 md:py-24">
+              <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
+                <h2 className="text-2xl md:text-4xl font-bold text-center text-secondary">
+                  Aún no tienes pedidos
+                </h2>
+                <p>No has realizado ninguna compra con nosotros</p>
+                <Button text="Ir de compras" to="/productos" />
+              </div>
+            </section>
+          </main>
         )}
       </section>
     </main>
