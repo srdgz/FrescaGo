@@ -1,16 +1,20 @@
-import { useState, useEffect } from "react";
 import AddToCartBtn from "../components/Utils/AddToCartBtn";
 import Loading from "../components/Utils/Loading";
+import { useState, useEffect } from "react";
 import { config } from "../../config";
 import { getData } from "../lib";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { IoClose, IoSearchOutline } from "react-icons/io5";
 
 const ProductsScreen = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchProduct, setSearchProduct] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -30,6 +34,7 @@ const ProductsScreen = () => {
         setLoading(true);
         const productsData = await getData(`${config?.baseUrl}/productos`);
         setProducts(productsData);
+        setFilteredProducts(productsData);
       } catch (error) {
         console.error("Error fetching products: ", error);
       } finally {
@@ -41,14 +46,24 @@ const ProductsScreen = () => {
     fetchProducts();
   }, []);
 
-  const categorizedProducts = categories.map((category) => {
-    return {
-      ...category,
-      products: products.filter(
+  useEffect(() => {
+    const filtered = products.filter((product) =>
+      product.title.toLowerCase().includes(searchProduct.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  }, [searchProduct, products]);
+
+  const categorizedProducts = categories
+    .map((category) => {
+      const filteredCategoryProducts = filteredProducts.filter(
         (product) => product.category === category.base
-      ),
-    };
-  });
+      );
+      return {
+        ...category,
+        products: filteredCategoryProducts,
+      };
+    })
+    .filter((category) => category.products.length > 0);
 
   const handleProduct = (id) => {
     navigate(`/productos/${id}`);
@@ -57,8 +72,49 @@ const ProductsScreen = () => {
   if (loading) return <Loading />;
 
   return (
-    <main className="overflow-x-hidden">
-      <section className="container py-12 md:py-24">
+    <main className="overflow-x-hidden min-h-screen">
+      <section className="container py-10 md:py-18">
+        <div className="relative flex justify-end">
+          <motion.div
+            initial={{ width: "40px" }}
+            animate={{ width: isExpanded ? "100%" : "40px" }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="relative"
+          >
+            <div className="relative w-full flex items-center">
+              <motion.input
+                initial={{ width: "0px", opacity: 0 }}
+                animate={{
+                  width: isExpanded ? "100%" : "0px",
+                  opacity: isExpanded ? 1 : 0,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                type="text"
+                placeholder="Buscar productos..."
+                value={searchProduct}
+                onChange={(e) => setSearchProduct(e.target.value)}
+                onFocus={() => setIsExpanded(true)}
+                onBlur={() => !searchProduct && setIsExpanded(false)}
+                className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary"
+              />
+              {!isExpanded && (
+                <IoSearchOutline
+                  onClick={() => setIsExpanded(true)}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xl text-gray-600 hover:text-secondary cursor-pointer duration-200"
+                />
+              )}
+              {isExpanded && (
+                <IoClose
+                  onClick={() => {
+                    setSearchProduct("");
+                    setIsExpanded(false);
+                  }}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xl text-gray-600 hover:text-primary cursor-pointer duration-200"
+                />
+              )}
+            </div>
+          </motion.div>
+        </div>
         {categorizedProducts.map((category) => (
           <div key={category.id} className="mb-14">
             <h2 className="text-4xl font-bold text-secondary my-4">
