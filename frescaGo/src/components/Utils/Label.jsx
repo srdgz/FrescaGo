@@ -9,8 +9,8 @@ const Label = ({ title, htmlFor }) => {
 };
 
 Label.propTypes = {
-  title: PropTypes.string.isRequired,
-  htmlFor: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  htmlFor: PropTypes.string,
 };
 
 export default Label;
