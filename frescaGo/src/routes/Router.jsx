@@ -7,6 +7,7 @@ import ShopScreen from "../views/ShopScreen";
 import AboutScreen from "../views/AboutScreen";
 import ContactScreen from "../views/ContactScreen";
 import UserScreen from "../views/UserScreen";
+import EditProfileScreen from "../views/EditProfileScreen";
 import OrdersScreen from "../views/OrdersScreen";
 import SuccessScreen from "../views/SuccessScreen";
 import CancelScreen from "../views/CancelScreen";
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path="/contacto" element={<ContactScreen />} />
         <Route path="/tienda" element={<ShopScreen />} />
         <Route path="/usuario" element={<UserScreen />} />
+        <Route path="/editar" element={<EditProfileScreen />} />
         <Route path="/success" element={<SuccessScreen />} />
         <Route path="/cancel" element={<CancelScreen />} />
         <Route path="/pedidos" element={<OrdersScreen />} />

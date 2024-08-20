@@ -2,7 +2,7 @@ import { useState } from "react";
 import Label from "../Utils/Label";
 import Login from "./Login";
 import upload from "../../lib/upload";
-import { MdPhotoLibrary } from "react-icons/md";
+import AvatarUploader from "../Utils/AvatarUploader";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../lib/firebase";
@@ -12,19 +12,11 @@ const Registration = () => {
   const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [avatar, setAvatar] = useState({
-    file: null,
-    url: "",
-  });
+  const [avatarFile, setAvatarFile] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleAvatar = (e) => {
-    if (e.target.files[0]) {
-      setAvatar({
-        file: e.target.files[0],
-        url: URL.createObjectURL(e.target.files[0]),
-      });
-    }
+  const handleFileChange = (file) => {
+    setAvatarFile(file);
   };
 
   const handleRegistration = async (e) => {
@@ -36,8 +28,8 @@ const Registration = () => {
       setLoading(true);
       const res = await createUserWithEmailAndPassword(auth, email, password);
       let imageUrl = null;
-      if (avatar && avatar?.file) {
-        imageUrl = await upload(avatar?.file);
+      if (avatarFile) {
+        imageUrl = await upload(avatarFile);
       }
       await setDoc(doc(db, "users", res.user.uid), {
         firstName,
@@ -134,37 +126,10 @@ const Registration = () => {
                   <div className="flex-1">
                     <Label title="Foto de perfil" />
                     <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-4">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="w-14 h-14 border border-gray-300 rounded-full p-1">
-                          {avatar?.url ? (
-                            <img
-                              src={avatar.url}
-                              alt="userImage"
-                              className="w-full h-full rounded-full object-cover"
-                            />
-                          ) : (
-                            <MdPhotoLibrary className="mx-auto h-full w-full text-gray-400" />
-                          )}
-                        </div>
-                        <div className="mt-4 flex items-center mb-1 text-sm leading-6 text-gray-600">
-                          <label htmlFor="file-upload">
-                            <span className="relative cursor-pointer rounded-md px-2 py-1 bg-secondary text-white hover:bg-primary-dark">
-                              Subir archivo
-                            </span>
-                            <input
-                              type="file"
-                              name="file-upload"
-                              id="file-upload"
-                              className="sr-only"
-                              onChange={handleAvatar}
-                            />
-                          </label>
-                          <p className="pl-1">o arrastra y suelta aquí</p>
-                        </div>
-                        <p className="text-xs leading-5 text-gray-500">
-                          PNG, JPG, GIF hasta 10MB
-                        </p>
-                      </div>
+                      <AvatarUploader
+                        onFileChange={handleFileChange}
+                        currentUrl={""}
+                      />
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import Button from "../Utils/Button";
-import toast from "react-hot-toast";
 import { auth } from "../../lib/firebase";
 
 const UserInfo = ({ currentUser }) => {
@@ -37,14 +36,7 @@ const UserInfo = ({ currentUser }) => {
             </div>
           </div>
           <div className="mt-10 flex flex-col sm:flex-row items-center gap-5 px-4">
-            <button
-              onClick={() =>
-                toast.error("Esta opción aún no se ha implementado")
-              }
-              className="primary-btn flex items-center gap-2 mb-6"
-            >
-              Editar perfil
-            </button>
+            <Button text="Editar perfil" to="/editar" />
             <Button text="Mis pedidos" to="/pedidos" />
             <button
               onClick={() => auth.signOut()}
