@@ -24,22 +24,22 @@ const CategoryPagination = ({ products, itemsPerPage }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {currentProducts.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-3xl px-4 py-4 shadow-[0_0_22px_0_rgba(0,0,0,0.15)] cursor-pointer"
             onClick={() => handleProduct(product.id)}
           >
-            <div className="flex flex-row gap-6 justify-evenly">
-              <div className="flex justify-center items-center">
+            <div className="flex flex-row gap-6">
+              <div className="flex justify-center items-center w-[120px] h-[120px] flex-shrink-0 pl-4 md:pl-6 lg:pl-8">
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-[100px] object-cover rounded-lg"
+                  className="w-full h-full object-contain rounded-lg"
                 />
               </div>
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col justify-between flex-grow">
                 <h3 className="text-lg font-semibold">{product.title}</h3>
                 <p className="text-lg font-semibold text-secondary">
                   {product.price.toFixed(2)}€/Kg
