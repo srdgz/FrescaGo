@@ -36,5 +36,6 @@ jobs:
           cache-dependency-path: frescaGo/package-lock.json
       - run: npm ci
       - run: npm run lint
+      - run: npm run typecheck
       - run: npm test
       - run: npm run build
