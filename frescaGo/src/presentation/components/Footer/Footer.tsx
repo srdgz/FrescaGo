@@ -5,8 +5,10 @@ import {
   RiInstagramFill,
 } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-primary/10 py-12 mt-12">
       <motion.div
@@ -18,14 +20,14 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start md:flex-1">
           <Logo />
           <p className="mt-4 text-center md:text-left text-gray-700">
-            © 2024 | Web realizada por{" "}
+            {t("footer.2024WebRealizadaPor")}{" "}
             <a
               href="https://github.com/srdgz"
               target="_blank"
               rel="noopener noreferrer"
               className="text-secondary hover:underline"
             >
-              Sandra Rodríguez
+              {t("footer.sandraRodriguez")}
             </a>
           </p>
         </div>

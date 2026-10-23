@@ -4,13 +4,15 @@ import Label from "../Utils/Label";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { AuthError } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
-import { loginErrorMessage } from "../../authMessages";
+import { loginErrorKey } from "../../authMessages";
+import { useTranslation } from "react-i18next";
 
 interface LoginProps {
   setLogin: (login: boolean) => void;
 }
 
 const Login = ({ setLogin }: LoginProps) => {
+  const { t } = useTranslation();
   const { signIn } = useUseCases();
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -29,7 +31,7 @@ const Login = ({ setLogin }: LoginProps) => {
     } catch (error) {
       console.log("Error", error);
       setErrMsg(
-        loginErrorMessage(error instanceof AuthError ? error.code : "unknown")
+        t(loginErrorKey(error instanceof AuthError ? error.code : "unknown"))
       );
     } finally {
       setLoading(false);
@@ -41,16 +43,15 @@ const Login = ({ setLogin }: LoginProps) => {
       <form onSubmit={handleLogin} className="text-secondary">
         <div className="border-b border-gray-200 pb-5">
           <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
-            Iniciar Sesión
+            {t("login.iniciarSesion")}
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            Proporcione su correo electrónico y contraseña para acceder a su
-            cuenta.
+            {t("login.proporcioneSuCorreoElectronico")}
           </p>
         </div>
         <div className="mt-5 grid grid-cols-1 gap-y-5">
           <div>
-            <Label title="Email" htmlFor="email" />
+            <Label title={t("login.email")} htmlFor="email" />
             <input
               type="email"
               name="email"
@@ -58,7 +59,7 @@ const Login = ({ setLogin }: LoginProps) => {
             />
           </div>
           <div className="relative">
-            <Label title="Contraseña" htmlFor="password" />
+            <Label title={t("login.contrasena")} htmlFor="password" />
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -90,16 +91,16 @@ const Login = ({ setLogin }: LoginProps) => {
               : "bg-primary hover:bg-primary-dark duration-200"
           }`}
         >
-          Iniciar Sesión
+          {t("login.iniciarSesion")}
         </button>
       </form>
       <p className="text-sm leading-6 text-gray-600 text-center mt-4">
-        ¿No tienes una cuenta?{" "}
+        {t("login.noTienesUnaCuenta")}{" "}
         <button
           onClick={() => setLogin(false)}
           className="text-primary font-semibold underline underline-offset-2 decoration-[1px] hover:text-primary-dark duration-200"
         >
-          Registrarse
+          {t("login.registrarse")}
         </button>
       </p>
     </div>

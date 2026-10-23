@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
+import CurrencySwitcher from "./CurrencySwitcher";
 import { NavbarMenu } from "../../data/navbar";
 import { useAppStore } from "../../AppContext";
+import { useLocalePath } from "../../LocaleContext";
+import type { RouteKey } from "../../routes/paths";
 
 interface ResponsiveMenuProps {
   open: boolean;
@@ -10,11 +15,13 @@ interface ResponsiveMenuProps {
 }
 
 function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const navigate = useNavigate();
   const { cartProduct, currentUser } = useAppStore();
 
-  const handleNavigation = (link: string) => {
-    navigate(link);
+  const handleNavigation = (route: RouteKey) => {
+    navigate(path(route));
     setOpen(false);
   };
 
@@ -32,22 +39,30 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
             <ul className="flex flex-col items-center gap-10">
               {NavbarMenu.map((menu) => (
                 <li key={menu.id}>
-                  <button onClick={() => handleNavigation(menu.link)}>
-                    {menu.title}
+                  <button onClick={() => handleNavigation(menu.route)}>
+                    {t(menu.label)}
                   </button>
                 </li>
               ))}
+              <li className="flex flex-row gap-4 items-center text-gray-900">
+                <LanguageSwitcher />
+                <CurrencySwitcher />
+              </li>
               <li className="flex flex-row gap-12 items-center">
                 <button
-                  onClick={() => handleNavigation("/tienda")}
+                  onClick={() => handleNavigation("shop")}
                   className="relative"
+                  aria-label={t("nav.cart")}
                 >
                   <RiShoppingCart2Line className="text-2xl" />
                   <span className="inline-flex items-center justify-center bg-white text-primary absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
                     {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                   </span>
                 </button>
-                <button onClick={() => handleNavigation("/usuario")}>
+                <button
+                  onClick={() => handleNavigation("user")}
+                  aria-label={t("nav.account")}
+                >
                   {currentUser ? (
                     <img
                       src={
@@ -55,7 +70,7 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                           ? currentUser?.avatar
                           : "https://i.ibb.co/qMpPq5Z/user.png"
                       }
-                      alt="profileImg"
+                      alt=""
                       className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
@@ -70,6 +85,5 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
     </AnimatePresence>
   );
 }
-
 
 export default ResponsiveMenu;

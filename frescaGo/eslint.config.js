@@ -37,7 +37,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/presentation/AppContext.tsx"],
+    files: ["src/presentation/AppContext.tsx", "src/presentation/LocaleContext.tsx"],
     rules: { "react-refresh/only-export-components": "off" },
   },
   {

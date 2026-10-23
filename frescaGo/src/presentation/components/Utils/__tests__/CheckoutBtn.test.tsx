@@ -23,7 +23,10 @@ describe("CheckoutBtn", () => {
 
     await userEvent.click(await screen.findByRole("button", { name: /pagar/i }));
 
-    expect(startCheckout).toHaveBeenCalledWith(products, buyer.email);
+    expect(startCheckout).toHaveBeenCalledWith(products, buyer.email, {
+      currency: "EUR",
+      locale: "es",
+    });
   });
 
   it("alerts the user when the checkout fails", async () => {

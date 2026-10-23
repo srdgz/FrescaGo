@@ -2,8 +2,12 @@ import BannerSplash from "../../../assets/banner-frutas.png";
 import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeUp } from "../../utility/animation";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../../LocaleContext";
 
 const Banner = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   return (
     <section className="bg-secondary/10">
       <div className="container grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 py-14">
@@ -27,7 +31,7 @@ const Banner = () => {
               viewport={{ once: true }}
               className="text-3xl lg:text-6xl font-bold"
             >
-              Sobre nosotros
+              {t("banner.sobreNosotros")}
             </motion.h1>
             <motion.p
               variants={FadeUp(0.7)}
@@ -35,10 +39,7 @@ const Banner = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              En FrescaGo, nos apasiona llevar la frescura del campo
-              directamente a tu mesa. Somos una tienda online de frutas y
-              verduras comprometida con ofrecer productos de la más alta
-              calidad, cultivados de manera sostenible por agricultores locales.
+              {t("banner.enFrescagoNosApasiona")}
             </motion.p>
             <motion.p
               variants={FadeUp(0.9)}
@@ -46,8 +47,7 @@ const Banner = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Creemos en la importancia de una alimentación saludable y en el
-              poder de la naturaleza para nutrirnos.
+              {t("banner.creemosEnLaImportancia")}
             </motion.p>
             <motion.p
               variants={FadeUp(1.1)}
@@ -55,10 +55,7 @@ const Banner = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Cada pedido es cuidadosamente seleccionado para garantizar que
-              recibas solo lo mejor. FrescaGo no es solo una tienda, es un
-              puente entre el campo y tu hogar, asegurando que disfrutes de
-              alimentos frescos, nutritivos y llenos de sabor todos los días.
+              {t("banner.cadaPedidoEsCuidadosamente")}
             </motion.p>
             <motion.p
               variants={FadeUp(1.3)}
@@ -67,7 +64,7 @@ const Banner = () => {
               viewport={{ once: true }}
             >
               {" "}
-              ¡Confía en nosotros para llevar la frescura a tu vida!
+              {t("banner.confiaEnNosotrosPara")}
             </motion.p>
             <motion.div
               variants={FadeUp(1.5)}
@@ -77,7 +74,7 @@ const Banner = () => {
               viewport={{ once: true }}
               className="flex justify-center md:justify-start"
             >
-              <Button text="Saber más" to="/nosotros" />
+              <Button text={t("banner.saberMas")} to={path("about")} />
             </motion.div>
           </div>
         </div>

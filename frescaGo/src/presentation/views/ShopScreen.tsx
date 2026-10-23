@@ -4,9 +4,15 @@ import Button from "../components/Utils/Button";
 import { RiQuestionLine } from "react-icons/ri";
 import { SHIPPING_AMOUNT, cartSubtotal } from "../../domain/cart";
 import { useAppStore } from "../AppContext";
+import { useMoney } from "../hooks/useMoney";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../LocaleContext";
 
 const ShopScreen = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const { cartProduct } = useAppStore();
+  const { format } = useMoney();
 
   const totalAmt = cartSubtotal(cartProduct);
   const shippingAmt = SHIPPING_AMOUNT;
@@ -17,7 +23,7 @@ const ShopScreen = () => {
         {cartProduct.length > 0 ? (
           <>
             <h1 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
-              Tu cesta de la compra
+              {t("shop.tuCestaDeLa")}
             </h1>
 
             <div className="mt-10 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
@@ -32,32 +38,32 @@ const ShopScreen = () => {
                 </div>
               </section>
               <section className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-                <h2 className="text-lg font-medium text-gray-900">Tu pedido</h2>
+                <h2 className="text-lg font-medium text-gray-900">{t("shop.tuPedido")}</h2>
                 <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between">
-                    <dt className="text-sm text-gray-600">Subtotal</dt>
+                    <dt className="text-sm text-gray-600">{t("shop.subtotal")}</dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      {totalAmt.toFixed(2)}€
+                      {format(totalAmt)}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <dt className="flex items-center text-sm text-gray-600">
-                      <span>Envío</span>
+                      <span>{t("shop.envio")}</span>
                       <RiQuestionLine
                         className="h-5 w-5 text-gray-400 ml-2"
                         aria-hidden="true"
                       />
                     </dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      {shippingAmt}€
+                      {format(shippingAmt)}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <dt className="text-base font-medium text-gray-900">
-                      TOTAL
+                      {t("shop.total")}
                     </dt>
                     <dd className="text-lg font-bold text-gray-900">
-                      {(totalAmt + shippingAmt).toFixed(2)}€
+                      {format(totalAmt + shippingAmt)}
                     </dd>
                   </div>
                 </dl>
@@ -68,13 +74,12 @@ const ShopScreen = () => {
         ) : (
           <div className="bg-white h-96 flex flex-col gap-2 items-center justify-center py-5 my-14 rounded-lg border border-gray-200 drop-shadow-2xl">
             <h1 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
-              Tu cesta de la compra
+              {t("shop.tuCestaDeLa")}
             </h1>
             <p className="text-lg max-w-[600px] text-center text-gray-600 tracking-wide leading-6 py-8">
-              Tu carrito está vacío. Empieza a añadir productos frescos y
-              saludables.
+              {t("shop.tuCarritoEstaVacio")}
             </p>
-            <Button text="Hacer la compra" to="/productos" />
+            <Button text={t("shop.hacerLaCompra")} to={path("products")} />
           </div>
         )}
       </section>

@@ -1,47 +1,48 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ContactScreen = () => {
+  const { t } = useTranslation();
   return (
     <main className="overflow-x-hidden">
       <section className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-secondary">Contáctanos</h2>
+          <h2 className="text-4xl font-bold text-secondary">{t("contact.contactanos")}</h2>
           <p className="mt-4 text-lg text-gray-600">
-            ¡Estamos aquí para ayudarte! Si tienes alguna pregunta o necesitas
-            asistencia, no dudes en contactarnos.
+            {t("contact.estamosAquiParaAyudarte")}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
             <h3 className="text-2xl font-semibold text-gray-800">
-              Información de Contacto
+              {t("contact.informacionDeContacto")}
             </h3>
             <ul className="mt-6 space-y-4">
               <li>
-                <strong className="text-gray-700">Dirección:</strong>
-                <p className="text-gray-600">1234 Calle Falsa, Ciudad, País</p>
+                <strong className="text-gray-700">{t("contact.direccion")}</strong>
+                <p className="text-gray-600">{t("contact.1234CalleFalsaCiudad")}</p>
               </li>
               <li>
-                <strong className="text-gray-700">Teléfono:</strong>
+                <strong className="text-gray-700">{t("contact.telefono")}</strong>
                 <p className="text-gray-600">+123 456 7890</p>
               </li>
               <li>
-                <strong className="text-gray-700">Email:</strong>
-                <p className="text-gray-600">contacto@frescago.com</p>
+                <strong className="text-gray-700">{t("contact.email")}</strong>
+                <p className="text-gray-600">{t("contact.contactoFrescagoCom")}</p>
               </li>
               <li>
-                <strong className="text-gray-700">Horario de Atención:</strong>
+                <strong className="text-gray-700">{t("contact.horarioDeAtencion")}</strong>
                 <p className="text-gray-600">
-                  Lunes a Viernes: 9:00 AM - 6:00 PM <br />
-                  Sábado: 10:00 AM - 4:00 PM <br />
-                  Domingo: Cerrado
+                  {t("contact.lunesAViernes9")} <br />
+                  {t("contact.sabado1000Am")} <br />
+                  {t("contact.domingoCerrado")}
                 </p>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="text-2xl font-semibold text-gray-800">
-              Envíanos un mensaje
+              {t("contact.envianosUnMensaje")}
             </h3>
             <form className="mt-6 space-y-6">
               <div>
@@ -49,7 +50,7 @@ const ContactScreen = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Nombre completo
+                  {t("contact.nombreCompleto")}
                 </label>
                 <input
                   type="text"
@@ -65,7 +66,7 @@ const ContactScreen = () => {
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email
+                  {t("contact.email2")}
                 </label>
                 <input
                   type="email"
@@ -81,7 +82,7 @@ const ContactScreen = () => {
                   htmlFor="message"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Mensaje
+                  {t("contact.mensaje")}
                 </label>
                 <textarea
                   id="message"
@@ -94,7 +95,7 @@ const ContactScreen = () => {
 
               <div>
                 <button type="submit" className="w-full primary-btn">
-                  Enviar
+                  {t("contact.enviar")}
                 </button>
               </div>
             </form>
@@ -102,7 +103,7 @@ const ContactScreen = () => {
         </div>
         <div className="mt-12">
           <h3 className="text-2xl font-semibold text-gray-800 text-center">
-            Visítanos en nuestra oficina
+            {t("contact.visitanosEnNuestraOficina")}
           </h3>
           <div className="mt-6 flex justify-center">
             <motion.div

@@ -1,4 +1,6 @@
 import type { CartItem } from "../domain/cart";
+import type { Currency } from "../domain/currency";
+import type { Locale } from "../domain/locale";
 import type { Order } from "../domain/order";
 import type { ProfileForm, Registration, User } from "../domain/user";
 import type {
@@ -7,11 +9,13 @@ import type {
   CheckoutGateway,
   ImageStorage,
   OrderRepository,
+  RatesGateway,
   UserRepository,
 } from "./ports";
 
 export interface Dependencies {
   catalog: CatalogGateway;
+  rates: RatesGateway;
   auth: AuthService;
   users: UserRepository;
   orders: OrderRepository;
@@ -21,16 +25,18 @@ export interface Dependencies {
 
 export const makeUseCases = ({
   catalog,
+  rates,
   auth,
   users,
   orders,
   images,
   checkout,
 }: Dependencies) => ({
-  listFeatured: () => catalog.getFeatured(),
-  listCategories: () => catalog.getCategories(),
-  listProducts: () => catalog.getProducts(),
-  getProduct: (id: string) => catalog.getProduct(id),
+  listFeatured: (locale: Locale) => catalog.getFeatured(locale),
+  listCategories: (locale: Locale) => catalog.getCategories(locale),
+  listProducts: (locale: Locale) => catalog.getProducts(locale),
+  getProduct: (id: string, locale: Locale) => catalog.getProduct(id, locale),
+  getExchangeRate: () => rates.getRate(),
 
   signIn: (email: string, password: string) => auth.signIn(email, password),
   signOut: () => auth.signOut(),
@@ -71,19 +77,29 @@ export const makeUseCases = ({
 
   listOrders: (email: string) => orders.list(email),
 
-  saveOrder: (user: User, paymentId: string, items: CartItem[]) => {
+  saveOrder: (
+    user: User,
+    paymentId: string,
+    items: CartItem[],
+    pricing: { currency: Currency; usdPerEur: number }
+  ) => {
     const order: Order = {
       userEmail: user.email,
       paymentId,
       orderItems: items,
       paymentMethod: "stripe",
       userId: user.id,
+      currency: pricing.currency,
+      exchangeRate: pricing.usdPerEur,
     };
     return orders.add(user.email, order);
   },
 
-  startCheckout: (items: CartItem[], email: string) =>
-    checkout.start(items, email),
+  startCheckout: (
+    items: CartItem[],
+    email: string,
+    options: { currency: Currency; locale: Locale }
+  ) => checkout.start(items, email, options),
 });
 
 export type UseCases = ReturnType<typeof makeUseCases>;

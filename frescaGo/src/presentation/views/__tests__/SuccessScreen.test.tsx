@@ -21,12 +21,15 @@ describe("SuccessScreen", () => {
     const { store } = renderWithApp(
       <SuccessScreen />,
       { saveOrder },
-      "/success?session_id=cs_test_1"
+      { route: "/es/success?session_id=cs_test_1" }
     );
     store.setState({ currentUser: buyer, cartProduct: cart });
 
     await waitFor(() =>
-      expect(saveOrder).toHaveBeenCalledWith(buyer, "cs_test_1", cart)
+      expect(saveOrder).toHaveBeenCalledWith(buyer, "cs_test_1", cart, {
+        currency: "EUR",
+        usdPerEur: store.getState().usdPerEur,
+      })
     );
     await waitFor(() => expect(store.getState().cartProduct).toEqual([]));
     expect(toast.success).toHaveBeenCalled();
@@ -38,7 +41,7 @@ describe("SuccessScreen", () => {
     const { store } = renderWithApp(
       <SuccessScreen />,
       { saveOrder },
-      "/success?session_id=cs_test_1"
+      { route: "/es/success?session_id=cs_test_1" }
     );
     store.setState({ currentUser: buyer, cartProduct: cart });
 
@@ -51,7 +54,7 @@ describe("SuccessScreen", () => {
     const { store } = renderWithApp(
       <SuccessScreen />,
       { saveOrder },
-      "/success?session_id=cs_test_1"
+      { route: "/es/success?session_id=cs_test_1" }
     );
     store.setState({ currentUser: null, cartProduct: cart });
 

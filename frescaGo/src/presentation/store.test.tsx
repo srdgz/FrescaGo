@@ -3,13 +3,15 @@ import { createAppStore } from "./store";
 import { apple, buyer, pear } from "../test/fixtures";
 
 const loadUser = vi.fn();
+const getExchangeRate = vi.fn();
 
 describe("app store", () => {
   let store: ReturnType<typeof createAppStore>;
 
   beforeEach(() => {
     loadUser.mockReset();
-    store = createAppStore({ loadUser });
+    getExchangeRate.mockReset();
+    store = createAppStore({ loadUser, getExchangeRate });
   });
 
   it("adds products and increments repeated ones", async () => {

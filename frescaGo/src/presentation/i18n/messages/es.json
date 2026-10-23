@@ -1,0 +1,245 @@
+{
+  "login": {
+    "iniciarSesion": "Iniciar Sesión",
+    "proporcioneSuCorreoElectronico": "Proporcione su correo electrónico y contraseña para acceder a su cuenta.",
+    "email": "Email",
+    "contrasena": "Contraseña",
+    "noTienesUnaCuenta": "¿No tienes una cuenta?",
+    "registrarse": "Registrarse"
+  },
+  "registration": {
+    "crearUnaCuenta": "Crear una cuenta",
+    "proporcioneLaInformacionRequerida": "Proporcione la información requerida para registrarse.",
+    "nombre": "Nombre",
+    "apellido": "Apellido",
+    "email": "Email",
+    "contrasena": "Contraseña",
+    "fotoDePerfil": "Foto de perfil",
+    "yaTienesUnaCuenta": "¿Ya tienes una cuenta?",
+    "iniciarSesion": "Iniciar sesión"
+  },
+  "userInfo": {
+    "bienvenid": "Bienvenid@",
+    "nosAlegraVerteEn": "¡Nos alegra verte en",
+    "aquiPodrasGestionarTu": "! Aquí podrás gestionar tu perfil, actualizar tu información y disfrutar de una experiencia de compra rápida y eficiente. Nuestro objetivo es hacer que tus compras sean frescas, fáciles y sin complicaciones. ¡Gracias por elegirnos!",
+    "editarPerfil": "Editar perfil",
+    "misPedidos": "Mis pedidos",
+    "cerrarSesion": "Cerrar sesión"
+  },
+  "banner": {
+    "sobreNosotros": "Sobre nosotros",
+    "enFrescagoNosApasiona": "En FrescaGo, nos apasiona llevar la frescura del campo directamente a tu mesa. Somos una tienda online de frutas y verduras comprometida con ofrecer productos de la más alta calidad, cultivados de manera sostenible por agricultores locales.",
+    "creemosEnLaImportancia": "Creemos en la importancia de una alimentación saludable y en el poder de la naturaleza para nutrirnos.",
+    "cadaPedidoEsCuidadosamente": "Cada pedido es cuidadosamente seleccionado para garantizar que recibas solo lo mejor. FrescaGo no es solo una tienda, es un puente entre el campo y tu hogar, asegurando que disfrutes de alimentos frescos, nutritivos y llenos de sabor todos los días.",
+    "confiaEnNosotrosPara": "¡Confía en nosotros para llevar la frescura a tu vida!",
+    "saberMas": "Saber más"
+  },
+  "bannerApp": {
+    "descargaNuestraApp": "Descarga nuestra App",
+    "llevaLaFrescuraDel": "Lleva la frescura del campo a tu bolsillo. Con nuestra app, podrás hacer pedidos de frutas y verduras frescas en cualquier momento, directamente desde tu teléfono.",
+    "disponibleTantoEnGoogle": "Disponible tanto en Google Play como en App Store, nuestra aplicación te ofrece una experiencia de compra rápida y conveniente.",
+    "descubreLoFacilQue": "Descubre lo fácil que es mantener una alimentación saludable con productos frescos de alta calidad, seleccionados especialmente para ti.",
+    "imagenPromocionalDeLa": "Imagen promocional de la app FrescaGo"
+  },
+  "bannerOrder": {
+    "hazTuPedidoHoy": "Haz tu pedido hoy",
+    "hazTuPedidoAhora": "Haz tu pedido ahora y recibe frutas y verduras de la mejor calidad, cultivadas de manera sostenible por agricultores locales. ¡Disfruta de alimentos nutritivos y llenos de sabor en cada bocado!",
+    "hazTuPedido": "Haz tu pedido"
+  },
+  "footer": {
+    "2024WebRealizadaPor": "© 2024 | Web realizada por",
+    "sandraRodriguez": "Sandra Rodríguez"
+  },
+  "hero": {
+    "frescura": "Frescura",
+    "directa": "directa",
+    "aTuPuerta": "a tu puerta",
+    "noEsperesMasPara": "¡No esperes más para disfrutar de lo más fresco!",
+    "compraEnFrescagoY": "Compra en FrescaGo y recibe frutas y verduras directamente en tu puerta. Calidad, frescura y sabor en cada bocado. Haz tu pedido ahora y descubre la diferencia!",
+    "pideAhora": "Pide ahora"
+  },
+  "featured": {
+    "algunosDeNuestrosProductos": "Algunos de nuestros productos"
+  },
+  "cartItem": {
+    "categoria": "Categoría:"
+  },
+  "avatar": {
+    "avatar": "Avatar",
+    "subirArchivo": "Subir archivo",
+    "oArrastraYSuelta": "o arrastra y suelta aquí",
+    "pngJpgGifHasta": "PNG, JPG, GIF hasta 10MB"
+  },
+  "pagination": {
+    "comprar": "Comprar"
+  },
+  "checkout": {
+    "pagar": "Pagar",
+    "necesitasIniciarSesionPara": "Necesitas iniciar sesión para completar la compra"
+  },
+  "about": {
+    "sobreFresca": "Sobre Fresca",
+    "enFrescagoNosDedicamos": "En FrescaGo, nos dedicamos a llevar la frescura del campo directamente a tu mesa. Nuestro objetivo es ofrecerte productos de la más alta calidad, cultivados de manera sostenible por agricultores locales, para que disfrutes de frutas y verduras frescas todos los días.",
+    "nuestraMision": "Nuestra Misión",
+    "laMisionDeFrescago": "La misión de FrescaGo es facilitar el acceso a alimentos frescos, nutritivos y sostenibles, fortaleciendo el vínculo entre el campo y la ciudad. Creemos en la importancia de una alimentación saludable y estamos comprometidos con la sostenibilidad y el apoyo a los agricultores locales.",
+    "nuestraVision": "Nuestra Visión",
+    "nuestraVisionEsSer": "Nuestra visión es ser la tienda online de referencia para la compra de productos frescos, fomentando un estilo de vida saludable y sostenible en todo el país.",
+    "nuestrosValores": "Nuestros Valores",
+    "calidad": "Calidad:",
+    "ofrecerProductosDeLa": "Ofrecer productos de la más alta calidad, frescos y nutritivos.",
+    "sostenibilidad": "Sostenibilidad:",
+    "fomentarPracticasAgricolasSostenibles": "Fomentar prácticas agrícolas sostenibles y apoyar a los agricultores locales.",
+    "confianza": "Confianza:",
+    "serUnPuenteDe": "Ser un puente de confianza entre los productores y los consumidores.",
+    "innovacion": "Innovación:",
+    "utilizarTecnologiaParaMejorar": "Utilizar tecnología para mejorar la experiencia de compra y la eficiencia en la entrega.",
+    "sobreFrescago": "Sobre FrescaGo"
+  },
+  "cancel": {
+    "tuPagoHaSido": "Tu pago ha sido cancelado",
+    "lamentablementeTuPagoNo": "Lamentablemente, tu pago no se completó. Si necesitas ayuda, por favor, contacta con nosotros.",
+    "volverAlInicio": "Volver al inicio",
+    "volverAComprar": "Volver a comprar"
+  },
+  "contact": {
+    "contactanos": "Contáctanos",
+    "estamosAquiParaAyudarte": "¡Estamos aquí para ayudarte! Si tienes alguna pregunta o necesitas asistencia, no dudes en contactarnos.",
+    "informacionDeContacto": "Información de Contacto",
+    "direccion": "Dirección:",
+    "1234CalleFalsaCiudad": "1234 Calle Falsa, Ciudad, País",
+    "telefono": "Teléfono:",
+    "email": "Email:",
+    "contactoFrescagoCom": "contacto@frescago.com",
+    "horarioDeAtencion": "Horario de Atención:",
+    "lunesAViernes9": "Lunes a Viernes: 9:00 AM - 6:00 PM",
+    "sabado1000Am": "Sábado: 10:00 AM - 4:00 PM",
+    "domingoCerrado": "Domingo: Cerrado",
+    "envianosUnMensaje": "Envíanos un mensaje",
+    "nombreCompleto": "Nombre completo",
+    "email2": "Email",
+    "mensaje": "Mensaje",
+    "enviar": "Enviar",
+    "visitanosEnNuestraOficina": "Visítanos en nuestra oficina"
+  },
+  "editProfile": {
+    "editarPerfil": "Editar Perfil",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos",
+    "direccionCompleta": "Dirección Completa",
+    "telefono": "Teléfono",
+    "email": "Email",
+    "contrasena": "Contraseña",
+    "guardar": "Guardar",
+    "cancelar": "Cancelar"
+  },
+  "notFound": {
+    "error": "Error",
+    "estaPaginaNoExiste": "¡Esta página no existe!",
+    "pareceQueNoPodemos": "Parece que no podemos encontrar lo que estás buscando.",
+    "volverAtras": "Volver atrás"
+  },
+  "orders": {
+    "detallesDelPedido": "Detalles del pedido",
+    "nombreDelCliente": "Nombre del cliente:",
+    "totalDePedidos": "Total de pedidos:",
+    "aquiPuedesVerLos": "Aquí puedes ver los detalles de tus pedidos anteriores. Si tienes alguna pregunta, no dudes en contactarnos.",
+    "numeroDeSeguimiento": "Número de seguimiento:",
+    "tuPedido": "Tu pedido",
+    "haSidoEnviadoY": "ha sido enviado y estará contigo pronto.",
+    "cantidadDeArticulosEn": "Cantidad de artículos en el pedido:",
+    "estadoDelPago": "Estado del pago:",
+    "pagadoPorStripe": "Pagado por Stripe",
+    "importeDelPedido": "Importe del pedido:",
+    "importeDelEnvio": "Importe del envío:",
+    "imagenDelProducto": "Imagen del producto",
+    "cantidad": "Cantidad",
+    "precio": "Precio",
+    "subtotal": "Subtotal",
+    "aunNoTienesPedidos": "Aún no tienes pedidos",
+    "noHasRealizadoNinguna": "No has realizado ninguna compra con nosotros",
+    "irDeCompras": "Ir de compras"
+  },
+  "catalog": {
+    "buscarProductos": "Buscar productos..."
+  },
+  "shop": {
+    "tuCestaDeLa": "Tu cesta de la compra",
+    "tuPedido": "Tu pedido",
+    "subtotal": "Subtotal",
+    "envio": "Envío",
+    "tuCarritoEstaVacio": "Tu carrito está vacío. Empieza a añadir productos frescos y saludables.",
+    "hacerLaCompra": "Hacer la compra",
+    "total": "TOTAL"
+  },
+  "product": {
+    "volverAtras": "Volver atrás",
+    "categoria": "Categoría:",
+    "anadirAlCarrito": "Añadir al carrito",
+    "pagosSeguros": "PAGOS SEGUROS",
+    "pagoSeguro": "pago seguro"
+  },
+  "success": {
+    "processing": "Tu pago se está procesando",
+    "accepted": "Pago aceptado en FrescaGo",
+    "onceDone": "Una vez completado",
+    "now": "Ahora",
+    "puedesVerTusPedidos": "puedes ver tus pedidos o continuar comprando con nosotros.",
+    "misPedidos": "Mis pedidos",
+    "seguirComprando": "Seguir comprando",
+    "paid": "Pago realizado correctamente",
+    "saveError": "Error al guardar el pedido"
+  },
+  "meta": {
+    "title": "FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!"
+  },
+  "common": {
+    "perKg": "{{price}}/kg",
+    "loading": "Cargando...",
+    "register": "Registrar"
+  },
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "cart": "Carrito",
+    "account": "Mi cuenta",
+    "mainMenu": "Menú principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "en": "English"
+  },
+  "currency": {
+    "label": "Moneda",
+    "EUR": "Euro",
+    "USD": "Dólar estadounidense"
+  },
+  "toast": {
+    "added": "{{title}} añadido con éxito!",
+    "removed": "{{title}} eliminado con éxito",
+    "removedFromCart": "{{title}} eliminado con éxito!",
+    "notAdded": "No se ha añadido el producto",
+    "minimum": "No puedes eliminar más productos",
+    "profileUpdated": "Perfil actualizado con éxito",
+    "profileError": "Error al actualizar el perfil"
+  },
+  "auth": {
+    "login": {
+      "user-not-found": "No hay ningún usuario registrado con este email",
+      "wrong-password": "Contraseña incorrecta",
+      "invalid-email": "Por favor, introduce un email válido",
+      "invalid-credential": "El email o la contraseña no coinciden"
+    },
+    "registration": {
+      "invalid-email": "Por favor, introduce un email válido",
+      "missing-password": "Por favor, introduce una contraseña",
+      "weak-password": "La contraseña debe tener al menos 6 caracteres",
+      "email-already-in-use": "Este email ya está registrado. Por favor, prueba con otro"
+    },
+    "unknown": "Algo no ha funcionado. Por favor, inténtalo de nuevo"
+  }
+}

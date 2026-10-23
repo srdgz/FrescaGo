@@ -1,13 +1,19 @@
 import type { CartItem } from "../domain/cart";
 import type { Category, FeaturedProduct, Product } from "../domain/catalog";
+import type { Currency, ExchangeRate } from "../domain/currency";
+import type { Locale } from "../domain/locale";
 import type { Order } from "../domain/order";
 import type { User } from "../domain/user";
 
 export interface CatalogGateway {
-  getFeatured(): Promise<FeaturedProduct[]>;
-  getCategories(): Promise<Category[]>;
-  getProducts(): Promise<Product[]>;
-  getProduct(id: string): Promise<Product>;
+  getFeatured(locale: Locale): Promise<FeaturedProduct[]>;
+  getCategories(locale: Locale): Promise<Category[]>;
+  getProducts(locale: Locale): Promise<Product[]>;
+  getProduct(id: string, locale: Locale): Promise<Product>;
+}
+
+export interface RatesGateway {
+  getRate(): Promise<ExchangeRate>;
 }
 
 export interface AuthService {
@@ -33,6 +39,15 @@ export interface ImageStorage {
   upload(file: File): Promise<string>;
 }
 
+export interface CheckoutOptions {
+  currency: Currency;
+  locale: Locale;
+}
+
 export interface CheckoutGateway {
-  start(items: CartItem[], email: string): Promise<void>;
+  start(
+    items: CartItem[],
+    email: string,
+    options: CheckoutOptions
+  ): Promise<void>;
 }

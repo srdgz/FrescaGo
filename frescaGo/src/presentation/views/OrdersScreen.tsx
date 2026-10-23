@@ -9,12 +9,19 @@ import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import type { Order } from "../../domain/order";
-import { orderTotal } from "../../domain/order";
+import { orderCurrency, orderRate, orderTotal } from "../../domain/order";
+import { SHIPPING_AMOUNT } from "../../domain/cart";
+import { useMoney } from "../hooks/useMoney";
 import { useAppStore, useUseCases } from "../AppContext";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../LocaleContext";
 
 const Orders = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const { currentUser } = useAppStore();
   const { listOrders } = useUseCases();
+  const { format } = useMoney();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -41,21 +48,20 @@ const Orders = () => {
         ) : orders.length > 0 ? (
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl md:text-3xl text-secondary font-bold my-2">
-              Detalles del pedido
+              {t("orders.detallesDelPedido")}
             </h2>
             <p className="text-gray-600 mb-2">
-              Nombre del cliente:{" "}
+              {t("orders.nombreDelCliente")}{" "}
               <span className="text-black font-semibold">
                 {currentUser?.firstName} {currentUser?.lastName}
               </span>
             </p>
             <p className="text-gray-600">
-              Total de pedidos:{" "}
+              {t("orders.totalDePedidos")}{" "}
               <span className="text-black font-semibold">{orders.length}</span>
             </p>
             <p className="text-sm max-w-[600px] tracking-wide text-gray-500">
-              Aquí puedes ver los detalles de tus pedidos anteriores. Si tienes
-              alguna pregunta, no dudes en contactarnos.
+              {t("orders.aquiPuedesVerLos")}
             </p>
             <div className="flex flex-col gap-3">
               <div className="space-y-6 divide-y divide-gray-900/10">
@@ -72,7 +78,7 @@ const Orders = () => {
                           <dt>
                             <DisclosureButton className="flex w-full items-center justify-between text-left text-gray-900">
                               <span className="flex-1 text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-7 truncate">
-                                Número de seguimiento:{" "}
+                                {t("orders.numeroDeSeguimiento")}{" "}
                                 <span className="font-normal break-words">
                                   {order?.paymentId}
                                 </span>
@@ -93,35 +99,35 @@ const Orders = () => {
                           >
                             <div className="flex flex-col gap-2 bg-[#f4f4f480] p-4 sm:p-5 md:p-6 border border-gray-200">
                               <p className="text-sm sm:text-base font-semibold">
-                                Tu pedido{" "}
+                                {t("orders.tuPedido")}{" "}
                                 <span className="text-secondary">
                                   #{order?.paymentId.substring(0, 20)}...
                                 </span>{" "}
-                                ha sido enviado y estará contigo pronto.
+                                {t("orders.haSidoEnviadoY")}
                               </p>
                               <div className="flex flex-col gap-1">
                                 <p className="text-sm sm:text-base text-gray-600">
-                                  Cantidad de artículos en el pedido:{" "}
+                                  {t("orders.cantidadDeArticulosEn")}{" "}
                                   <span className="text-black font-medium">
                                     {order?.orderItems?.length}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
-                                  Estado del pago:{" "}
+                                  {t("orders.estadoDelPago")}{" "}
                                   <span className="text-black font-medium">
-                                    Pagado por Stripe
+                                    {t("orders.pagadoPorStripe")}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
-                                  Importe del pedido:{" "}
+                                  {t("orders.importeDelPedido")}{" "}
                                   <span className="text-black font-medium">
-                                    {totalProducts.toFixed(2)}€
+                                    {format(totalProducts, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
-                                  Importe del envío:{" "}
+                                  {t("orders.importeDelEnvio")}{" "}
                                   <span className="text-black font-medium">
-                                    4.99€
+                                    {format(SHIPPING_AMOUNT, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
                               </div>
@@ -131,12 +137,12 @@ const Orders = () => {
                                   className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 border-b border-gray-200 py-3"
                                 >
                                   <Link
-                                    to={`/productos/${item?.id}`}
+                                    to={path("products", item?.id)}
                                     className="h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 flex-none rounded-lg bg-gray-100 border border-gray-300 hover:border-skyText overflow-hidden"
                                   >
                                     <img
                                       src={item?.image}
-                                      alt="Imagen del producto"
+                                      alt={t("orders.imagenDelProducto")}
                                       className="h-full w-full object-cover object-center hover:scale-110 duration-300"
                                     />
                                   </Link>
@@ -149,14 +155,14 @@ const Orders = () => {
                                         {item?.title}
                                       </Link>
                                       <p className="mt-2 text-xs sm:text-sm md:text-base text-gray-900">
-                                        {item?.category}
+                                        {item?.categoryLabel ?? item?.category}
                                       </p>
                                     </div>
                                     <div className="mt-4 sm:mt-6 flex flex-1 items-end">
                                       <dl className="flex flex-wrap space-x-4 divide-x divide-gray-200 text-xs sm:text-sm md:text-base">
                                         <div className="flex">
                                           <dt className="font-medium text-gray-900">
-                                            Cantidad
+                                            {t("orders.cantidad")}
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
                                             {item?.quantity}
@@ -164,24 +170,21 @@ const Orders = () => {
                                         </div>
                                         <div className="flex pl-4 sm:pl-6">
                                           <dt className="font-medium text-gray-900">
-                                            Precio
+                                            {t("orders.precio")}
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
                                             <span>
-                                              {item.price.toFixed(2)}€
+                                              {format(item.price, orderCurrency(order), orderRate(order))}
                                             </span>
                                           </dd>
                                         </div>
                                         <div className="flex pl-4 sm:pl-6">
                                           <dt className="font-medium text-gray-900">
-                                            Subtotal
+                                            {t("orders.subtotal")}
                                           </dt>
                                           <dd className="ml-2 text-gray-700">
                                             <span>
-                                              {(
-                                                item?.price * item?.quantity
-                                              ).toFixed(2)}
-                                              €
+                                              {format(item.price * item.quantity, orderCurrency(order), orderRate(order))}
                                             </span>
                                           </dd>
                                         </div>
@@ -205,10 +208,10 @@ const Orders = () => {
             <section className="container py-12 md:py-24">
               <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
                 <h2 className="text-2xl md:text-4xl font-bold text-center text-secondary">
-                  Aún no tienes pedidos
+                  {t("orders.aunNoTienesPedidos")}
                 </h2>
-                <p>No has realizado ninguna compra con nosotros</p>
-                <Button text="Ir de compras" to="/productos" />
+                <p>{t("orders.noHasRealizadoNinguna")}</p>
+                <Button text={t("orders.irDeCompras")} to={path("products")} />
               </div>
             </section>
           </main>

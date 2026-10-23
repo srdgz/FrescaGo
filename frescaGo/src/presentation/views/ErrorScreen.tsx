@@ -1,19 +1,23 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../LocaleContext";
 
 const ErrorScreen = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   return (
     <main className="overflow-x-hidden min-h-screen flex justify-center items-center">
       <div className="text-center">
-        <p className="text-4xl font-semibold text-primary">Error</p>
+        <p className="text-4xl font-semibold text-primary">{t("notFound.error")}</p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          ¡Esta página no existe!
+          {t("notFound.estaPaginaNoExiste")}
         </h1>
         <p className="mt-6 text-base leading-7 text-gray-600">
-          Parece que no podemos encontrar lo que estás buscando.
+          {t("notFound.pareceQueNoPodemos")}
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <Link to="/" className="primary-btn flex items-center gap-2 mb-6">
-            Volver atrás
+          <Link to={path("home")} className="primary-btn flex items-center gap-2 mb-6">
+            {t("notFound.volverAtras")}
           </Link>
         </div>
       </div>

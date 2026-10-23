@@ -6,9 +6,11 @@ import AvatarUploader from "../Utils/AvatarUploader";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { AuthError } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
-import { registrationErrorMessage } from "../../authMessages";
+import { registrationErrorKey } from "../../authMessages";
+import { useTranslation } from "react-i18next";
 
 const Registration = () => {
+  const { t } = useTranslation();
   const { register } = useUseCases();
   const [login, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,8 +35,10 @@ const Registration = () => {
     } catch (error) {
       console.log("Error", error);
       setErrMsg(
-        registrationErrorMessage(
-          error instanceof AuthError ? error.code : "unknown"
+        t(
+          registrationErrorKey(
+            error instanceof AuthError ? error.code : "unknown"
+          )
         )
       );
     } finally {
@@ -49,15 +53,15 @@ const Registration = () => {
           <form onSubmit={handleRegistration} className="text-secondary">
             <div className="border-b border-gray-200 pb-5">
               <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
-                Crear una cuenta
+                {t("registration.crearUnaCuenta")}
               </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
-                Proporcione la información requerida para registrarse.
+                {t("registration.proporcioneLaInformacionRequerida")}
               </p>
             </div>
             <div className="mt-5 grid grid-cols-1 gap-y-5 lg:grid-cols-2 lg:gap-x-6">
               <div>
-                <Label title="Nombre" htmlFor="firstName" />
+                <Label title={t("registration.nombre")} htmlFor="firstName" />
                 <input
                   type="text"
                   name="firstName"
@@ -65,7 +69,7 @@ const Registration = () => {
                 />
               </div>
               <div>
-                <Label title="Apellido" htmlFor="lastName" />
+                <Label title={t("registration.apellido")} htmlFor="lastName" />
                 <input
                   type="text"
                   name="lastName"
@@ -73,7 +77,7 @@ const Registration = () => {
                 />
               </div>
               <div className="col-span-full lg:col-span-2">
-                <Label title="Email" htmlFor="email" />
+                <Label title={t("registration.email")} htmlFor="email" />
                 <input
                   type="email"
                   name="email"
@@ -81,7 +85,7 @@ const Registration = () => {
                 />
               </div>
               <div className="relative col-span-full lg:col-span-2">
-                <Label title="Contraseña" htmlFor="password" />
+                <Label title={t("registration.contrasena")} htmlFor="password" />
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
@@ -101,7 +105,7 @@ const Registration = () => {
               <div className="col-span-full lg:col-span-2">
                 <div className="mt-2 flex items-center gap-x-3">
                   <div className="flex-1">
-                    <Label title="Foto de perfil" />
+                    <Label title={t("registration.fotoDePerfil")} />
                     <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-4">
                       <AvatarUploader
                         onFileChange={handleFileChange}
@@ -126,16 +130,16 @@ const Registration = () => {
                   : "bg-primary hover:bg-primary-dark duration-200"
               }`}
             >
-              {loading ? "Cargando..." : "Registrar"}
+              {loading ? t("common.loading") : t("common.register")}
             </button>
           </form>
           <p className="text-sm leading-6 text-gray-600 text-center mt-4">
-            ¿Ya tienes una cuenta?{" "}
+            {t("registration.yaTienesUnaCuenta")}{" "}
             <button
               onClick={() => setLogin(true)}
               className="text-primary font-semibold underline underline-offset-2 decoration-[1px] hover:text-primary-dark duration-200"
             >
-              Iniciar sesión
+              {t("registration.iniciarSesion")}
             </button>
           </p>
         </div>

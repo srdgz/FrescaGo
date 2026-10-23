@@ -9,9 +9,13 @@ import {
   groupProductsByCategory,
 } from "../../domain/catalog";
 import { useUseCases } from "../AppContext";
+import { useLocale } from "../LocaleContext";
+import { useTranslation } from "react-i18next";
 
 const ProductsScreen = () => {
+  const { t } = useTranslation();
   const { listCategories, listProducts } = useUseCases();
+  const locale = useLocale();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -24,8 +28,8 @@ const ProductsScreen = () => {
       try {
         setLoading(true);
         const [categoriesData, productsData] = await Promise.all([
-          listCategories(),
-          listProducts(),
+          listCategories(locale),
+          listProducts(locale),
         ]);
         setCategories(categoriesData);
         setProducts(productsData);
@@ -36,7 +40,7 @@ const ProductsScreen = () => {
       }
     };
     load();
-  }, [listCategories, listProducts]);
+  }, [listCategories, listProducts, locale]);
 
   const categorizedProducts = useMemo(
     () =>
@@ -68,7 +72,7 @@ const ProductsScreen = () => {
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 type="text"
-                placeholder="Buscar productos..."
+                placeholder={t("catalog.buscarProductos")}
                 value={searchProduct}
                 onChange={(e) => setSearchProduct(e.target.value)}
                 onFocus={() => setIsExpanded(true)}

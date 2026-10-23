@@ -7,8 +7,12 @@ import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ProfileForm } from "../../domain/user";
 import { useAppStore, useUseCases } from "../AppContext";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../LocaleContext";
 
 const EditProfileScreen = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const { currentUser, isLoading } = useAppStore();
   const { updateProfile } = useUseCases();
   const navigate = useNavigate();
@@ -38,11 +42,11 @@ const EditProfileScreen = () => {
     if (!currentUser) return;
     try {
       await updateProfile(currentUser, formData, avatarFile);
-      toast.success("Perfil actualizado con éxito");
-      navigate("/usuario");
+      toast.success(t("toast.profileUpdated"));
+      navigate(path("user"));
     } catch (error) {
       console.error(error);
-      toast.error("Error al actualizar el perfil");
+      toast.error(t("toast.profileError"));
     }
   };
 
@@ -53,7 +57,7 @@ const EditProfileScreen = () => {
       <section className="container py-12 md:py-24">
         <div className="relative max-w-md lg:max-w-3xl mx-auto bg-secondary/10 px-6 py-20 shadow-2xl rounded-3xl sm:px-16">
           <h2 className="text-3xl font-bold text-secondary mb-6">
-            Editar Perfil
+            {t("editProfile.editarPerfil")}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <AvatarUploader
@@ -62,7 +66,7 @@ const EditProfileScreen = () => {
               imgClassName="w-full h-full"
             />
             <div>
-              <label className="block mb-2">Nombre</label>
+              <label className="block mb-2">{t("editProfile.nombre")}</label>
               <input
                 type="text"
                 name="firstName"
@@ -72,7 +76,7 @@ const EditProfileScreen = () => {
               />
             </div>
             <div>
-              <label className="block mb-2">Apellidos</label>
+              <label className="block mb-2">{t("editProfile.apellidos")}</label>
               <input
                 type="text"
                 name="lastName"
@@ -82,7 +86,7 @@ const EditProfileScreen = () => {
               />
             </div>
             <div>
-              <label className="block mb-2">Dirección Completa</label>
+              <label className="block mb-2">{t("editProfile.direccionCompleta")}</label>
               <input
                 type="text"
                 name="address"
@@ -92,7 +96,7 @@ const EditProfileScreen = () => {
               />
             </div>
             <div>
-              <label className="block mb-2">Teléfono</label>
+              <label className="block mb-2">{t("editProfile.telefono")}</label>
               <input
                 type="text"
                 name="phone"
@@ -102,7 +106,7 @@ const EditProfileScreen = () => {
               />
             </div>
             <div>
-              <label className="block mb-2">Email</label>
+              <label className="block mb-2">{t("editProfile.email")}</label>
               <input
                 type="text"
                 readOnly
@@ -111,7 +115,7 @@ const EditProfileScreen = () => {
               />
             </div>
             <div>
-              <label className="block mb-2">Contraseña</label>
+              <label className="block mb-2">{t("editProfile.contrasena")}</label>
               <input
                 type="text"
                 readOnly
@@ -124,9 +128,9 @@ const EditProfileScreen = () => {
                 type="submit"
                 className="bg-secondary text-white font-semibold py-3 px-6 rounded-xl shadow-[0px_10px_14px_-7px_#fb923c] hover:!scale-110 duration-300"
               >
-                Guardar
+                {t("editProfile.guardar")}
               </button>
-              <Button text="Cancelar" to="/usuario" />
+              <Button text={t("editProfile.cancelar")} to={path("user")} />
             </div>
           </form>
         </div>

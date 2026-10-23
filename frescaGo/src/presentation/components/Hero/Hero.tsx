@@ -4,8 +4,12 @@ import Button from "../Utils/Button";
 import { RiShoppingBasketLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { FadeRight } from "../../utility/animation";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../../LocaleContext";
 
 const Hero = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   return (
     <section>
       <div className="container grid grid-cols-1 md:grid-cols-2 min-h-[650px] relative">
@@ -17,10 +21,10 @@ const Hero = () => {
               animate="visible"
               className="text-5xl lg:text-6xl font-bold leading-snug xl:leading-normal font-averia"
             >
-              <span className="text-secondary">Frescura</span>
+              <span className="text-secondary">{t("hero.frescura")}</span>
               <br />
-              directa
-              <br />a tu puerta
+              {t("hero.directa")}
+              <br />{t("hero.aTuPuerta")}
             </motion.h1>
             <motion.p
               variants={FadeRight(0.9)}
@@ -28,7 +32,7 @@ const Hero = () => {
               animate="visible"
               className="text-2xl tracking-wide py-6"
             >
-              ¡No esperes más para disfrutar de lo más fresco!
+              {t("hero.noEsperesMasPara")}
             </motion.p>
             <motion.p
               variants={FadeRight(1.2)}
@@ -36,9 +40,7 @@ const Hero = () => {
               animate="visible"
               className="text-gray-400 pb-6"
             >
-              Compra en FrescaGo y recibe frutas y verduras directamente en tu
-              puerta. Calidad, frescura y sabor en cada bocado. Haz tu pedido
-              ahora y descubre la diferencia!
+              {t("hero.compraEnFrescagoY")}
             </motion.p>
             <motion.div
               variants={FadeRight(1.5)}
@@ -47,8 +49,8 @@ const Hero = () => {
               className="flex justify-center md:justify-start"
             >
               <Button
-                text="Pide ahora"
-                to="/tienda"
+                text={t("hero.pideAhora")}
+                to={path("shop")}
                 icon={<RiShoppingBasketLine />}
               />
             </motion.div>

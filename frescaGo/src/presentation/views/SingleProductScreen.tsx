@@ -5,6 +5,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { RiArrowLeftCircleLine } from "react-icons/ri";
 import type { Product } from "../../domain/catalog";
 import { useUseCases } from "../AppContext";
+import { useLocale } from "../LocaleContext";
+import { useMoney } from "../hooks/useMoney";
+import { useTranslation } from "react-i18next";
 
 const emptyProduct: Product = {
   id: 0,
@@ -17,7 +20,10 @@ const emptyProduct: Product = {
 };
 
 const SingleProductScreen = () => {
+  const { t } = useTranslation();
   const { getProduct } = useUseCases();
+  const locale = useLocale();
+  const { format } = useMoney();
   const [productData, setProductData] = useState<Product>(emptyProduct);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
@@ -28,7 +34,7 @@ const SingleProductScreen = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        setProductData(await getProduct(id));
+        setProductData(await getProduct(id, locale));
       } catch (error) {
         console.error("Error fetching data", error);
       } finally {
@@ -36,7 +42,7 @@ const SingleProductScreen = () => {
       }
     };
     fetchData();
-  }, [id, getProduct]);
+  }, [id, getProduct, locale]);
 
   if (loading) return <Loading />;
 
@@ -47,7 +53,7 @@ const SingleProductScreen = () => {
           onClick={() => navigate(-1)}
           className="absolute top-4 left-4 lg:top-12 lg:left-24 flex items-center text-gray-600 hover:text-secondary transition duration-200"
         >
-          <RiArrowLeftCircleLine className="text-3xl mr-2" /> Volver atrás
+          <RiArrowLeftCircleLine className="text-3xl mr-2" /> {t("product.volverAtras")}
         </button>
 
         {productData && productData.id && (
@@ -66,27 +72,27 @@ const SingleProductScreen = () => {
                   {productData.title}
                 </h1>
                 <p className="text-2xl font-semibold text-secondary mt-4">
-                  {productData.price.toFixed(2)}€/Kg
+                  {t("common.perKg", { price: format(productData.price) })}
                 </p>
                 <p className="text-gray-500 mt-2">
-                  Categoría:{" "}
+                  {t("product.categoria")}{" "}
                   <span className="font-medium text-gray-700">
-                    {productData.category}
+                    {productData.categoryLabel ?? productData.category}
                   </span>
                 </p>
               </div>
               <div className="my-6">
                 <AddToCartBtn
                   product={productData}
-                  title="Añadir al carrito"
+                  title={t("product.anadirAlCarrito")}
                   className="bg-primary hover:bg-primary text-white p-3 text-lg rounded-full shadow-lg transition duration-200"
                 />
               </div>
               <div className="bg-slate-100 p-5 rounded-md flex flex-col items-center justify-center gap-2">
-                <p className="font-semibold">PAGOS SEGUROS</p>
+                <p className="font-semibold">{t("product.pagosSeguros")}</p>
                 <img
                   src="https://www.freshlycosmetics.com/img/paymentlogos/imatge_es.png"
-                  alt="pago seguro"
+                  alt={t("product.pagoSeguro")}
                   className="w-auto object-cover"
                 />
               </div>

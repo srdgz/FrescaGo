@@ -3,6 +3,8 @@ import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../../utility/animation";
 import { RiShoppingBasketLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../../LocaleContext";
 
 const bgStyle = {
   backgroundImage: `url(${BannerBg})`,
@@ -12,6 +14,8 @@ const bgStyle = {
 };
 
 const BannerThird = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   return (
     <section className="container mb-12 relative">
       <div
@@ -29,7 +33,7 @@ const BannerThird = () => {
               viewport={{ once: true }}
               className="text-3xl lg:text-6xl font-bold"
             >
-              Haz tu pedido hoy
+              {t("bannerOrder.hazTuPedidoHoy")}
             </motion.h1>
             <motion.p
               variants={FadeLeft(0.7)}
@@ -37,10 +41,7 @@ const BannerThird = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Haz tu pedido ahora y recibe frutas y verduras de la mejor
-              calidad, cultivadas de manera sostenible por agricultores locales.
-              ¡Disfruta de alimentos nutritivos y llenos de sabor en cada
-              bocado!
+              {t("bannerOrder.hazTuPedidoAhora")}
             </motion.p>
             <motion.div
               variants={FadeLeft(0.9)}
@@ -49,8 +50,8 @@ const BannerThird = () => {
               className="flex justify-center md:justify-start"
             >
               <Button
-                text="Haz tu pedido"
-                to="/tienda"
+                text={t("bannerOrder.hazTuPedido")}
+                to={path("shop")}
                 icon={<RiShoppingBasketLine />}
               />
             </motion.div>

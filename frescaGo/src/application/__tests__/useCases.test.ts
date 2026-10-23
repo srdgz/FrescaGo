@@ -6,6 +6,11 @@ import { apple, buyer } from "../../test/fixtures";
 const setup = () => {
   const deps = {
     catalog: {} as Dependencies["catalog"],
+    rates: {
+      getRate: vi
+        .fn()
+        .mockResolvedValue({ usdPerEur: 1.1, date: "2026-10-23", source: "ecb" }),
+    },
     auth: {
       signIn: vi.fn(),
       register: vi.fn().mockResolvedValue("uid-9"),
@@ -108,7 +113,10 @@ describe("saveOrder", () => {
     const { deps, useCases } = setup();
     const items = [{ ...apple, quantity: 2 }];
 
-    await useCases.saveOrder(buyer, "cs_123", items);
+    await useCases.saveOrder(buyer, "cs_123", items, {
+      currency: "USD",
+      usdPerEur: 1.1,
+    });
 
     expect(deps.orders.add).toHaveBeenCalledWith(buyer.email, {
       userEmail: buyer.email,
@@ -116,16 +124,31 @@ describe("saveOrder", () => {
       orderItems: items,
       paymentMethod: "stripe",
       userId: buyer.id,
+      currency: "USD",
+      exchangeRate: 1.1,
     });
   });
 });
 
 describe("startCheckout", () => {
-  it("delegates to the checkout gateway", async () => {
+  it("delegates to the checkout gateway with currency and language", async () => {
     const { deps, useCases } = setup();
+    const options = { currency: "USD" as const, locale: "en" as const };
 
-    await useCases.startCheckout([apple], buyer.email);
+    await useCases.startCheckout([apple], buyer.email, options);
 
-    expect(deps.checkout.start).toHaveBeenCalledWith([apple], buyer.email);
+    expect(deps.checkout.start).toHaveBeenCalledWith(
+      [apple],
+      buyer.email,
+      options
+    );
+  });
+});
+
+describe("getExchangeRate", () => {
+  it("returns the rate from the gateway", async () => {
+    const { useCases } = setup();
+
+    expect(await useCases.getExchangeRate()).toMatchObject({ usdPerEur: 1.1 });
   });
 });

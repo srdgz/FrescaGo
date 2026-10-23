@@ -1,8 +1,10 @@
 import BannerPlato from "../../../assets/banner-plato.png";
 import { motion } from "framer-motion";
 import { FadeUp } from "../../utility/animation";
+import { useTranslation } from "react-i18next";
 
 const BannerSecond = () => {
+  const { t } = useTranslation();
   return (
     <section className="">
       <div className="container grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 py-14 md:py-24">
@@ -15,7 +17,7 @@ const BannerSecond = () => {
               viewport={{ once: true }}
               className="text-3xl lg:text-6xl font-bold"
             >
-              Descarga nuestra App
+              {t("bannerApp.descargaNuestraApp")}
             </motion.h1>
             <motion.p
               variants={FadeUp(0.7)}
@@ -23,9 +25,7 @@ const BannerSecond = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Lleva la frescura del campo a tu bolsillo. Con nuestra app, podrás
-              hacer pedidos de frutas y verduras frescas en cualquier momento,
-              directamente desde tu teléfono.
+              {t("bannerApp.llevaLaFrescuraDel")}
             </motion.p>
             <motion.p
               variants={FadeUp(0.9)}
@@ -33,9 +33,7 @@ const BannerSecond = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Disponible tanto en Google Play como en App Store, nuestra
-              aplicación te ofrece una experiencia de compra rápida y
-              conveniente.
+              {t("bannerApp.disponibleTantoEnGoogle")}
             </motion.p>
             <motion.p
               variants={FadeUp(1.1)}
@@ -43,9 +41,7 @@ const BannerSecond = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              Descubre lo fácil que es mantener una alimentación saludable con
-              productos frescos de alta calidad, seleccionados especialmente
-              para ti.
+              {t("bannerApp.descubreLoFacilQue")}
             </motion.p>
             <motion.div
               variants={FadeUp(1.5)}
@@ -88,7 +84,7 @@ const BannerSecond = () => {
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             src={BannerPlato}
-            alt="Imagen promocional de la app FrescaGo"
+            alt={t("bannerApp.imagenPromocionalDeLa")}
             className="w-[450px] md:max-w-[500px] h-full object-cover drop-shadow"
           />
         </div>

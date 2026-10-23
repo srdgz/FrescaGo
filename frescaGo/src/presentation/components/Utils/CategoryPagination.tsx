@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import type { Product } from "../../../domain/catalog";
+import { useTranslation } from "react-i18next";
+import { useMoney } from "../../hooks/useMoney";
+import { useLocalePath } from "../../LocaleContext";
 
 interface CategoryPaginationProps {
   products: Product[];
@@ -14,6 +17,9 @@ const CategoryPagination = ({
   products,
   itemsPerPage,
 }: CategoryPaginationProps) => {
+  const { t } = useTranslation();
+  const { format } = useMoney();
+  const path = useLocalePath();
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
 
@@ -27,7 +33,7 @@ const CategoryPagination = ({
   };
 
   const handleProduct = (id: number) => {
-    navigate(`/productos/${id}`);
+    navigate(path("products", id));
   };
 
   return (
@@ -50,11 +56,11 @@ const CategoryPagination = ({
               <div className="flex flex-col justify-between flex-grow">
                 <h3 className="text-lg font-semibold">{product.title}</h3>
                 <p className="text-lg font-semibold text-secondary">
-                  {product.price.toFixed(2)}€/Kg
+                  {t("common.perKg", { price: format(product.price) })}
                 </p>
                 <AddToCartBtn
                   product={product}
-                  title="Comprar"
+                  title={t("pagination.comprar")}
                   className="bg-primary hover:bg-primary text-white h-[40px] w-[120px] flex items-center justify-center text-md rounded-full shadow-lg transition duration-200 mt-2"
                 />
               </div>

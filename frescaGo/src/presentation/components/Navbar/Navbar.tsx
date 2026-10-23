@@ -1,19 +1,25 @@
 import { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
+import LanguageSwitcher from "./LanguageSwitcher";
+import CurrencySwitcher from "./CurrencySwitcher";
 import Logo from "../Utils/Logo";
 import { NavbarMenu } from "../../data/navbar";
 import { RiShoppingCart2Line, RiMenu3Fill, RiUserLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAppStore } from "../../AppContext";
+import { useLocalePath } from "../../LocaleContext";
 
 const Navbar = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const [open, setOpen] = useState(false);
   const { cartProduct, currentUser } = useAppStore();
 
   return (
     <>
-      <nav>
+      <nav aria-label={t("nav.mainMenu")}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -26,39 +32,59 @@ const Navbar = () => {
               {NavbarMenu.map((menu) => (
                 <li key={menu.id}>
                   <Link
-                    to={menu.link}
+                    to={path(menu.route)}
                     className="inline-block py-1 px-3 hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444] font-semibold"
                   >
-                    {menu.title}
+                    {t(menu.label)}
                   </Link>
                 </li>
               ))}
-              <Link to="/tienda" className="relative block">
-                <RiShoppingCart2Line className="hover:text-primary duration-200 text-2xl" />
-                <span className="inline-flex items-center justify-center bg-primary text-white absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
-                  {cartProduct?.length > 0 ? cartProduct?.length : "0"}
-                </span>
-              </Link>
-              <Link to="/usuario">
-                {currentUser ? (
-                  <img
-                    src={
-                      currentUser?.avatar
-                        ? currentUser?.avatar
-                        : "https://i.ibb.co/qMpPq5Z/user.png"
-                    }
-                    alt="profileImg"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                ) : (
-                  <RiUserLine className="hover:text-primary duration-200 text-2xl" />
-                )}
-              </Link>
+              <li>
+                <LanguageSwitcher />
+              </li>
+              <li>
+                <CurrencySwitcher />
+              </li>
+              <li>
+                <Link
+                  to={path("shop")}
+                  className="relative block"
+                  aria-label={t("nav.cart")}
+                >
+                  <RiShoppingCart2Line className="hover:text-primary duration-200 text-2xl" />
+                  <span className="inline-flex items-center justify-center bg-primary text-white absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
+                    {cartProduct?.length > 0 ? cartProduct?.length : "0"}
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link to={path("user")} aria-label={t("nav.account")}>
+                  {currentUser ? (
+                    <img
+                      src={
+                        currentUser?.avatar
+                          ? currentUser?.avatar
+                          : "https://i.ibb.co/qMpPq5Z/user.png"
+                      }
+                      alt=""
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <RiUserLine className="hover:text-primary duration-200 text-2xl" />
+                  )}
+                </Link>
+              </li>
             </ul>
           </div>
-          <div className="md:hidden" onClick={() => setOpen(!open)}>
+          <button
+            type="button"
+            className="md:hidden"
+            aria-label={open ? t("nav.closeMenu") : t("nav.openMenu")}
+            aria-expanded={open}
+            onClick={() => setOpen(!open)}
+          >
             <RiMenu3Fill className="text-4xl" />
-          </div>
+          </button>
         </motion.div>
       </nav>
       <ResponsiveMenu open={open} setOpen={setOpen} />

@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
+import { useTranslation } from "react-i18next";
 import type { CartItem } from "../../../domain/cart";
 import type { Product } from "../../../domain/catalog";
 import { useAppStore } from "../../AppContext";
@@ -13,6 +14,7 @@ interface AddToCartBtnProps {
 }
 
 const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
+  const { t } = useTranslation();
   const [existingProduct, setExistingProduct] = useState<CartItem | null>(null);
   const { addToCart, cartProduct, decreaseQuantity } = useAppStore();
 
@@ -24,9 +26,9 @@ const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
   const handleAddToCart = () => {
     if (product) {
       addToCart(product);
-      toast.success(`${product?.title} añadido con éxito!`);
+      toast.success(t("toast.added", { title: product?.title }));
     } else {
-      toast.error("No se ha añadido el producto");
+      toast.error(t("toast.notAdded"));
     }
   };
 
@@ -34,9 +36,9 @@ const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
     if (existingProduct) {
       if (existingProduct?.quantity > 1) {
         decreaseQuantity(existingProduct?.id);
-        toast.success(`${product?.title} eliminado con éxito`);
+        toast.success(t("toast.removed", { title: product?.title }));
       } else {
-        toast.error("No puedes eliminar más productos");
+        toast.error(t("toast.minimum"));
       }
     }
   };
@@ -65,7 +67,7 @@ const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
         </div>
       ) : (
         <button onClick={handleAddToCart} className={newClassName}>
-          {title ? title : "Comprar"}
+          {title ? title : t("pagination.comprar")}
         </button>
       )}
     </>

@@ -1,12 +1,16 @@
 import Button from "../Utils/Button";
 import type { User } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../../LocaleContext";
 
 interface UserInfoProps {
   currentUser: User | null;
 }
 
 const UserInfo = ({ currentUser }: UserInfoProps) => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const { signOut } = useUseCases();
   return (
     <main className="overflow-x-hidden">
@@ -24,30 +28,26 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
             />
             <div className="text-start flex-1">
               <h2 className="text-xl font-bold tracking-tight sm:text-4xl text-secondary">
-                Bienvenid@{" "}
+                {t("userInfo.bienvenid")}{" "}
                 <span className="underline underline-offset-2 decoration-[1px] font-medium">
                   {currentUser?.firstName} {currentUser?.lastName}
                 </span>
               </h2>
               <p className="text-start mt-3 max-w-3xl text-base leading-6 text-gray-700">
-                ¡Nos alegra verte en{" "}
+                {t("userInfo.nosAlegraVerteEn")}{" "}
                 <span className="text-primary font-bold">Fresca</span>
-                <span className="text-secondary font-bold">Go</span>! Aquí
-                podrás gestionar tu perfil, actualizar tu información y
-                disfrutar de una experiencia de compra rápida y eficiente.
-                Nuestro objetivo es hacer que tus compras sean frescas, fáciles
-                y sin complicaciones. ¡Gracias por elegirnos!
+                <span className="text-secondary font-bold">Go</span>{t("userInfo.aquiPodrasGestionarTu")}
               </p>
             </div>
           </div>
           <div className="mt-10 flex flex-col sm:flex-row items-center gap-5 px-4">
-            <Button text="Editar perfil" to="/editar" />
-            <Button text="Mis pedidos" to="/pedidos" />
+            <Button text={t("userInfo.editarPerfil")} to={path("editProfile")} />
+            <Button text={t("userInfo.misPedidos")} to={path("orders")} />
             <button
               onClick={() => signOut()}
               className="primary-btn flex items-center gap-2 mb-6"
             >
-              Cerrar sesión
+              {t("userInfo.cerrarSesion")}
             </button>
           </div>
           <svg

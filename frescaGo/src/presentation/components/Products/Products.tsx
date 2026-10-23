@@ -4,22 +4,28 @@ import { FadeLeft } from "../../utility/animation";
 import { useNavigate } from "react-router-dom";
 import type { FeaturedProduct } from "../../../domain/catalog";
 import { useUseCases } from "../../AppContext";
+import { useLocale } from "../../LocaleContext";
+import { useTranslation } from "react-i18next";
+import { useLocalePath } from "../../LocaleContext";
 
 const Products = () => {
+  const { t } = useTranslation();
+  const path = useLocalePath();
   const navigate = useNavigate();
   const { listFeatured } = useUseCases();
+  const locale = useLocale();
   const [generalProductsData, setGeneralProductsData] = useState<
     FeaturedProduct[]
   >([]);
 
   useEffect(() => {
-    listFeatured()
+    listFeatured(locale)
       .then(setGeneralProductsData)
       .catch((error) => console.error("Error fetching data: ", error));
-  }, [listFeatured]);
+  }, [listFeatured, locale]);
 
   const handleProducts = () => {
-    navigate("/productos");
+    navigate(path("products"));
   };
 
   return (
@@ -31,7 +37,7 @@ const Products = () => {
           transition={{ duration: 1, delay: 0.3 }}
           className="text-2xl font-bold text-left pb-10"
         >
-          Algunos de nuestros productos
+          {t("featured.algunosDeNuestrosProductos")}
         </motion.h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {generalProductsData.map((product) => (

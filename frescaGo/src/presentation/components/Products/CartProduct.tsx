@@ -4,19 +4,23 @@ import AddToCartBtn from "../Utils/AddToCartBtn";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useAppStore } from "../../AppContext";
+import { useMoney } from "../../hooks/useMoney";
 import { RiCloseCircleLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
 
 interface CartProductProps {
   product: CartItem;
 }
 
 const CartProduct = ({ product }: CartProductProps) => {
+  const { t } = useTranslation();
   const { removeFromCart } = useAppStore();
+  const { format } = useMoney();
 
   const handleRemoveProduct = () => {
     if (product) {
       removeFromCart(product?.id);
-      toast.success(`${product?.title} eliminado con éxito!`);
+      toast.success(t("toast.removedFromCart", { title: product?.title }));
     }
   };
 
@@ -36,12 +40,12 @@ const CartProduct = ({ product }: CartProductProps) => {
               {product?.title}
             </h3>
             <p className="text-sm text-gray-600">
-              Categoría:{" "}
-              <span className="font-medium">{product?.category}</span>
+              {t("cartItem.categoria")}{" "}
+              <span className="font-medium">{product?.categoryLabel ?? product?.category}</span>
             </p>
             <div className="flex items-center gap-6 mt-2">
               <p className="text-lg font-semibold text-gray-800">
-                {itemTotal(product).toFixed(2)}€
+                {format(itemTotal(product))}
               </p>
               <AddToCartBtn product={product} />
             </div>
