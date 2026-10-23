@@ -1,10 +1,10 @@
-const cat = {
-  Fruta: "Fruta",
-  Verdura: "Verdura",
-  Cestas: "Cestas",
-};
+import type {
+  Category,
+  FeaturedProduct,
+  Product,
+} from "../../domain/catalog.js";
 
-export const categories = [
+export const categories: Category[] = [
   {
     id: 1001,
     base: "Fruta",
@@ -28,7 +28,7 @@ export const categories = [
   },
 ];
 
-export const products = [
+export const products: Product[] = [
   {
     id: 2001,
     title: "Plátanos de Canarias",
@@ -330,7 +330,7 @@ export const products = [
   },
 ];
 
-export const generalProductsData = [
+export const generalProductsData: FeaturedProduct[] = [
   {
     id: 3001,
     title: "Manzanas variadas",

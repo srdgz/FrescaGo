@@ -2,15 +2,16 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "FrescaGo data backup",
-  "main": "index.mjs",
+  "main": "src/index.ts",
   "type": "module",
   "engines": {
     "node": "24.x"
   },
   "scripts": {
-    "start": "node index.mjs",
+    "start": "tsx src/index.ts",
     "test": "vitest run",
-    "dev": "nodemon index.mjs"
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit"
   },
   "author": "Sandra Rodriguez",
   "license": "ISC",
@@ -18,11 +19,16 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "nodemon": "^3.1.4",
     "stripe": "^16.8.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/node": "^26.6.5",
+    "@types/supertest": "^7.2.1",
     "supertest": "^7.3.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
     "vitest": "^5.0.5"
   }
 }

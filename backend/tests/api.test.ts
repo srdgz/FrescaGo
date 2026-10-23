@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import request from "supertest";
 
-const createSession = vi.fn();
+const createSession = vi.hoisted(() => vi.fn());
 
 vi.mock("stripe", () => ({
   default: class {
@@ -9,8 +9,8 @@ vi.mock("stripe", () => ({
   },
 }));
 
-const { createApp } = await import("../app.mjs");
-const { products } = await import("../constants/index.mjs");
+const { createApp } = await import("../src/infrastructure/http/app.js");
+const { products } = await import("../src/infrastructure/catalog/data.js");
 
 const app = createApp();
 const product = products[0];
@@ -51,7 +51,7 @@ describe("POST /checkout", () => {
     process.env.FRONTEND_URL = "https://shop.test";
   });
 
-  const send = (body) => request(app).post("/checkout").send(body);
+  const send = (body: object) => request(app).post("/checkout").send(body);
 
   it("creates a session priced from the server catalog", async () => {
     const res = await send({
