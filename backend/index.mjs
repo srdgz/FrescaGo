@@ -8,7 +8,14 @@ import "dotenv/config";
 const app = express();
 
 const port = process.env.PORT || 8000;
-app.use(cors());
+const allowedOrigins = (
+  process.env.ALLOWED_ORIGINS ||
+  "http://localhost:5173,https://frescago.vercel.app"
+)
+  .split(",")
+  .map((origin) => origin.trim());
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);

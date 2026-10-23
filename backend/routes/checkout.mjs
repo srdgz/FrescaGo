@@ -1,41 +1,65 @@
 import Stripe from "stripe";
 import { Router } from "express";
+import { products } from "../constants/index.mjs";
 
 const router = Router();
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const MAX_QUANTITY = 99;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-router.post("/checkout", async (req, res) => {
-  const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: "2024-06-20",
-  });
-  try {
-    const { items, email } = req.body;
+const buildLineItems = (items) => {
+  if (!Array.isArray(items) || items.length === 0) return null;
 
-    if (!items || !email) {
-      return res.status(400).json({ error: "Faltan parámetros requeridos." });
+  const lineItems = [];
+  for (const item of items) {
+    const product = products.find((p) => p.id === item?.id);
+    const quantity = Number(item?.quantity);
+    if (
+      !product ||
+      !Number.isInteger(quantity) ||
+      quantity < 1 ||
+      quantity > MAX_QUANTITY
+    ) {
+      return null;
     }
-
-    const extractingItems = await items.map((item) => ({
-      quantity: item.quantity,
+    lineItems.push({
+      quantity,
       price_data: {
         currency: "eur",
-        unit_amount: Math.round(item.price * 100),
+        unit_amount: Math.round(product.price * 100),
         product_data: {
-          name: item.title,
-          description: item.category,
-          images: [item.image],
+          name: product.title,
+          description: product.category,
+          images: [product.image],
         },
       },
-    }));
+    });
+  }
+  return lineItems;
+};
+
+router.post("/checkout", async (req, res) => {
+  const { items, email } = req.body ?? {};
+
+  if (typeof email !== "string" || !EMAIL_PATTERN.test(email)) {
+    return res.status(400).json({ error: "Faltan parámetros requeridos." });
+  }
+
+  const lineItems = buildLineItems(items);
+  if (!lineItems) {
+    return res.status(400).json({ error: "Carrito no válido." });
+  }
+
+  try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const frontendUrl = process.env.FRONTEND_URL || "https://frescago.vercel.app";
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: extractingItems,
+      line_items: lineItems,
       mode: "payment",
-      success_url:
-        "https://frescago.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "https://frescago.vercel.app/cancel",
+      success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/cancel`,
       metadata: {
         email,
       },
@@ -47,7 +71,8 @@ router.post("/checkout", async (req, res) => {
       id: session.id,
     });
   } catch (error) {
-    res.status(500).json({ error: error });
+    console.error("Checkout error:", error.message);
+    res.status(500).json({ error: "No se pudo crear la sesión de pago." });
   }
 });
 export default router;
