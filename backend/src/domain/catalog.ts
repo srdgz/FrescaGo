@@ -8,6 +8,10 @@ export interface Product {
   base: string;
 }
 
+export interface LocalizedProduct extends Product {
+  categoryLabel: string;
+}
+
 export interface Category {
   id: number;
   base: string;

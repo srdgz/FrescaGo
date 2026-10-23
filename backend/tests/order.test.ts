@@ -6,15 +6,17 @@ import {
   buildOrderLines,
   toCents,
 } from "../src/domain/order.js";
-import type { Product } from "../src/domain/catalog.js";
+import { convertToCents } from "../src/domain/currency.js";
+import type { LocalizedProduct } from "../src/domain/catalog.js";
 
-const apple: Product = {
+const apple: LocalizedProduct = {
   id: 1,
   title: "Manzana",
   price: 1.15,
   image: "x.png",
   quantity: 1,
   category: "Fruta",
+  categoryLabel: "Fruta",
   base: "Fruta",
 };
 
@@ -26,9 +28,23 @@ describe("order domain", () => {
     expect(toCents(19.99)).toBe(1999);
   });
 
-  it("builds lines priced from the catalog", () => {
+  it("converts a euro price to the target currency", () => {
+    expect(convertToCents(2, "EUR", 1.1)).toBe(200);
+    expect(convertToCents(2, "USD", 1.1)).toBe(220);
+    expect(convertToCents(1.15, "USD", 1.08)).toBe(124);
+  });
+
+  it("builds lines priced from the catalog in euros by default", () => {
     const [line] = buildOrderLines([{ id: 1, quantity: 3 }], find);
     expect(line).toEqual({ product: apple, quantity: 3, unitAmountCents: 115 });
+  });
+
+  it("builds lines priced in dollars when asked", () => {
+    const [line] = buildOrderLines([{ id: 1, quantity: 1 }], find, {
+      currency: "USD",
+      usdPerEur: 1.08,
+    });
+    expect(line.unitAmountCents).toBe(124);
   });
 
   it.each([

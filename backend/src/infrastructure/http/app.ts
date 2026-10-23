@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import express from "express";
+import { parseLocale } from "../../domain/locale.js";
 import { InvalidCartError, InvalidEmailError } from "../../domain/order.js";
 import { createContainer } from "../container.js";
 import type { Container } from "../container.js";
@@ -26,24 +27,30 @@ export const createApp = (container: Container = createContainer()) => {
     res.sendFile(path.join(publicDir, "index.html"));
   });
 
-  app.get("/productos", (_req, res) => {
-    res.send(container.catalog.listProducts());
+  app.get("/productos", (req, res) => {
+    res.send(container.catalog.listProducts(parseLocale(req.query.lang)));
   });
 
   app.get("/productos/:id", (req, res) => {
-    const product = container.catalog.getProduct(parseInt(req.params.id));
+    const product = container.catalog.getProduct(
+      parseInt(req.params.id),
+      parseLocale(req.query.lang)
+    );
     if (!product) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
     res.send(product);
   });
 
-  app.get("/categorias", (_req, res) => {
-    res.send(container.catalog.listCategories());
+  app.get("/categorias", (req, res) => {
+    res.send(container.catalog.listCategories(parseLocale(req.query.lang)));
   });
 
   app.get("/categorias/:id", (req, res) => {
-    const matches = container.catalog.getCategories(parseInt(req.params.id));
+    const matches = container.catalog.getCategories(
+      parseInt(req.params.id),
+      parseLocale(req.query.lang)
+    );
     if (matches.length === 0) {
       return res
         .status(404)
@@ -52,8 +59,13 @@ export const createApp = (container: Container = createContainer()) => {
     res.json(matches);
   });
 
-  app.get("/destacados", (_req, res) => {
-    res.send(container.catalog.listFeatured());
+  app.get("/destacados", (req, res) => {
+    res.send(container.catalog.listFeatured(parseLocale(req.query.lang)));
+  });
+
+  app.get("/rates", async (_req, res) => {
+    const rate = await container.getExchangeRate();
+    res.json({ base: "EUR", ...rate });
   });
 
   app.post("/checkout", async (req, res) => {
@@ -61,6 +73,8 @@ export const createApp = (container: Container = createContainer()) => {
       const id = await container.createCheckout({
         items: req.body?.items,
         email: req.body?.email,
+        currency: req.body?.currency,
+        locale: req.body?.locale,
       });
       res.json({ message: "Server is connected", success: true, id });
     } catch (error) {

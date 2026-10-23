@@ -1,4 +1,6 @@
-import type { Product } from "./catalog.js";
+import { convertToCents } from "./currency.js";
+import type { Currency } from "./currency.js";
+import type { LocalizedProduct } from "./catalog.js";
 
 export const MAX_QUANTITY = 99;
 
@@ -9,8 +11,13 @@ export interface CartItemRequest {
   quantity: number;
 }
 
+export interface Pricing {
+  currency: Currency;
+  usdPerEur: number;
+}
+
 export interface OrderLine {
-  product: Product;
+  product: LocalizedProduct;
   quantity: number;
   unitAmountCents: number;
 }
@@ -38,7 +45,8 @@ export const toCents = (price: number): number => Math.round(price * 100);
 
 export const buildOrderLines = (
   items: unknown,
-  findProduct: (id: number) => Product | undefined
+  findProduct: (id: number) => LocalizedProduct | undefined,
+  pricing: Pricing = { currency: "EUR", usdPerEur: 1 }
 ): OrderLine[] => {
   if (!Array.isArray(items) || items.length === 0) {
     throw new InvalidCartError();
@@ -57,6 +65,14 @@ export const buildOrderLines = (
       throw new InvalidCartError();
     }
 
-    return { product, quantity, unitAmountCents: toCents(product.price) };
+    return {
+      product,
+      quantity,
+      unitAmountCents: convertToCents(
+        product.price,
+        pricing.currency,
+        pricing.usdPerEur
+      ),
+    };
   });
 };

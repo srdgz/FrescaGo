@@ -1,24 +1,47 @@
+import { parseCurrency } from "../domain/currency.js";
+import { parseLocale } from "../domain/locale.js";
 import { assertValidEmail, buildOrderLines } from "../domain/order.js";
-import type { CatalogRepository, PaymentGateway } from "./ports.js";
+import type {
+  CatalogRepository,
+  ExchangeRateProvider,
+  PaymentGateway,
+} from "./ports.js";
 
 interface Dependencies {
   catalog: CatalogRepository;
   payments: PaymentGateway;
+  rates: ExchangeRateProvider;
   getFrontendUrl: () => string;
 }
 
+interface CheckoutInput {
+  items: unknown;
+  email: unknown;
+  currency?: unknown;
+  locale?: unknown;
+}
+
 export const makeCreateCheckout =
-  ({ catalog, payments, getFrontendUrl }: Dependencies) =>
-  async (input: { items: unknown; email: unknown }): Promise<string> => {
+  ({ catalog, payments, rates, getFrontendUrl }: Dependencies) =>
+  async (input: CheckoutInput): Promise<string> => {
     const email = assertValidEmail(input.email);
-    const lines = buildOrderLines(input.items, (id) => catalog.findProduct(id));
+    const currency = parseCurrency(input.currency);
+    const locale = parseLocale(input.locale);
+    const { usdPerEur } = await rates.getRate();
+    const lines = buildOrderLines(
+      input.items,
+      (id) => catalog.findProduct(id, locale),
+      { currency, usdPerEur }
+    );
     const frontendUrl = getFrontendUrl();
 
     return payments.createCheckoutSession({
       lines,
       email,
-      successUrl: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${frontendUrl}/cancel`,
+      currency,
+      locale,
+      successUrl: `${frontendUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${frontendUrl}/${locale}/cancel`,
     });
   };
 
