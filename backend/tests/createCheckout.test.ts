@@ -91,6 +91,23 @@ describe("createCheckout use case", () => {
     });
   });
 
+  it("asks the gateway to charge shipping in the chosen currency", async () => {
+    const { payments, createCheckout } = setup();
+
+    await createCheckout(input({ items: [{ id: products[0].id, quantity: 1 }] }));
+    await createCheckout(
+      input({ items: [{ id: products[0].id, quantity: 1 }], currency: "USD" })
+    );
+    await createCheckout(input({ items: [{ id: products[0].id, quantity: 30 }] }));
+
+    const [eur, usd, free] = payments.createCheckoutSession.mock.calls.map(
+      (call) => call[0].shippingCents
+    );
+    expect(eur).toBe(499);
+    expect(usd).toBe(549);
+    expect(free).toBe(0);
+  });
+
   it("never reaches the gateway without a valid shipping address", async () => {
     const { payments, createCheckout } = setup();
 

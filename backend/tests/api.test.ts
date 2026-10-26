@@ -212,6 +212,62 @@ describe("POST /checkout", () => {
     });
   });
 
+  it("charges the shipping fee as its own line below the free shipping limit", async () => {
+    await send({
+      items: [{ id: product.id, quantity: 2 }],
+      email: "buyer@example.com",
+    });
+
+    const lines = createSession.mock.calls[0][0].line_items;
+    expect(lines).toHaveLength(2);
+    expect(lines[1]).toEqual({
+      quantity: 1,
+      price_data: {
+        currency: "eur",
+        unit_amount: 499,
+        product_data: { name: "Envío" },
+      },
+    });
+  });
+
+  it("does not charge shipping above 30 euros", async () => {
+    await send({
+      items: [{ id: product.id, quantity: 20 }],
+      email: "buyer@example.com",
+    });
+
+    const lines = createSession.mock.calls[0][0].line_items;
+    expect(lines).toHaveLength(1);
+    expect(lines[0].quantity).toBe(20);
+  });
+
+  it("charges the shipping fee in dollars with an English label", async () => {
+    await send({
+      items: [{ id: product.id, quantity: 1 }],
+      email: "buyer@example.com",
+      currency: "USD",
+      locale: "en",
+    });
+
+    const [, shippingLine] = createSession.mock.calls[0][0].line_items;
+    expect(shippingLine.price_data).toEqual({
+      currency: "usd",
+      unit_amount: 549,
+      product_data: { name: "Shipping" },
+    });
+  });
+
+  it("ignores a shipping price sent by the client", async () => {
+    await send({
+      items: [{ id: product.id, quantity: 1 }],
+      email: "buyer@example.com",
+      shippingCents: 0,
+      shippingFee: 0,
+    });
+
+    expect(createSession.mock.calls[0][0].line_items[1].price_data.unit_amount).toBe(499);
+  });
+
   it("rejects a checkout without a shipping address", async () => {
     const res = await send({
       items: [{ id: product.id, quantity: 1 }],

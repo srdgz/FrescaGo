@@ -18,6 +18,7 @@ export interface CheckoutSessionRequest {
   currency: Currency;
   locale: Locale;
   shipping: ShippingInfo;
+  shippingCents: number;
   successUrl: string;
   cancelUrl: string;
 }

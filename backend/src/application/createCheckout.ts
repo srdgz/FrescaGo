@@ -2,6 +2,7 @@ import { parseCurrency } from "../domain/currency.js";
 import { parseLocale } from "../domain/locale.js";
 import { assertValidEmail, buildOrderLines } from "../domain/order.js";
 import { parseShippingInfo } from "../domain/shipping.js";
+import { shippingFeeCents } from "../domain/shippingFee.js";
 import type {
   CatalogRepository,
   ExchangeRateProvider,
@@ -36,6 +37,7 @@ export const makeCreateCheckout =
       (id) => catalog.findProduct(id, locale),
       { currency, usdPerEur }
     );
+    const shippingCents = shippingFeeCents(lines, { currency, usdPerEur });
     const frontendUrl = getFrontendUrl();
 
     return payments.createCheckoutSession({
@@ -44,6 +46,7 @@ export const makeCreateCheckout =
       currency,
       locale,
       shipping,
+      shippingCents,
       successUrl: `${frontendUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${frontendUrl}/${locale}/cancel`,
     });

@@ -10,6 +10,7 @@ export const createStripePaymentGateway = (
     currency,
     locale,
     shipping,
+    shippingCents,
     successUrl,
     cancelUrl,
   }) {
@@ -18,18 +19,34 @@ export const createStripePaymentGateway = (
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       locale,
-      line_items: lines.map(({ product, quantity, unitAmountCents }) => ({
-        quantity,
-        price_data: {
-          currency: currency.toLowerCase(),
-          unit_amount: unitAmountCents,
-          product_data: {
-            name: product.title,
-            description: product.categoryLabel,
-            images: [product.image],
+      line_items: [
+        ...lines.map(({ product, quantity, unitAmountCents }) => ({
+          quantity,
+          price_data: {
+            currency: currency.toLowerCase(),
+            unit_amount: unitAmountCents,
+            product_data: {
+              name: product.title,
+              description: product.categoryLabel,
+              images: [product.image],
+            },
           },
-        },
-      })),
+        })),
+        ...(shippingCents > 0
+          ? [
+              {
+                quantity: 1,
+                price_data: {
+                  currency: currency.toLowerCase(),
+                  unit_amount: shippingCents,
+                  product_data: {
+                    name: locale === "en" ? "Shipping" : "Envío",
+                  },
+                },
+              },
+            ]
+          : []),
+      ],
       mode: "payment",
       payment_intent_data: {
         shipping: {
