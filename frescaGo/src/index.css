@@ -1,17 +1,144 @@
-@import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Montserrat&family=Roboto&family=Titillium+Web&display=swap");
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/fraunces";
+@import "./theme.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme inline {
+  --color-canvas: rgb(var(--canvas));
+  --color-surface: rgb(var(--surface));
+  --color-soft: rgb(var(--soft));
+  --color-photo: rgb(var(--photo));
+  --color-ink: rgb(var(--ink));
+  --color-line: rgb(var(--line));
+  --color-primary: rgb(var(--primary));
+  --color-primary-dark: rgb(var(--primary-strong));
+  --color-brand: rgb(var(--brand));
+  --color-secondary: rgb(var(--ink));
+  --color-accent: rgb(var(--accent));
+  --color-accent-soft: rgb(var(--accent-soft));
+  --color-danger: rgb(var(--danger));
+  --color-danger-soft: rgb(var(--danger-soft));
+  --color-gray-50: rgb(var(--gray-50));
+  --color-gray-100: rgb(var(--gray-100));
+  --color-gray-200: rgb(var(--gray-200));
+  --color-gray-300: rgb(var(--gray-300));
+  --color-gray-400: rgb(var(--gray-400));
+  --color-gray-500: rgb(var(--gray-500));
+  --color-gray-600: rgb(var(--gray-600));
+  --color-gray-700: rgb(var(--gray-700));
+  --color-gray-800: rgb(var(--gray-800));
+  --color-gray-900: rgb(var(--gray-900));
 
-@layer components {
-  .primary-btn {
-    @apply bg-primary text-white font-semibold py-3 px-6 rounded-xl shadow-[0px_10px_14px_-7px_#de0029] hover:!scale-110 duration-300;
+  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+
+  --radius-card: 1.25rem;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (width >= 40rem) {
+    max-width: 40rem;
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 48rem) {
+    max-width: 48rem;
+  }
+
+  @media (width >= 64rem) {
+    max-width: 64rem;
+    padding-inline: 4rem;
+  }
+
+  @media (width >= 80rem) {
+    max-width: 80rem;
+    padding-inline: 5rem;
+  }
+
+  @media (width >= 96rem) {
+    max-width: 96rem;
+    padding-inline: 6rem;
   }
 }
 
-@layer utilities {
-  .drop-shadow {
-    filter: drop-shadow(-6px 8px 15px rgba(0, 0, 0, 0.2));
+@utility fruit-shadow {
+  filter: drop-shadow(-6px 8px 15px rgb(0 0 0 / 0.2));
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  ::placeholder {
+    @apply text-gray-500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .primary-btn {
+    @apply inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white shadow-xs transition-colors duration-200 hover:bg-primary-dark;
+  }
+
+  .outline-btn {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-brand px-6 py-2.5 font-semibold text-brand transition-colors duration-200 hover:bg-soft;
+  }
+
+  .field {
+    @apply block w-full rounded-xl border border-gray-400 bg-surface px-4 py-2.5 text-ink shadow-xs transition-colors duration-200 focus:border-brand focus:outline-hidden focus:ring-2 focus:ring-brand/30;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-xs;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full bg-accent-soft px-3 py-0.5 text-xs font-bold text-accent;
   }
 }

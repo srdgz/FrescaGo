@@ -1,0 +1,317 @@
+{
+  "login": {
+    "iniciarSesion": "Sign in",
+    "proporcioneSuCorreoElectronico": "Enter your email and password to access your account.",
+    "email": "Email",
+    "contrasena": "Password",
+    "noTienesUnaCuenta": "Don't have an account?",
+    "registrarse": "Sign up"
+  },
+  "registration": {
+    "crearUnaCuenta": "Create an account",
+    "proporcioneLaInformacionRequerida": "Enter the information required to sign up.",
+    "nombre": "First name",
+    "apellido": "Last name",
+    "email": "Email",
+    "contrasena": "Password",
+    "fotoDePerfil": "Profile picture",
+    "yaTienesUnaCuenta": "Already have an account?",
+    "iniciarSesion": "Sign in",
+    "confirmPassword": "Repeat the password",
+    "passwordHint": "At least {{min}} characters.",
+    "passwordMismatch": "The passwords do not match."
+  },
+  "userInfo": {
+    "bienvenid": "Welcome",
+    "nosAlegraVerteEn": "We're glad to see you at",
+    "aquiPodrasGestionarTu": "! Here you can manage your profile, update your information and enjoy a fast, efficient shopping experience. Our goal is to make your shopping fresh, easy and hassle free. Thank you for choosing us!",
+    "editarPerfil": "Edit profile",
+    "misPedidos": "My orders",
+    "cerrarSesion": "Sign out",
+    "addressNotice": "Add your shipping address to be able to place orders.",
+    "addAddress": "Add address"
+  },
+  "banner": {
+    "sobreNosotros": "About us",
+    "enFrescagoNosApasiona": "At FrescaGo, we are passionate about bringing the freshness of the countryside straight to your table. We are an online fruit and vegetable shop committed to offering top quality products, sustainably grown by local farmers.",
+    "creemosEnLaImportancia": "We believe in the importance of healthy eating and in the power of nature to nourish us.",
+    "cadaPedidoEsCuidadosamente": "Every order is carefully selected so you only receive the best. FrescaGo is more than a shop, it is a bridge between the countryside and your home, making sure you enjoy fresh, nutritious and flavourful food every day.",
+    "confiaEnNosotrosPara": "Trust us to bring freshness into your life!",
+    "saberMas": "Discover more about FrescaGo"
+  },
+  "bannerApp": {
+    "descargaNuestraApp": "Download our app",
+    "llevaLaFrescuraDel": "Take the freshness of the countryside in your pocket. With our app you can order fresh fruit and vegetables at any time, straight from your phone.",
+    "disponibleTantoEnGoogle": "Available on both Google Play and the App Store, our app gives you a fast and convenient shopping experience.",
+    "descubreLoFacilQue": "Discover how easy it is to eat healthily with high quality fresh products, selected especially for you.",
+    "imagenPromocionalDeLa": "Promotional image of the FrescaGo app",
+    "googlePlay": "Get it on Google Play",
+    "appStore": "Download on the App Store"
+  },
+  "bannerOrder": {
+    "hazTuPedidoHoy": "Order today",
+    "hazTuPedidoAhora": "Order now and receive the best quality fruit and vegetables, sustainably grown by local farmers. Enjoy nutritious, flavourful food in every bite!",
+    "hazTuPedido": "Place your order"
+  },
+  "footer": {
+    "webBy": "© {{year}} | Website by",
+    "sandraRodriguez": "Sandra Rodríguez"
+  },
+  "hero": {
+    "frescura": "Fresh",
+    "directa": "direct",
+    "aTuPuerta": "to your door",
+    "noEsperesMasPara": "Don't wait any longer to enjoy the freshest food!",
+    "compraEnFrescagoY": "Shop at FrescaGo and get fruit and vegetables delivered straight to your door. Quality, freshness and flavour in every bite. Order now and taste the difference!",
+    "pideAhora": "Order now"
+  },
+  "featured": {
+    "algunosDeNuestrosProductos": "Some of our products"
+  },
+  "cartItem": {
+    "categoria": "Category:",
+    "remove": "Remove {{title}} from the cart"
+  },
+  "avatar": {
+    "avatar": "Avatar",
+    "subirArchivo": "Upload a file",
+    "oArrastraYSuelta": "or drag and drop here",
+    "pngJpgGifHasta": "PNG, JPG, GIF up to 10MB"
+  },
+  "pagination": {
+    "comprar": "Buy",
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}}"
+  },
+  "checkout": {
+    "pagar": "Pay",
+    "necesitasIniciarSesionPara": "You need to sign in to complete your purchase",
+    "error": "The payment could not be started. Please try again in a few minutes.",
+    "addressRequired": "Add your shipping address to be able to pay.",
+    "addAddress": "Add shipping address",
+    "shipTo": "Ship to:",
+    "changeAddress": "Change address"
+  },
+  "about": {
+    "sobreFresca": "About Fresca",
+    "enFrescagoNosDedicamos": "At FrescaGo, we are dedicated to bringing the freshness of the countryside straight to your table. Our goal is to offer you top quality products, sustainably grown by local farmers, so you can enjoy fresh fruit and vegetables every day.",
+    "nuestraMision": "Our Mission",
+    "laMisionDeFrescago": "FrescaGo's mission is to make fresh, nutritious and sustainable food easier to reach, strengthening the bond between the countryside and the city. We believe in the importance of healthy eating and are committed to sustainability and to supporting local farmers.",
+    "nuestraVision": "Our Vision",
+    "nuestraVisionEsSer": "Our vision is to be the leading online shop for fresh produce, promoting a healthy and sustainable lifestyle across the country.",
+    "nuestrosValores": "Our Values",
+    "calidad": "Quality:",
+    "ofrecerProductosDeLa": "Offer top quality, fresh and nutritious products.",
+    "sostenibilidad": "Sustainability:",
+    "fomentarPracticasAgricolasSostenibles": "Promote sustainable farming practices and support local farmers.",
+    "confianza": "Trust:",
+    "serUnPuenteDe": "Be a bridge of trust between producers and consumers.",
+    "innovacion": "Innovation:",
+    "utilizarTecnologiaParaMejorar": "Use technology to improve the shopping experience and the efficiency of delivery.",
+    "sobreFrescago": "About FrescaGo"
+  },
+  "cancel": {
+    "tuPagoHaSido": "Your payment was cancelled",
+    "lamentablementeTuPagoNo": "Unfortunately, your payment was not completed. If you need help, please contact us.",
+    "volverAlInicio": "Back to home",
+    "volverAComprar": "Back to shopping"
+  },
+  "contact": {
+    "contactanos": "Contact us",
+    "estamosAquiParaAyudarte": "We're here to help! If you have any questions or need assistance, don't hesitate to contact us.",
+    "informacionDeContacto": "Contact information",
+    "direccion": "Address:",
+    "1234CalleFalsaCiudad": "1234 Fake Street, City, Country",
+    "telefono": "Phone:",
+    "email": "Email:",
+    "contactoFrescagoCom": "contacto@frescago.com",
+    "horarioDeAtencion": "Opening hours:",
+    "lunesAViernes9": "Monday to Friday: 9:00 AM - 6:00 PM",
+    "sabado1000Am": "Saturday: 10:00 AM - 4:00 PM",
+    "domingoCerrado": "Sunday: Closed",
+    "envianosUnMensaje": "Send us a message",
+    "nombreCompleto": "Full name",
+    "email2": "Email",
+    "mensaje": "Message",
+    "enviar": "Send",
+    "visitUs": "Visit us at our store"
+  },
+  "editProfile": {
+    "editarPerfil": "Edit profile",
+    "nombre": "First name",
+    "apellidos": "Last name",
+    "telefono": "Phone",
+    "email": "Email",
+    "guardar": "Save",
+    "cancelar": "Cancel",
+    "personalData": "Personal details",
+    "shippingTitle": "Shipping address",
+    "shippingHelp": "We need your address to deliver your orders. It is required to place an order.",
+    "street": "Street and number",
+    "postalCode": "Postal code",
+    "postalCodeHint": "3 to 10 letters, numbers, spaces or hyphens",
+    "phoneHint": "6 to 20 digits, with + ( ) spaces or hyphens",
+    "city": "City",
+    "country": "Country",
+    "needAddress": "Complete your shipping address to finish your purchase."
+  },
+  "notFound": {
+    "error": "Error",
+    "estaPaginaNoExiste": "This page doesn't exist!",
+    "pareceQueNoPodemos": "It looks like we can't find what you're looking for.",
+    "volverAtras": "Go back"
+  },
+  "orders": {
+    "detallesDelPedido": "Order details",
+    "nombreDelCliente": "Customer name:",
+    "totalDePedidos": "Total orders:",
+    "aquiPuedesVerLos": "Here you can see the details of your previous orders. If you have any questions, don't hesitate to contact us.",
+    "numeroDeSeguimiento": "Order number:",
+    "tuPedido": "Your order",
+    "haSidoEnviadoY": "has been received and we are getting it ready.",
+    "cantidadDeArticulosEn": "Number of items in the order:",
+    "estadoDelPago": "Payment status:",
+    "pagadoPorStripe": "Paid with Stripe",
+    "importeDelPedido": "Order amount:",
+    "importeDelEnvio": "Shipping cost:",
+    "imagenDelProducto": "Product image",
+    "cantidad": "Quantity",
+    "precio": "Price",
+    "subtotal": "Subtotal",
+    "aunNoTienesPedidos": "You don't have any orders yet",
+    "noHasRealizadoNinguna": "You haven't made any purchases with us",
+    "irDeCompras": "Go shopping",
+    "orderDate": "Order date:",
+    "shippingAddress": "Shipping address:"
+  },
+  "catalog": {
+    "buscarProductos": "Search products...",
+    "search": "Search",
+    "clear": "Clear search"
+  },
+  "shop": {
+    "tuCestaDeLa": "Your shopping basket",
+    "tuPedido": "Your order",
+    "subtotal": "Subtotal",
+    "envio": "Shipping",
+    "tuCarritoEstaVacio": "Your cart is empty. Start adding fresh and healthy products.",
+    "hacerLaCompra": "Start shopping",
+    "total": "TOTAL",
+    "shippingInfoLabel": "More information about shipping",
+    "shippingInfo": "Shipping costs {{fee}} per order. It is free on orders over {{threshold}}.",
+    "free": "Free"
+  },
+  "product": {
+    "volverAtras": "Go back",
+    "categoria": "Category:",
+    "anadirAlCarrito": "Add to cart",
+    "pagosSeguros": "SECURE PAYMENTS",
+    "pagoSeguro": "secure payment"
+  },
+  "success": {
+    "misPedidos": "My orders",
+    "seguirComprando": "Keep shopping",
+    "paid": "Payment completed successfully",
+    "saveError": "Error saving the order",
+    "title": {
+      "confirming": "We are confirming your payment",
+      "confirmed": "Payment accepted at FrescaGo",
+      "unpaid": "We have not received your payment yet",
+      "notFound": "We could not find this order",
+      "mismatch": "This order belongs to another account",
+      "error": "We could not confirm your order",
+      "needLogin": "Sign in to see your order"
+    },
+    "body": {
+      "confirming": "One moment, we are checking the payment with Stripe.",
+      "confirmed": "Your order is saved. You can now see it in your orders or keep shopping with us.",
+      "unpaid": "Stripe has not confirmed the payment to us yet. Wait a few seconds and try again.",
+      "notFound": "We could not find this order. If you have paid, write to us and we will look into it.",
+      "mismatch": "Sign in with the account you used to buy to see this order.",
+      "error": "We could not confirm your order right now. Your payment is safe; please try again in a few minutes.",
+      "needLogin": "Sign in with the account you bought with to save and see your order."
+    },
+    "orderNumber": "Your order number is",
+    "retry": "Try again"
+  },
+  "meta": {
+    "title": "FrescaGo | Order today and enjoy fresh fruit and vegetables!",
+    "description": "FrescaGo is an online shop for fresh fruit and vegetables from local farmers. Order today and get it delivered to your home."
+  },
+  "common": {
+    "perKg": "{{price}}/kg",
+    "loading": "Loading...",
+    "register": "Sign up",
+    "newTab": "(opens in a new tab)"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart",
+    "account": "My account",
+    "mainMenu": "Main menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to main content"
+  },
+  "theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
+  "language": {
+    "label": "Language",
+    "es": "Español",
+    "en": "English"
+  },
+  "currency": {
+    "label": "Currency",
+    "EUR": "Euro",
+    "USD": "US dollar"
+  },
+  "toast": {
+    "added": "{{title}} added successfully!",
+    "removed": "{{title}} removed successfully",
+    "decrease": "Remove one unit of {{title}}",
+    "increase": "Add one unit of {{title}}",
+    "removedFromCart": "{{title}} removed successfully!",
+    "notAdded": "The product could not be added",
+    "minimum": "You can't remove any more units",
+    "profileUpdated": "Profile updated successfully",
+    "profileError": "Error updating the profile"
+  },
+  "auth": {
+    "login": {
+      "user-not-found": "There is no user registered with this email",
+      "wrong-password": "Wrong password",
+      "invalid-email": "Please enter a valid email",
+      "invalid-credential": "The email and password don't match"
+    },
+    "registration": {
+      "invalid-email": "Please enter a valid email",
+      "missing-password": "Please enter a password",
+      "weak-password": "The password is too weak. Use at least 8 characters",
+      "email-already-in-use": "This email is already registered. Please try another one"
+    },
+    "unknown": "Something went wrong. Please try again"
+  },
+  "password": {
+    "show": "Show password",
+    "hide": "Hide password"
+  },
+  "pageTitle": {
+    "products": "Products",
+    "about": "About us",
+    "contact": "Contact",
+    "shop": "Your cart",
+    "user": "My account",
+    "editProfile": "Edit profile",
+    "orders": "My orders",
+    "success": "Order confirmed",
+    "cancel": "Payment cancelled",
+    "notFound": "Page not found"
+  }
+}
