@@ -37,7 +37,8 @@ const SuccessScreen = () => {
   const { confirmOrder } = useUseCases();
   const { currentUser, resetCart } = useAppStore();
   const sessionId = new URLSearchParams(location.search).get("session_id");
-  const [status, setStatus] = useState<Status>("confirming");
+  const [result, setResult] = useState<Status>("confirming");
+  const status: Status = currentUser ? result : "needLogin";
   const [reference, setReference] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const started = useRef<string | null>(null);
@@ -48,32 +49,33 @@ const SuccessScreen = () => {
       return;
     }
     if (!currentUser) {
-      setStatus("needLogin");
       return;
     }
     const key = `${sessionId}:${currentUser.id}:${attempt}`;
     if (started.current === key) return;
     started.current = key;
-    setStatus("confirming");
     confirmOrder(currentUser, sessionId)
       .then(({ order, alreadySaved }) => {
         setReference(orderReference(order.paymentId));
         resetCart();
-        setStatus("confirmed");
+        setResult("confirmed");
         if (!alreadySaved) {
           toast.success(t("success.paid"));
         }
       })
       .catch((error) => {
         console.error(error);
-        setStatus(statusOf(error));
+        setResult(statusOf(error));
       });
   }, [sessionId, currentUser, attempt, confirmOrder, resetCart, navigate, path, t]);
 
   const retry = (
     <button
       type="button"
-      onClick={() => setAttempt((value) => value + 1)}
+      onClick={() => {
+        setResult("confirming");
+        setAttempt((value) => value + 1);
+      }}
       className="primary-btn"
     >
       {t("success.retry")}

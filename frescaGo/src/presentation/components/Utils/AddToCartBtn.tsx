@@ -1,9 +1,7 @@
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import { useTranslation } from "react-i18next";
-import type { CartItem } from "../../../domain/cart";
 import type { Product } from "../../../domain/catalog";
 import { useAppStore } from "../../AppContext";
 
@@ -15,13 +13,9 @@ interface AddToCartBtnProps {
 
 const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
   const { t } = useTranslation();
-  const [existingProduct, setExistingProduct] = useState<CartItem | null>(null);
   const { addToCart, cartProduct, decreaseQuantity } = useAppStore();
-
-  useEffect(() => {
-    const availableItem = cartProduct.find((item) => item?.id === product?.id);
-    setExistingProduct(availableItem || null);
-  }, [product, cartProduct]);
+  const existingProduct =
+    cartProduct.find((item) => item.id === product?.id) ?? null;
 
   const handleAddToCart = () => {
     if (product) {
