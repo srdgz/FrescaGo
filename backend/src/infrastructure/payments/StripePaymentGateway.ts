@@ -9,6 +9,7 @@ export const createStripePaymentGateway = (
     email,
     currency,
     locale,
+    shipping,
     successUrl,
     cancelUrl,
   }) {
@@ -30,6 +31,18 @@ export const createStripePaymentGateway = (
         },
       })),
       mode: "payment",
+      payment_intent_data: {
+        shipping: {
+          name: shipping.recipient,
+          phone: shipping.phone,
+          address: {
+            line1: shipping.street,
+            postal_code: shipping.postalCode,
+            city: shipping.city,
+            country: shipping.country,
+          },
+        },
+      },
       success_url: successUrl,
       cancel_url: cancelUrl,
       metadata: { email, currency },

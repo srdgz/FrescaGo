@@ -4,6 +4,7 @@ import cors from "cors";
 import express from "express";
 import { parseLocale } from "../../domain/locale.js";
 import { InvalidCartError, InvalidEmailError } from "../../domain/order.js";
+import { InvalidShippingError } from "../../domain/shipping.js";
 import { createContainer } from "../container.js";
 import type { Container } from "../container.js";
 
@@ -75,10 +76,15 @@ export const createApp = (container: Container = createContainer()) => {
         email: req.body?.email,
         currency: req.body?.currency,
         locale: req.body?.locale,
+        shipping: req.body?.shipping,
       });
       res.json({ message: "Server is connected", success: true, id });
     } catch (error) {
-      if (error instanceof InvalidEmailError || error instanceof InvalidCartError) {
+      if (
+        error instanceof InvalidEmailError ||
+        error instanceof InvalidCartError ||
+        error instanceof InvalidShippingError
+      ) {
         return res.status(400).json({ error: error.message });
       }
       console.error("Checkout error:", (error as Error).message);

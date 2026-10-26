@@ -21,7 +21,16 @@ const setup = () => {
   return { payments, createCheckout };
 };
 
+const shipping = {
+  recipient: "Ana Pérez",
+  street: "Calle Mayor 12",
+  postalCode: "28013",
+  city: "Madrid",
+  country: "ES",
+};
+
 const input = (extra = {}) => ({
+  shipping,
   items: [{ id: products[0].id, quantity: 2 }],
   email: "buyer@example.com",
   ...extra,
@@ -68,6 +77,28 @@ describe("createCheckout use case", () => {
     const request = payments.createCheckoutSession.mock.calls[0][0];
     expect(request.currency).toBe("EUR");
     expect(request.locale).toBe("es");
+  });
+
+  it("passes the shipping address to the gateway", async () => {
+    const { payments, createCheckout } = setup();
+
+    await createCheckout(input());
+
+    expect(payments.createCheckoutSession.mock.calls[0][0].shipping).toMatchObject({
+      recipient: "Ana Pérez",
+      street: "Calle Mayor 12",
+      country: "ES",
+    });
+  });
+
+  it("never reaches the gateway without a valid shipping address", async () => {
+    const { payments, createCheckout } = setup();
+
+    await expect(createCheckout(input({ shipping: undefined }))).rejects.toThrow();
+    await expect(
+      createCheckout(input({ shipping: { ...shipping, country: "XX" } }))
+    ).rejects.toThrow();
+    expect(payments.createCheckoutSession).not.toHaveBeenCalled();
   });
 
   it("never reaches the gateway with an invalid cart", async () => {

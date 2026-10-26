@@ -2,6 +2,7 @@ import type { Currency, ExchangeRate } from "../domain/currency.js";
 import type { Category, FeaturedProduct, LocalizedProduct } from "../domain/catalog.js";
 import type { Locale } from "../domain/locale.js";
 import type { OrderLine } from "../domain/order.js";
+import type { ShippingInfo } from "../domain/shipping.js";
 
 export interface CatalogRepository {
   listProducts(locale: Locale): LocalizedProduct[];
@@ -16,6 +17,7 @@ export interface CheckoutSessionRequest {
   email: string;
   currency: Currency;
   locale: Locale;
+  shipping: ShippingInfo;
   successUrl: string;
   cancelUrl: string;
 }

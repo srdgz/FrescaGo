@@ -1,6 +1,7 @@
 import { parseCurrency } from "../domain/currency.js";
 import { parseLocale } from "../domain/locale.js";
 import { assertValidEmail, buildOrderLines } from "../domain/order.js";
+import { parseShippingInfo } from "../domain/shipping.js";
 import type {
   CatalogRepository,
   ExchangeRateProvider,
@@ -19,6 +20,7 @@ interface CheckoutInput {
   email: unknown;
   currency?: unknown;
   locale?: unknown;
+  shipping?: unknown;
 }
 
 export const makeCreateCheckout =
@@ -27,6 +29,7 @@ export const makeCreateCheckout =
     const email = assertValidEmail(input.email);
     const currency = parseCurrency(input.currency);
     const locale = parseLocale(input.locale);
+    const shipping = parseShippingInfo(input.shipping);
     const { usdPerEur } = await rates.getRate();
     const lines = buildOrderLines(
       input.items,
@@ -40,6 +43,7 @@ export const makeCreateCheckout =
       email,
       currency,
       locale,
+      shipping,
       successUrl: `${frontendUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${frontendUrl}/${locale}/cancel`,
     });

@@ -46,6 +46,15 @@ const container = {
 const app = createApp(container);
 const product = products[0];
 
+const shipping = {
+  recipient: "Ana Pérez",
+  phone: "+34 600 123 123",
+  street: "Calle Mayor 12, 3ºB",
+  postalCode: "28013",
+  city: "Madrid",
+  country: "ES",
+};
+
 describe("catalog routes", () => {
   it("lists products", async () => {
     const res = await request(app).get("/productos");
@@ -127,7 +136,10 @@ describe("POST /checkout", () => {
     createSession.mockResolvedValue({ id: "cs_test_123" });
   });
 
-  const send = (body: object) => request(app).post("/checkout").send(body);
+  const send = (body: object) =>
+    request(app)
+      .post("/checkout")
+      .send({ shipping, ...body });
 
   it("creates a session priced from the server catalog in euros", async () => {
     const res = await send({
@@ -179,6 +191,53 @@ describe("POST /checkout", () => {
   ])("rejects %s", async (_label, items) => {
     const res = await send({ items, email: "buyer@example.com" });
     expect(res.status).toBe(400);
+    expect(createSession).not.toHaveBeenCalled();
+  });
+
+  it("sends the shipping address to Stripe", async () => {
+    await send({
+      items: [{ id: product.id, quantity: 1 }],
+      email: "buyer@example.com",
+    });
+
+    expect(createSession.mock.calls[0][0].payment_intent_data.shipping).toEqual({
+      name: "Ana Pérez",
+      phone: "+34 600 123 123",
+      address: {
+        line1: "Calle Mayor 12, 3ºB",
+        postal_code: "28013",
+        city: "Madrid",
+        country: "ES",
+      },
+    });
+  });
+
+  it("rejects a checkout without a shipping address", async () => {
+    const res = await send({
+      items: [{ id: product.id, quantity: 1 }],
+      email: "buyer@example.com",
+      shipping: null,
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe("Dirección de envío no válida.");
+    expect(createSession).not.toHaveBeenCalled();
+  });
+
+  it("rejects an incomplete or unsupported shipping address", async () => {
+    for (const bad of [
+      { ...shipping, street: "" },
+      { ...shipping, city: undefined },
+      { ...shipping, country: "XX" },
+      { ...shipping, postalCode: "!!" },
+    ]) {
+      const res = await send({
+        items: [{ id: product.id, quantity: 1 }],
+        email: "buyer@example.com",
+        shipping: bad,
+      });
+      expect(res.status).toBe(400);
+    }
     expect(createSession).not.toHaveBeenCalled();
   });
 
