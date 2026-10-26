@@ -71,7 +71,11 @@
     "pngJpgGifHasta": "PNG, JPG, GIF up to 10MB"
   },
   "pagination": {
-    "comprar": "Buy"
+    "comprar": "Buy",
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}}"
   },
   "checkout": {
     "pagar": "Pay",
@@ -161,7 +165,9 @@
     "irDeCompras": "Go shopping"
   },
   "catalog": {
-    "buscarProductos": "Search products..."
+    "buscarProductos": "Search products...",
+    "search": "Search",
+    "clear": "Clear search"
   },
   "shop": {
     "tuCestaDeLa": "Your shopping basket",
@@ -209,6 +215,10 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
+  "theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
   "language": {
     "label": "Language",
     "es": "Español",
@@ -222,6 +232,8 @@
   "toast": {
     "added": "{{title}} added successfully!",
     "removed": "{{title}} removed successfully",
+    "decrease": "Remove one unit of {{title}}",
+    "increase": "Add one unit of {{title}}",
     "removedFromCart": "{{title}} removed successfully!",
     "notAdded": "The product could not be added",
     "minimum": "You can't remove any more units",

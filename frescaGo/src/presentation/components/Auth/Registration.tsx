@@ -49,7 +49,7 @@ const Registration = () => {
   return (
     <div>
       {!login ? (
-        <div className="bg-secondary/10 rounded-lg max-w-md lg:max-w-3xl mx-auto my-14 p-6 sm:p-10 md:p-14">
+        <div className="card max-w-md lg:max-w-3xl mx-auto my-14 p-6 sm:p-10 md:p-14">
           <form onSubmit={handleRegistration} className="text-secondary">
             <div className="border-b border-gray-200 pb-5">
               <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
@@ -65,7 +65,7 @@ const Registration = () => {
                 <input
                   type="text"
                   name="firstName"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                  className="field mt-2"
                 />
               </div>
               <div>
@@ -73,7 +73,7 @@ const Registration = () => {
                 <input
                   type="text"
                   name="lastName"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                  className="field mt-2"
                 />
               </div>
               <div className="col-span-full lg:col-span-2">
@@ -81,7 +81,7 @@ const Registration = () => {
                 <input
                   type="email"
                   name="email"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                  className="field mt-2"
                 />
               </div>
               <div className="relative col-span-full lg:col-span-2">
@@ -89,7 +89,7 @@ const Registration = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  className="block w-full rounded-md border-0 bg-white py-1.5 px-4 outline-none text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-secondary sm:text-sm sm:leading-6 mt-2"
+                  className="field mt-2"
                 />
                 <div
                   className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
@@ -117,18 +117,14 @@ const Registration = () => {
               </div>
             </div>
             {errMsg && (
-              <p className="bg-red-100 text-red-600 text-center py-2 rounded-md tracking-wide font-semibold mt-4">
+              <p className="bg-danger-soft text-danger text-center py-2 rounded-md tracking-wide font-semibold mt-4">
                 {errMsg}
               </p>
             )}
             <button
               disabled={loading}
               type="submit"
-              className={`mt-5 w-full py-3 uppercase text-base font-bold tracking-wide text-white rounded-md ${
-                loading
-                  ? "bg-primary/10"
-                  : "bg-primary hover:bg-primary-dark duration-200"
-              }`}
+              className="primary-btn mt-5 w-full uppercase tracking-wide disabled:opacity-60"
             >
               {loading ? t("common.loading") : t("common.register")}
             </button>
@@ -137,7 +133,7 @@ const Registration = () => {
             {t("registration.yaTienesUnaCuenta")}{" "}
             <button
               onClick={() => setLogin(true)}
-              className="text-primary font-semibold underline underline-offset-2 decoration-[1px] hover:text-primary-dark duration-200"
+              className="text-brand font-semibold underline underline-offset-2 decoration-[1px] hover:text-brand duration-200"
             >
               {t("registration.iniciarSesion")}
             </button>

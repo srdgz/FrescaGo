@@ -1,17 +1,66 @@
-@import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Montserrat&family=Roboto&family=Titillium+Web&display=swap");
+@import "./theme.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .primary-btn {
-    @apply bg-primary text-white font-semibold py-3 px-6 rounded-xl shadow-[0px_10px_14px_-7px_#de0029] hover:!scale-110 duration-300;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+
+  ::placeholder {
+    @apply text-gray-500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-@layer utilities {
-  .drop-shadow {
-    filter: drop-shadow(-6px 8px 15px rgba(0, 0, 0, 0.2));
+@layer components {
+  .primary-btn {
+    @apply inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-primary-dark;
+  }
+
+  .outline-btn {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-brand px-6 py-2.5 font-semibold text-brand transition-colors duration-200 hover:bg-soft;
+  }
+
+  .field {
+    @apply block w-full rounded-xl border border-gray-400 bg-surface px-4 py-2.5 text-ink shadow-sm transition-colors duration-200 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface shadow-sm;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full bg-accent-soft px-3 py-0.5 text-xs font-bold text-accent;
   }
 }

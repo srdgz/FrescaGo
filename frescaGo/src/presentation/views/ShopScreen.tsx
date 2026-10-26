@@ -22,7 +22,7 @@ const ShopScreen = () => {
       <section className="container py-12 md:py-24">
         {cartProduct.length > 0 ? (
           <>
-            <h1 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
               {t("shop.tuCestaDeLa")}
             </h1>
 
@@ -37,7 +37,7 @@ const ShopScreen = () => {
                   ))}
                 </div>
               </section>
-              <section className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+              <section className="card mt-16 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
                 <h2 className="text-lg font-medium text-gray-900">{t("shop.tuPedido")}</h2>
                 <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between">
@@ -72,8 +72,8 @@ const ShopScreen = () => {
             </div>
           </>
         ) : (
-          <div className="bg-white h-96 flex flex-col gap-2 items-center justify-center py-5 my-14 rounded-lg border border-gray-200 drop-shadow-2xl">
-            <h1 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
+          <div className="card my-14 flex h-96 flex-col items-center justify-center gap-2 py-5">
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
               {t("shop.tuCestaDeLa")}
             </h1>
             <p className="text-lg max-w-[600px] text-center text-gray-600 tracking-wide leading-6 py-8">

@@ -15,7 +15,7 @@ const CurrencySwitcher = () => {
     <div
       role="group"
       aria-label={t("currency.label")}
-      className="inline-flex overflow-hidden rounded-full border border-gray-300 text-xs font-semibold"
+      className="inline-flex overflow-hidden rounded-full border border-gray-400 text-xs font-semibold"
     >
       {CURRENCIES.map((option) => (
         <button
@@ -27,7 +27,7 @@ const CurrencySwitcher = () => {
           className={`px-3 py-1 ${
             option === currency
               ? "bg-primary text-white"
-              : "text-gray-600 hover:text-primary"
+              : "text-gray-600 hover:text-brand"
           }`}
         >
           {SYMBOLS[option]}

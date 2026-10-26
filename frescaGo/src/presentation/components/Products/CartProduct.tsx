@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useAppStore } from "../../AppContext";
 import { useMoney } from "../../hooks/useMoney";
+import { useLocalePath } from "../../LocaleContext";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
 
@@ -16,6 +17,7 @@ const CartProduct = ({ product }: CartProductProps) => {
   const { t } = useTranslation();
   const { removeFromCart } = useAppStore();
   const { format } = useMoney();
+  const path = useLocalePath();
 
   const handleRemoveProduct = () => {
     if (product) {
@@ -26,11 +28,11 @@ const CartProduct = ({ product }: CartProductProps) => {
 
   return (
     <div className="flex py-6 sm:py-10">
-      <Link to={`/productos/${product?.id}`}>
+      <Link to={path("products", product?.id)} className="flex-none self-start rounded-2xl bg-photo p-2">
         <img
           src={product?.image}
-          alt="productImage"
-          className="h-24 w-24 object-cover object-center sm:h-48 sm:w-48"
+          alt=""
+          className="h-24 w-24 object-contain mix-blend-multiply sm:h-40 sm:w-40"
         />
       </Link>
       <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
@@ -54,7 +56,7 @@ const CartProduct = ({ product }: CartProductProps) => {
             <div className="absolute right-0 top-0">
               <button
                 onClick={handleRemoveProduct}
-                className="-m2 inline-flex p-2 text-gray-600 hover:text-primary"
+                className="-m2 inline-flex p-2 text-gray-600 hover:text-brand"
               >
                 <RiCloseCircleLine className="text-2xl" />
               </button>

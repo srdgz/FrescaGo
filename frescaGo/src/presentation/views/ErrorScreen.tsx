@@ -6,9 +6,9 @@ const ErrorScreen = () => {
   const { t } = useTranslation();
   const path = useLocalePath();
   return (
-    <main className="overflow-x-hidden min-h-screen flex justify-center items-center">
+    <main className="overflow-x-hidden flex min-h-[60vh] items-center justify-center">
       <div className="text-center">
-        <p className="text-4xl font-semibold text-primary">{t("notFound.error")}</p>
+        <p className="text-4xl font-semibold text-brand">{t("notFound.error")}</p>
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           {t("notFound.estaPaginaNoExiste")}
         </h1>

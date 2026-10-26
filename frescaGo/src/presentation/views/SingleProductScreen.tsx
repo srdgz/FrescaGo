@@ -58,20 +58,20 @@ const SingleProductScreen = () => {
 
         {productData && productData.id && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
-            <div className="flex justify-center">
+            <div className="flex items-center justify-center rounded-card bg-photo p-8">
               <img
                 src={productData.image}
                 alt={productData.title}
-                className="w-auto max-w-xs object-cover"
+                className="w-auto max-w-xs object-contain mix-blend-multiply"
               />
             </div>
 
             <div className="flex flex-col justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-800">
+                <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
                   {productData.title}
                 </h1>
-                <p className="text-2xl font-semibold text-secondary mt-4">
+                <p className="mt-4 text-2xl font-semibold text-accent">
                   {t("common.perKg", { price: format(productData.price) })}
                 </p>
                 <p className="text-gray-500 mt-2">
@@ -85,15 +85,15 @@ const SingleProductScreen = () => {
                 <AddToCartBtn
                   product={productData}
                   title={t("product.anadirAlCarrito")}
-                  className="bg-primary hover:bg-primary text-white p-3 text-lg rounded-full shadow-lg transition duration-200"
+                  className="primary-btn text-lg"
                 />
               </div>
-              <div className="bg-slate-100 p-5 rounded-md flex flex-col items-center justify-center gap-2">
+              <div className="flex flex-col items-center justify-center gap-2 rounded-card bg-soft p-5">
                 <p className="font-semibold">{t("product.pagosSeguros")}</p>
                 <img
                   src="https://www.freshlycosmetics.com/img/paymentlogos/imatge_es.png"
                   alt={t("product.pagoSeguro")}
-                  className="w-auto object-cover"
+                  className="w-auto rounded-lg bg-white object-cover p-2"
                 />
               </div>
             </div>

@@ -59,9 +59,9 @@ const SuccessScreen = () => {
       <section className="container py-12 md:py-24">
         {loading && <Loading />}
         <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-center text-secondary">
+          <h1 className="text-2xl md:text-4xl font-bold text-center text-secondary">
             {loading ? t("success.processing") : t("success.accepted")}
-          </h2>
+          </h1>
           <p>
             {loading ? t("success.onceDone") : t("success.now")} {t("success.puedesVerTusPedidos")}
           </p>

@@ -71,7 +71,11 @@
     "pngJpgGifHasta": "PNG, JPG, GIF hasta 10MB"
   },
   "pagination": {
-    "comprar": "Comprar"
+    "comprar": "Comprar",
+    "label": "Paginación",
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "page": "Página {{page}}"
   },
   "checkout": {
     "pagar": "Pagar",
@@ -161,7 +165,9 @@
     "irDeCompras": "Ir de compras"
   },
   "catalog": {
-    "buscarProductos": "Buscar productos..."
+    "buscarProductos": "Buscar productos...",
+    "search": "Buscar",
+    "clear": "Borrar búsqueda"
   },
   "shop": {
     "tuCestaDeLa": "Tu cesta de la compra",
@@ -209,6 +215,10 @@
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
   },
+  "theme": {
+    "toLight": "Cambiar a tema claro",
+    "toDark": "Cambiar a tema oscuro"
+  },
   "language": {
     "label": "Idioma",
     "es": "Español",
@@ -222,6 +232,8 @@
   "toast": {
     "added": "{{title}} añadido con éxito!",
     "removed": "{{title}} eliminado con éxito",
+    "decrease": "Quitar una unidad de {{title}}",
+    "increase": "Añadir una unidad de {{title}}",
     "removedFromCart": "{{title}} eliminado con éxito!",
     "notAdded": "No se ha añadido el producto",
     "minimum": "No puedes eliminar más productos",

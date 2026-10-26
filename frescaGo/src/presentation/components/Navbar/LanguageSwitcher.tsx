@@ -13,7 +13,7 @@ const LanguageSwitcher = () => {
     <div
       role="group"
       aria-label={t("language.label")}
-      className="inline-flex overflow-hidden rounded-full border border-gray-300 text-xs font-semibold"
+      className="inline-flex overflow-hidden rounded-full border border-gray-400 text-xs font-semibold"
     >
       {LOCALES.map((locale) => (
         <Link
@@ -26,7 +26,7 @@ const LanguageSwitcher = () => {
           className={`px-3 py-1 uppercase ${
             locale === current
               ? "bg-primary text-white"
-              : "text-gray-600 hover:text-primary"
+              : "text-gray-600 hover:text-brand"
           }`}
         >
           {locale}

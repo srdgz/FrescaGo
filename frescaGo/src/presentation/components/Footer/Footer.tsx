@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 const Footer = () => {
   const { t } = useTranslation();
   return (
-    <footer className="bg-primary/10 py-12 mt-12">
+    <footer className="mt-12 border-t border-line bg-soft py-12">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -25,7 +25,7 @@ const Footer = () => {
               href="https://github.com/srdgz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-secondary hover:underline"
+              className="font-medium text-brand underline-offset-4 hover:underline"
             >
               {t("footer.sandraRodriguez")}
             </a>
@@ -33,26 +33,26 @@ const Footer = () => {
         </div>
         <div className="text-3xl flex items-center gap-4 text-gray-700 mt-6 md:mt-0">
           <a
-            href="https://www.facebook.com"
+            href="https://www.facebook.com" aria-label="Facebook"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-secondary transition-colors duration-300"
+            className="transition-colors duration-300 hover:text-brand"
           >
             <RiFacebookCircleFill />
           </a>
           <a
-            href="https://www.twitter.com"
+            href="https://www.twitter.com" aria-label="Twitter"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-secondary transition-colors duration-300"
+            className="transition-colors duration-300 hover:text-brand"
           >
             <RiTwitterFill />
           </a>
           <a
-            href="https://www.instagram.com"
+            href="https://www.instagram.com" aria-label="Instagram"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-secondary transition-colors duration-300"
+            className="transition-colors duration-300 hover:text-brand"
           >
             <RiInstagramFill />
           </a>

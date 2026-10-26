@@ -2,6 +2,7 @@ import { useState } from "react";
 import ResponsiveMenu from "./ResponsiveMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import CurrencySwitcher from "./CurrencySwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 import Logo from "../Utils/Logo";
 import { NavbarMenu } from "../../data/navbar";
 import { RiShoppingCart2Line, RiMenu3Fill, RiUserLine } from "react-icons/ri";
@@ -18,13 +19,13 @@ const Navbar = () => {
   const { cartProduct, currentUser } = useAppStore();
 
   return (
-    <>
+    <header className="sticky top-0 z-30 border-b border-line bg-canvas/90 backdrop-blur">
       <nav aria-label={t("nav.mainMenu")}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="container flex justify-between items-center py-4 md:pt-4"
+          className="container flex items-center justify-between py-3"
         >
           <Logo />
           <div className="hidden md:block">
@@ -33,7 +34,7 @@ const Navbar = () => {
                 <li key={menu.id}>
                   <Link
                     to={path(menu.route)}
-                    className="inline-block py-1 px-3 hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444] font-semibold"
+                    className="inline-block px-3 py-1 font-semibold underline-offset-8 decoration-2 hover:text-brand hover:underline"
                   >
                     {t(menu.label)}
                   </Link>
@@ -41,6 +42,9 @@ const Navbar = () => {
               ))}
               <li>
                 <LanguageSwitcher />
+              </li>
+              <li>
+                <ThemeSwitcher />
               </li>
               <li>
                 <CurrencySwitcher />
@@ -51,8 +55,8 @@ const Navbar = () => {
                   className="relative block"
                   aria-label={t("nav.cart")}
                 >
-                  <RiShoppingCart2Line className="hover:text-primary duration-200 text-2xl" />
-                  <span className="inline-flex items-center justify-center bg-primary text-white absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
+                  <RiShoppingCart2Line className="hover:text-brand duration-200 text-2xl" />
+                  <span className="inline-flex items-center justify-center absolute -right-2 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
                     {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                   </span>
                 </Link>
@@ -70,7 +74,7 @@ const Navbar = () => {
                       className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
-                    <RiUserLine className="hover:text-primary duration-200 text-2xl" />
+                    <RiUserLine className="hover:text-brand duration-200 text-2xl" />
                   )}
                 </Link>
               </li>
@@ -88,7 +92,7 @@ const Navbar = () => {
         </motion.div>
       </nav>
       <ResponsiveMenu open={open} setOpen={setOpen} />
-    </>
+    </header>
   );
 };
 

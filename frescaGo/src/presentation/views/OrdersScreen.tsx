@@ -47,18 +47,18 @@ const Orders = () => {
           <Loading />
         ) : orders.length > 0 ? (
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl text-secondary font-bold my-2">
+            <h1 className="text-2xl md:text-3xl text-secondary font-bold my-2">
               {t("orders.detallesDelPedido")}
-            </h2>
+            </h1>
             <p className="text-gray-600 mb-2">
               {t("orders.nombreDelCliente")}{" "}
-              <span className="text-black font-semibold">
+              <span className="text-ink font-semibold">
                 {currentUser?.firstName} {currentUser?.lastName}
               </span>
             </p>
             <p className="text-gray-600">
               {t("orders.totalDePedidos")}{" "}
-              <span className="text-black font-semibold">{orders.length}</span>
+              <span className="text-ink font-semibold">{orders.length}</span>
             </p>
             <p className="text-sm max-w-[600px] tracking-wide text-gray-500">
               {t("orders.aquiPuedesVerLos")}
@@ -108,25 +108,25 @@ const Orders = () => {
                               <div className="flex flex-col gap-1">
                                 <p className="text-sm sm:text-base text-gray-600">
                                   {t("orders.cantidadDeArticulosEn")}{" "}
-                                  <span className="text-black font-medium">
+                                  <span className="text-ink font-medium">
                                     {order?.orderItems?.length}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
                                   {t("orders.estadoDelPago")}{" "}
-                                  <span className="text-black font-medium">
+                                  <span className="text-ink font-medium">
                                     {t("orders.pagadoPorStripe")}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
                                   {t("orders.importeDelPedido")}{" "}
-                                  <span className="text-black font-medium">
+                                  <span className="text-ink font-medium">
                                     {format(totalProducts, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
                                 <p className="text-sm sm:text-base text-gray-600">
                                   {t("orders.importeDelEnvio")}{" "}
-                                  <span className="text-black font-medium">
+                                  <span className="text-ink font-medium">
                                     {format(SHIPPING_AMOUNT, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
@@ -138,12 +138,12 @@ const Orders = () => {
                                 >
                                   <Link
                                     to={path("products", item?.id)}
-                                    className="h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 flex-none rounded-lg bg-gray-100 border border-gray-300 hover:border-skyText overflow-hidden"
+                                    className="h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 flex-none rounded-2xl bg-photo border border-line hover:border-brand overflow-hidden"
                                   >
                                     <img
                                       src={item?.image}
                                       alt={t("orders.imagenDelProducto")}
-                                      className="h-full w-full object-cover object-center hover:scale-110 duration-300"
+                                      className="h-full w-full object-contain mix-blend-multiply p-2"
                                     />
                                   </Link>
                                   <div className="flex flex-auto flex-col">
@@ -207,9 +207,9 @@ const Orders = () => {
           <main className="overflow-x-hidden">
             <section className="container py-12 md:py-24">
               <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
-                <h2 className="text-2xl md:text-4xl font-bold text-center text-secondary">
+                <h1 className="text-2xl md:text-4xl font-bold text-center text-secondary">
                   {t("orders.aunNoTienesPedidos")}
-                </h2>
+                </h1>
                 <p>{t("orders.noHasRealizadoNinguna")}</p>
                 <Button text={t("orders.irDeCompras")} to={path("products")} />
               </div>

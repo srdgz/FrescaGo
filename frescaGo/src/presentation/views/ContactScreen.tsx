@@ -7,7 +7,7 @@ const ContactScreen = () => {
     <main className="overflow-x-hidden">
       <section className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-secondary">{t("contact.contactanos")}</h2>
+          <h1 className="text-4xl font-bold text-secondary">{t("contact.contactanos")}</h1>
           <p className="mt-4 text-lg text-gray-600">
             {t("contact.estamosAquiParaAyudarte")}
           </p>
@@ -57,7 +57,7 @@ const ContactScreen = () => {
                   id="name"
                   name="name"
                   required
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                  className="field mt-1"
                 />
               </div>
 
@@ -73,7 +73,7 @@ const ContactScreen = () => {
                   id="email"
                   name="email"
                   required
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                  className="field mt-1"
                 />
               </div>
 
@@ -89,7 +89,7 @@ const ContactScreen = () => {
                   name="message"
                   rows={4}
                   required
-                  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                  className="field mt-1"
                 ></textarea>
               </div>
 

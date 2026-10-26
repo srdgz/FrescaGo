@@ -9,8 +9,8 @@ const AboutScreen = () => {
     <main className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div className="text-center md:text-left">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
-            {t("about.sobreFresca")}<span className="text-secondary">Go</span>
+          <h1 className="text-4xl md:text-6xl font-bold text-brand mb-6">
+            {t("about.sobreFresca")}<span className="text-accent">Go</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-8">
             {t("about.enFrescagoNosDedicamos")}

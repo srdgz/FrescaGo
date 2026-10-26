@@ -1,50 +1,20 @@
-export const FadeUp = (delay: number) => {
-  return {
-    hidden: {
-      opacity: 0,
-      y: 100,
+const reveal = (axis: "x" | "y", from: number) => (delay: number) => ({
+  hidden: {
+    opacity: 0,
+    [axis]: from,
+  },
+  visible: {
+    opacity: 1,
+    [axis]: 0,
+    transition: {
+      duration: 0.6,
+      delay: Math.min(delay * 0.4, 0.5),
     },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 1,
-        delay: delay,
-      },
-    },
-  };
-};
+  },
+});
 
-export const FadeLeft = (delay: number) => {
-  return {
-    hidden: {
-      opacity: 0,
-      x: 100,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 1,
-        delay: delay,
-      },
-    },
-  };
-};
+export const FadeUp = reveal("y", 40);
 
-export const FadeRight = (delay: number) => {
-  return {
-    hidden: {
-      opacity: 0,
-      x: -100,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 1,
-        delay: delay,
-      },
-    },
-  };
-};
+export const FadeLeft = reveal("x", 40);
+
+export const FadeRight = reveal("x", -40);

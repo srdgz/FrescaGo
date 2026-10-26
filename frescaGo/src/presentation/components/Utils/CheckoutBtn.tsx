@@ -31,17 +31,21 @@ const CheckoutBtn = ({ products }: CheckoutBtnProps) => {
         <button
           onClick={handleCheckout}
           type="submit"
-          className="w-full rounded-md border border-transparent bg-gray-800 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-gray-50 duration-200"
+          className="primary-btn w-full"
         >
           {t("checkout.pagar")}
         </button>
       ) : (
-        <button className="w-full text-base text-white text-center rounded-md border border-transparent bg-gray-500 px-4 py-3 cursor-not-allowed">
+        <button
+          type="button"
+          disabled
+          className="w-full cursor-not-allowed rounded-full bg-gray-300 px-6 py-3 text-center font-semibold text-gray-700"
+        >
           {t("checkout.pagar")}
         </button>
       )}
       {!currentUser && (
-        <p className="mt-2 text-sm font-medium text-red-500 text-center">
+        <p className="mt-2 text-sm font-medium text-danger text-center">
           {t("checkout.necesitasIniciarSesionPara")}
         </p>
       )}

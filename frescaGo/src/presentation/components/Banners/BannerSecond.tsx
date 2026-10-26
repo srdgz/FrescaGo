@@ -10,15 +10,15 @@ const BannerSecond = () => {
       <div className="container grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 py-14 md:py-24">
         <div className="flex flex-col justify-center">
           <div className="text-center md:text-left space-y-4 lg:max-w-[400px] z-20">
-            <motion.h1
+            <motion.h2
               variants={FadeUp(0.5)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="text-3xl lg:text-6xl font-bold"
+              className="text-3xl lg:text-5xl font-bold"
             >
               {t("bannerApp.descargaNuestraApp")}
-            </motion.h1>
+            </motion.h2>
             <motion.p
               variants={FadeUp(0.7)}
               initial="hidden"
@@ -58,6 +58,7 @@ const BannerSecond = () => {
               >
                 <img
                   src="https://cdn1.bodas.net/assets/img/footer/googleplay.png"
+                  alt="Google Play"
                   srcSet="https://cdn1.bodas.net/assets/img/footer/googleplay@2x.png"
                   loading="lazy"
                   className="mx-auto md:mx-0 max-h-12"
@@ -70,6 +71,7 @@ const BannerSecond = () => {
               >
                 <img
                   src="https://cdn1.bodas.net/assets/img/footer/appstore.png"
+                  alt="App Store"
                   srcSet="https://cdn1.bodas.net/assets/img/footer/appstore@2x.png"
                   loading="lazy"
                   className="mx-auto md:mx-0 max-h-12"

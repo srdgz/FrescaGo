@@ -53,7 +53,7 @@ const AvatarUploader = ({
       </div>
       <div className="mt-4 flex items-center mb-1 text-sm leading-6 text-gray-600">
         <label htmlFor="file-upload">
-          <span className="relative cursor-pointer rounded-md px-2 py-1 bg-secondary text-white hover:bg-primary-dark">
+          <span className="relative cursor-pointer rounded-full bg-primary px-4 py-1.5 font-semibold text-white transition-colors hover:bg-primary-dark focus-within:ring-2">
             {t("avatar.subirArchivo")}
           </span>
           <input

@@ -19,9 +19,9 @@ const Hero = () => {
               variants={FadeRight(0.6)}
               initial="hidden"
               animate="visible"
-              className="text-5xl lg:text-6xl font-bold leading-snug xl:leading-normal font-averia"
+              className="font-display text-5xl font-bold leading-tight tracking-tight lg:text-6xl"
             >
-              <span className="text-secondary">{t("hero.frescura")}</span>
+              <span className="text-accent">{t("hero.frescura")}</span>
               <br />
               {t("hero.directa")}
               <br />{t("hero.aTuPuerta")}
@@ -30,7 +30,7 @@ const Hero = () => {
               variants={FadeRight(0.9)}
               initial="hidden"
               animate="visible"
-              className="text-2xl tracking-wide py-6"
+              className="py-6 text-xl font-medium text-gray-800 md:text-2xl"
             >
               {t("hero.noEsperesMasPara")}
             </motion.p>
@@ -38,7 +38,7 @@ const Hero = () => {
               variants={FadeRight(1.2)}
               initial="hidden"
               animate="visible"
-              className="text-gray-400 pb-6"
+              className="pb-6 text-gray-600"
             >
               {t("hero.compraEnFrescagoY")}
             </motion.p>
@@ -56,23 +56,24 @@ const Hero = () => {
             </motion.div>
           </div>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="relative flex items-center justify-center">
+          <div aria-hidden="true" className="absolute h-[280px] w-[280px] rounded-full bg-soft sm:h-[360px] sm:w-[360px] md:h-[460px] md:w-[460px]"></div>
           <motion.img
             initial={{ opacity: 0, x: 200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             src={heroEnsalada}
-            alt="FrescaGo ensalada"
-            className="w-[350px] md:w-[550px] drop-shadow"
+            alt=""
+            className="relative z-10 w-[300px] drop-shadow sm:w-[380px] md:w-[500px]"
           />
         </div>
-        <div className="absolute top-14 md:top-0 right-1/2 blur-sm opacity-80 rotate-[40deg]">
+        <div aria-hidden="true" className="absolute right-1/2 top-14 rotate-[40deg] opacity-60 blur-sm md:top-0">
           <motion.img
             initial={{ opacity: 0, x: -200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
             src={heroHoja}
-            alt="FrescaGo hoja"
+            alt=""
             className="w-full md:max-w-[300px]"
           />
         </div>

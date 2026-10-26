@@ -26,15 +26,15 @@ const BannerThird = () => {
         <div></div>
         <div className="flex flex-col justify-center">
           <div className="text-center md:text-left space-y-4 md:ms-14 lg:max-w-[400px]">
-            <motion.h1
+            <motion.h2
               variants={FadeLeft(0.5)}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="text-3xl lg:text-6xl font-bold"
+              className="text-3xl lg:text-5xl font-bold"
             >
               {t("bannerOrder.hazTuPedidoHoy")}
-            </motion.h1>
+            </motion.h2>
             <motion.p
               variants={FadeLeft(0.7)}
               initial="hidden"

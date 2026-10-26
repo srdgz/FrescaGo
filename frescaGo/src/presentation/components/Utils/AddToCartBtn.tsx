@@ -51,7 +51,8 @@ const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
         <div className="flex items-center justify-start gap-2 mt-2">
           <button
             onClick={handleDeleteProduct}
-            className="bg-[#f7f7f7] text-black p-2 border-[1px] border-gray-200 hover:border-skyText rounded-full text-sm hover:bg-white duration-200 cursor-pointer"
+            aria-label={t("toast.decrease", { title: product?.title })}
+            className="rounded-full border border-gray-400 bg-surface p-2 text-sm text-ink transition-colors duration-200 hover:border-brand hover:text-brand"
           >
             <FaMinus />
           </button>
@@ -60,7 +61,8 @@ const AddToCartBtn = ({ className, title, product }: AddToCartBtnProps) => {
           </p>
           <button
             onClick={handleAddToCart}
-            className="bg-[#f7f7f7] text-black p-2 border-[1px] border-gray-200 hover:border-skyText rounded-full text-sm hover:bg-white duration-200 cursor-pointer"
+            aria-label={t("toast.increase", { title: product?.title })}
+            className="rounded-full border border-gray-400 bg-surface p-2 text-sm text-ink transition-colors duration-200 hover:border-brand hover:text-brand"
           >
             <FaPlus />
           </button>

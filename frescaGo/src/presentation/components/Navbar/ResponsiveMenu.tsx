@@ -4,6 +4,7 @@ import { RiShoppingCart2Line, RiUserLine } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 import CurrencySwitcher from "./CurrencySwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 import { NavbarMenu } from "../../data/navbar";
 import { useAppStore } from "../../AppContext";
 import { useLocalePath } from "../../LocaleContext";
@@ -33,9 +34,9 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -100 }}
           transition={{ duration: 0.3 }}
-          className="absolute top-20 left-0 w-full h-screen z-20"
+          className="absolute left-0 top-full z-20 h-screen w-full bg-canvas/95 md:hidden"
         >
-          <div className="text-xl font-semibold  bg-primary text-white py-10 m-6 rounded-3xl">
+          <div className="card m-4 py-8 text-xl font-semibold">
             <ul className="flex flex-col items-center gap-10">
               {NavbarMenu.map((menu) => (
                 <li key={menu.id}>
@@ -44,9 +45,10 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                   </button>
                 </li>
               ))}
-              <li className="flex flex-row gap-4 items-center text-gray-900">
+              <li className="flex flex-row items-center gap-3">
                 <LanguageSwitcher />
                 <CurrencySwitcher />
+                <ThemeSwitcher />
               </li>
               <li className="flex flex-row gap-12 items-center">
                 <button
@@ -55,7 +57,7 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                   aria-label={t("nav.cart")}
                 >
                   <RiShoppingCart2Line className="text-2xl" />
-                  <span className="inline-flex items-center justify-center bg-white text-primary absolute -top-1 -right-2 text-[9px] rounded-full w-4 h-4">
+                  <span className="absolute -right-2 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
                     {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                   </span>
                 </button>

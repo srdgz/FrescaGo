@@ -55,10 +55,10 @@ const EditProfileScreen = () => {
   return (
     <main className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
-        <div className="relative max-w-md lg:max-w-3xl mx-auto bg-secondary/10 px-6 py-20 shadow-2xl rounded-3xl sm:px-16">
-          <h2 className="text-3xl font-bold text-secondary mb-6">
+        <div className="card relative mx-auto max-w-md px-6 py-16 sm:px-16 lg:max-w-3xl">
+          <h1 className="mb-6 text-3xl font-bold tracking-tight">
             {t("editProfile.editarPerfil")}
-          </h2>
+          </h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <AvatarUploader
               onFileChange={handleFileChange}
@@ -66,67 +66,67 @@ const EditProfileScreen = () => {
               imgClassName="w-full h-full"
             />
             <div>
-              <label className="block mb-2">{t("editProfile.nombre")}</label>
-              <input
+              <label htmlFor="profile-nombre" className="mb-2 block text-sm font-medium">{t("editProfile.nombre")}</label>
+              <input id="profile-nombre"
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="border p-2 rounded w-full max-w-md text-gray-600"
+                className="field max-w-md"
               />
             </div>
             <div>
-              <label className="block mb-2">{t("editProfile.apellidos")}</label>
-              <input
+              <label htmlFor="profile-apellidos" className="mb-2 block text-sm font-medium">{t("editProfile.apellidos")}</label>
+              <input id="profile-apellidos"
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="border p-2 rounded w-full max-w-md text-gray-600"
+                className="field max-w-md"
               />
             </div>
             <div>
-              <label className="block mb-2">{t("editProfile.direccionCompleta")}</label>
-              <input
+              <label htmlFor="profile-direccionCompleta" className="mb-2 block text-sm font-medium">{t("editProfile.direccionCompleta")}</label>
+              <input id="profile-direccionCompleta"
                 type="text"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="border p-2 rounded w-full max-w-md text-gray-600"
+                className="field max-w-md"
               />
             </div>
             <div>
-              <label className="block mb-2">{t("editProfile.telefono")}</label>
-              <input
+              <label htmlFor="profile-telefono" className="mb-2 block text-sm font-medium">{t("editProfile.telefono")}</label>
+              <input id="profile-telefono"
                 type="text"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="border p-2 rounded w-full max-w-md text-gray-600"
+                className="field max-w-md"
               />
             </div>
             <div>
-              <label className="block mb-2">{t("editProfile.email")}</label>
-              <input
+              <label htmlFor="profile-email" className="mb-2 block text-sm font-medium">{t("editProfile.email")}</label>
+              <input id="profile-email"
                 type="text"
                 readOnly
                 value={currentUser?.email}
-                className="border p-2 rounded w-full max-w-md cursor-none text-gray-600"
+                className="field max-w-md opacity-70"
               />
             </div>
             <div>
-              <label className="block mb-2">{t("editProfile.contrasena")}</label>
-              <input
+              <label htmlFor="profile-contrasena" className="mb-2 block text-sm font-medium">{t("editProfile.contrasena")}</label>
+              <input id="profile-contrasena"
                 type="text"
                 readOnly
                 value="******"
-                className="border p-2 rounded w-full max-w-md cursor-none text-gray-600 mb-12"
+                className="field mb-12 max-w-md opacity-70"
               />
             </div>
             <div className="flex justify-end gap-8 items-start">
               <button
                 type="submit"
-                className="bg-secondary text-white font-semibold py-3 px-6 rounded-xl shadow-[0px_10px_14px_-7px_#fb923c] hover:!scale-110 duration-300"
+                className="primary-btn"
               >
                 {t("editProfile.guardar")}
               </button>
