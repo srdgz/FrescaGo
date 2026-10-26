@@ -74,6 +74,15 @@ describe("OrdersScreen", () => {
     expect(screen.queryByText(/€/)).not.toBeInTheDocument();
   });
 
+  it("shows exactly the amount Stripe charged when it is known", async () => {
+    setup([{ ...order, amountPaid: 9.87 }]);
+
+    await userEvent.click(await screen.findByRole("button", { name: /FG-W8WCSAOZ/ }));
+
+    expect((await screen.findAllByText(/9,87 US[$]/)).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/9,89 US[$]/)).not.toBeInTheDocument();
+  });
+
   it("shows free shipping when none was charged", async () => {
     setup([{ ...order, shippingCost: 0 }]);
 

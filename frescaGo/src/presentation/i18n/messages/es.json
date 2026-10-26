@@ -205,15 +205,30 @@
     "pagoSeguro": "pago seguro"
   },
   "success": {
-    "processing": "Tu pago se está procesando",
-    "accepted": "Pago aceptado en FrescaGo",
-    "onceDone": "Una vez completado",
-    "now": "Ahora",
-    "puedesVerTusPedidos": "puedes ver tus pedidos o continuar comprando con nosotros.",
     "misPedidos": "Mis pedidos",
     "seguirComprando": "Seguir comprando",
     "paid": "Pago realizado correctamente",
-    "saveError": "Error al guardar el pedido"
+    "saveError": "Error al guardar el pedido",
+    "title": {
+      "confirming": "Estamos confirmando tu pago",
+      "confirmed": "Pago aceptado en FrescaGo",
+      "unpaid": "Todavía no hemos recibido tu pago",
+      "notFound": "No encontramos este pedido",
+      "mismatch": "Este pedido es de otra cuenta",
+      "error": "No pudimos confirmar tu pedido",
+      "needLogin": "Inicia sesión para ver tu pedido"
+    },
+    "body": {
+      "confirming": "Un momento, estamos comprobando el pago con Stripe.",
+      "confirmed": "Tu pedido está guardado. Ya puedes verlo en tus pedidos o seguir comprando con nosotros.",
+      "unpaid": "Stripe aún no nos ha confirmado el pago. Espera unos segundos e inténtalo de nuevo.",
+      "notFound": "No hemos podido encontrar este pedido. Si has pagado, escríbenos y lo revisamos.",
+      "mismatch": "Inicia sesión con la cuenta con la que hiciste la compra para ver este pedido.",
+      "error": "No hemos podido confirmar tu pedido ahora mismo. Tu pago está a salvo; inténtalo de nuevo en unos minutos.",
+      "needLogin": "Inicia sesión con la cuenta con la que has comprado para guardar y ver tu pedido."
+    },
+    "orderNumber": "Tu número de pedido es",
+    "retry": "Reintentar"
   },
   "meta": {
     "title": "FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!"

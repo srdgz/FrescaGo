@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 import { makeUseCases } from "../useCases";
+import {
+  OrderOwnerMismatchError,
+  PaymentNotCompletedError,
+} from "../../domain/order";
+import type { OrderConfirmation } from "../../domain/order";
 import type { Dependencies } from "../useCases";
 import { apple, buyer } from "../../test/fixtures";
 
@@ -21,7 +26,7 @@ const setup = () => {
     users: { get: vi.fn(), create: vi.fn(), update: vi.fn() },
     orders: { list: vi.fn(), add: vi.fn() },
     images: { upload: vi.fn().mockResolvedValue("https://img/avatar.png") },
-    checkout: { start: vi.fn() },
+    checkout: { start: vi.fn(), confirm: vi.fn() },
   };
   return { deps, useCases: makeUseCases(deps as unknown as Dependencies) };
 };
@@ -116,54 +121,137 @@ describe("updateProfile", () => {
   });
 });
 
-describe("saveOrder", () => {
-  const pricing = { currency: "USD" as const, usdPerEur: 1.1 };
+describe("confirmOrder", () => {
+  const confirmation: OrderConfirmation = {
+    paymentId: "cs_test_a1B2c3D4e5F6g7H8",
+    email: buyer.email,
+    currency: "USD",
+    exchangeRate: 1.1,
+    locale: "en",
+    createdAt: "2026-10-26T10:15:00.000Z",
+    items: [{ ...apple, quantity: 2 }],
+    shippingCost: 4.99,
+    amountPaid: 9.89,
+    shipping: {
+      recipient: "Ana Pérez",
+      phone: "600123123",
+      street: "Calle Mayor 12, 3ºB",
+      postalCode: "28013",
+      city: "Madrid",
+      country: "ES",
+    },
+  };
 
-  it("stores a Stripe order with currency, date and where to ship it", async () => {
-    const { deps, useCases } = setup();
-    const items = [{ ...apple, quantity: 2 }];
+  const confirmed = (overrides: Partial<OrderConfirmation> = {}) => {
+    const view = setup();
+    view.deps.checkout.confirm.mockResolvedValue({ ...confirmation, ...overrides });
+    view.deps.orders.list.mockResolvedValue([]);
+    return view;
+  };
 
-    await useCases.saveOrder(buyer, "cs_123", items, pricing);
+  it("saves the order exactly as Stripe confirmed it", async () => {
+    const { deps, useCases } = confirmed();
 
+    const result = await useCases.confirmOrder(buyer, confirmation.paymentId);
+
+    expect(deps.checkout.confirm).toHaveBeenCalledWith(confirmation.paymentId);
     expect(deps.orders.add).toHaveBeenCalledWith(buyer.email, {
       userEmail: buyer.email,
-      paymentId: "cs_123",
-      orderItems: items,
+      paymentId: confirmation.paymentId,
+      orderItems: confirmation.items,
       paymentMethod: "stripe",
       userId: buyer.id,
       currency: "USD",
       exchangeRate: 1.1,
-      createdAt: expect.stringMatching(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T/),
+      createdAt: "2026-10-26T10:15:00.000Z",
       shippingCost: 4.99,
+      amountPaid: 9.89,
       shipping: {
         recipient: "Ana Pérez",
         phone: "600123123",
-        address: buyer.shippingAddress,
+        address: {
+          street: "Calle Mayor 12, 3ºB",
+          postalCode: "28013",
+          city: "Madrid",
+          country: "ES",
+        },
       },
     });
+    expect(result.alreadySaved).toBe(false);
+    expect(result.order.paymentId).toBe(confirmation.paymentId);
   });
 
-  it("records free shipping on orders above 30 euros", async () => {
+  it("ignores whatever is in the cart or the profile when building the order", async () => {
+    const { deps, useCases } = confirmed();
+
+    await useCases.confirmOrder(
+      { ...buyer, shippingAddress: undefined, phone: undefined },
+      confirmation.paymentId
+    );
+
+    const order = deps.orders.add.mock.calls[0][1];
+    expect(order.shipping.address.street).toBe("Calle Mayor 12, 3ºB");
+    expect(order.orderItems).toEqual(confirmation.items);
+  });
+
+  it("accepts the buyer email whatever its case", async () => {
+    const { deps, useCases } = confirmed({ email: "BUYER@Example.com" });
+
+    await useCases.confirmOrder(buyer, confirmation.paymentId);
+
+    expect(deps.orders.add).toHaveBeenCalledTimes(1);
+  });
+
+  it("refuses an order that belongs to another account", async () => {
+    const { deps, useCases } = confirmed({ email: "someone@else.com" });
+
+    await expect(
+      useCases.confirmOrder(buyer, confirmation.paymentId)
+    ).rejects.toThrow(OrderOwnerMismatchError);
+    expect(deps.orders.list).not.toHaveBeenCalled();
+    expect(deps.orders.add).not.toHaveBeenCalled();
+  });
+
+  it("does not save the same payment twice", async () => {
+    const { deps, useCases } = confirmed();
+    deps.orders.list.mockResolvedValue([
+      { paymentId: confirmation.paymentId, userEmail: buyer.email },
+    ]);
+
+    const result = await useCases.confirmOrder(buyer, confirmation.paymentId);
+
+    expect(result.alreadySaved).toBe(true);
+    expect(deps.orders.add).not.toHaveBeenCalled();
+  });
+
+  it("saves nothing when the payment cannot be confirmed", async () => {
     const { deps, useCases } = setup();
+    deps.checkout.confirm.mockRejectedValue(new PaymentNotCompletedError());
 
-    await useCases.saveOrder(buyer, "cs_125", [{ ...apple, quantity: 16 }], pricing);
-
-    expect(deps.orders.add.mock.calls[0][1].shippingCost).toBe(0);
+    await expect(
+      useCases.confirmOrder(buyer, confirmation.paymentId)
+    ).rejects.toThrow(PaymentNotCompletedError);
+    expect(deps.orders.add).not.toHaveBeenCalled();
   });
 
   it("never sends undefined fields to the database", async () => {
-    const { deps, useCases } = setup();
+    const { deps, useCases } = confirmed({ shipping: null });
 
-    await useCases.saveOrder(
-      { ...buyer, shippingAddress: undefined, phone: undefined },
-      "cs_124",
-      [apple],
-      pricing
-    );
+    await useCases.confirmOrder(buyer, confirmation.paymentId);
 
     const order = deps.orders.add.mock.calls[0][1];
     expect(Object.values(order)).not.toContain(undefined);
     expect("shipping" in order).toBe(false);
+  });
+
+  it("leaves out the phone when the buyer gave none", async () => {
+    const { deps, useCases } = confirmed({
+      shipping: { ...confirmation.shipping!, phone: undefined },
+    });
+
+    await useCases.confirmOrder(buyer, confirmation.paymentId);
+
+    expect("phone" in deps.orders.add.mock.calls[0][1].shipping).toBe(false);
   });
 });
 

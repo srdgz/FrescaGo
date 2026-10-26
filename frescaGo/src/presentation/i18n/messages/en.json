@@ -205,15 +205,30 @@
     "pagoSeguro": "secure payment"
   },
   "success": {
-    "processing": "Your payment is being processed",
-    "accepted": "Payment accepted at FrescaGo",
-    "onceDone": "Once it is complete",
-    "now": "Now",
-    "puedesVerTusPedidos": "you can view your orders or keep shopping with us.",
     "misPedidos": "My orders",
     "seguirComprando": "Keep shopping",
     "paid": "Payment completed successfully",
-    "saveError": "Error saving the order"
+    "saveError": "Error saving the order",
+    "title": {
+      "confirming": "We are confirming your payment",
+      "confirmed": "Payment accepted at FrescaGo",
+      "unpaid": "We have not received your payment yet",
+      "notFound": "We could not find this order",
+      "mismatch": "This order belongs to another account",
+      "error": "We could not confirm your order",
+      "needLogin": "Sign in to see your order"
+    },
+    "body": {
+      "confirming": "One moment, we are checking the payment with Stripe.",
+      "confirmed": "Your order is saved. You can now see it in your orders or keep shopping with us.",
+      "unpaid": "Stripe has not confirmed the payment to us yet. Wait a few seconds and try again.",
+      "notFound": "We could not find this order. If you have paid, write to us and we will look into it.",
+      "mismatch": "Sign in with the account you used to buy to see this order.",
+      "error": "We could not confirm your order right now. Your payment is safe; please try again in a few minutes.",
+      "needLogin": "Sign in with the account you bought with to save and see your order."
+    },
+    "orderNumber": "Your order number is",
+    "retry": "Try again"
   },
   "meta": {
     "title": "FrescaGo | Order today and enjoy fresh fruit and vegetables!"

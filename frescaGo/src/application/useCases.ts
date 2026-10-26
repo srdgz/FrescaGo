@@ -1,9 +1,12 @@
-import { shippingCost } from "../domain/cart";
 import type { CartItem } from "../domain/cart";
 import type { Currency } from "../domain/currency";
 import type { Locale } from "../domain/locale";
+import {
+  OrderOwnerMismatchError,
+  orderFromConfirmation,
+} from "../domain/order";
 import type { Order } from "../domain/order";
-import { normalizeShippingAddress, recipientOf } from "../domain/user";
+import { normalizeShippingAddress } from "../domain/user";
 import type {
   ProfileForm,
   Registration,
@@ -84,30 +87,23 @@ export const makeUseCases = ({
 
   listOrders: (email: string) => orders.list(email),
 
-  saveOrder: (
+  async confirmOrder(
     user: User,
-    paymentId: string,
-    items: CartItem[],
-    pricing: { currency: Currency; usdPerEur: number }
-  ) => {
-    const shipping: ShippingDetails | undefined = user.shippingAddress && {
-      recipient: recipientOf(user),
-      ...(user.phone ? { phone: user.phone } : {}),
-      address: user.shippingAddress,
-    };
-    const order: Order = {
-      userEmail: user.email,
-      paymentId,
-      orderItems: items,
-      paymentMethod: "stripe",
-      userId: user.id,
-      currency: pricing.currency,
-      exchangeRate: pricing.usdPerEur,
-      createdAt: new Date().toISOString(),
-      shippingCost: shippingCost(items),
-      ...(shipping ? { shipping } : {}),
-    };
-    return orders.add(user.email, order);
+    sessionId: string
+  ): Promise<{ order: Order; alreadySaved: boolean }> {
+    const confirmation = await checkout.confirm(sessionId);
+    if (confirmation.email.toLowerCase() !== user.email.toLowerCase()) {
+      throw new OrderOwnerMismatchError();
+    }
+    const order = orderFromConfirmation(confirmation, user);
+    const saved = await orders.list(user.email);
+    const alreadySaved = saved.some(
+      (existing) => existing.paymentId === order.paymentId
+    );
+    if (!alreadySaved) {
+      await orders.add(user.email, order);
+    }
+    return { order, alreadySaved };
   },
 
   startCheckout: (

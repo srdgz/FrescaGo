@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { orderReference, orderTotal } from "../order";
-import type { Order } from "../order";
+import {
+  orderFromConfirmation,
+  orderReference,
+  orderTotal,
+} from "../order";
+import type { Order, OrderConfirmation } from "../order";
 import { apple, pear } from "../../test/fixtures";
 
 describe("order", () => {
@@ -51,5 +55,68 @@ describe("order reference", () => {
 
   it("copes with short ids", () => {
     expect(orderReference("abc")).toBe("FG-ABC");
+  });
+});
+
+describe("order from a confirmation", () => {
+  const confirmation: OrderConfirmation = {
+    paymentId: "cs_test_abcdefgh12345678",
+    email: "buyer@example.com",
+    currency: "EUR",
+    exchangeRate: 1.1,
+    locale: "es",
+    createdAt: "2026-10-26T10:15:00.000Z",
+    items: [{ ...apple, quantity: 3 }],
+    shippingCost: 0,
+    amountPaid: 6,
+    shipping: {
+      recipient: "Ana Pérez",
+      street: "Calle Mayor 12",
+      postalCode: "28013",
+      city: "Madrid",
+      country: "ES",
+    },
+  };
+  const user = { id: "uid-1", email: "buyer@example.com" };
+
+  it("keeps everything Stripe confirmed", () => {
+    expect(orderFromConfirmation(confirmation, user)).toEqual({
+      userEmail: "buyer@example.com",
+      paymentId: "cs_test_abcdefgh12345678",
+      orderItems: confirmation.items,
+      paymentMethod: "stripe",
+      userId: "uid-1",
+      currency: "EUR",
+      exchangeRate: 1.1,
+      createdAt: "2026-10-26T10:15:00.000Z",
+      shippingCost: 0,
+      amountPaid: 6,
+      shipping: {
+        recipient: "Ana Pérez",
+        address: {
+          street: "Calle Mayor 12",
+          postalCode: "28013",
+          city: "Madrid",
+          country: "ES",
+        },
+      },
+    });
+  });
+
+  it("keeps the buyer phone only when there is one", () => {
+    const withPhone = orderFromConfirmation(
+      { ...confirmation, shipping: { ...confirmation.shipping!, phone: "600" } },
+      user
+    );
+    expect(withPhone.shipping?.phone).toBe("600");
+    expect(
+      "phone" in orderFromConfirmation(confirmation, user).shipping!
+    ).toBe(false);
+  });
+
+  it("omits the shipping details when there are none", () => {
+    expect("shipping" in orderFromConfirmation({ ...confirmation, shipping: null }, user)).toBe(
+      false
+    );
   });
 });

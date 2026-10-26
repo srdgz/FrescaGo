@@ -1,4 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  OrderNotFoundError,
+  PaymentNotCompletedError,
+} from "../../../domain/order";
 import { apple } from "../../../test/fixtures";
 
 const redirectToCheckout = vi.hoisted(() => vi.fn());
@@ -103,5 +107,56 @@ describe("StripeCheckoutGateway", () => {
     await expect(
       gateway.start([apple], "buyer@example.com", options)
     ).rejects.toThrow("Blocked");
+  });
+
+  describe("confirm", () => {
+    const confirmation = {
+      paymentId: "cs_test_a1B2c3D4e5F6g7H8",
+      email: "buyer@example.com",
+      items: [],
+    };
+
+    it("asks the backend about the session and returns the confirmed order", async () => {
+      globalThis.fetch = respond(true, 200, confirmation);
+
+      const result = await gateway.confirm("cs_test_a1B2c3D4e5F6g7H8");
+
+      expect(result).toEqual(confirmation);
+      expect(vi.mocked(globalThis.fetch).mock.calls[0][0]).toBe(
+        "https://api.test/checkout/sessions/cs_test_a1B2c3D4e5F6g7H8"
+      );
+    });
+
+    it("encodes the session id", async () => {
+      globalThis.fetch = respond(true, 200, confirmation);
+
+      await gateway.confirm("a/b?c");
+
+      expect(vi.mocked(globalThis.fetch).mock.calls[0][0]).toBe(
+        "https://api.test/checkout/sessions/a%2Fb%3Fc"
+      );
+    });
+
+    it("tells apart a payment that is not completed", async () => {
+      globalThis.fetch = respond(false, 402, { error: "unpaid" });
+
+      await expect(gateway.confirm("cs_test_x")).rejects.toThrow(
+        PaymentNotCompletedError
+      );
+    });
+
+    it.each([404, 400])("treats a %s as an unknown order", async (status) => {
+      globalThis.fetch = respond(false, status, { error: "nope" });
+
+      await expect(gateway.confirm("cs_test_x")).rejects.toThrow(OrderNotFoundError);
+    });
+
+    it("fails with a generic error otherwise", async () => {
+      globalThis.fetch = respond(false, 500, { error: "boom" });
+
+      await expect(gateway.confirm("cs_test_x")).rejects.toThrow(
+        "Order confirmation failed (500)"
+      );
+    });
   });
 });

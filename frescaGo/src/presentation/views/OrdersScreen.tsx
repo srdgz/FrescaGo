@@ -28,7 +28,7 @@ const Orders = () => {
   const locale = useLocale();
   const { currentUser } = useAppStore();
   const { listOrders } = useUseCases();
-  const { format } = useMoney();
+  const { format, formatAmount } = useMoney();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -128,7 +128,9 @@ const Orders = () => {
                                 <p className="text-sm sm:text-base text-gray-600">
                                   {t("orders.importeDelPedido")}{" "}
                                   <span className="text-ink font-medium">
-                                    {format(totalProducts, orderCurrency(order), orderRate(order))}
+                                    {order.amountPaid !== undefined
+                                      ? formatAmount(order.amountPaid, orderCurrency(order))
+                                      : format(totalProducts, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
                                 {order.shippingCost !== undefined && (

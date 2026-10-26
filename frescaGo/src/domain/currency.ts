@@ -25,6 +25,16 @@ export const convertAmount = (
   usdPerEur: number
 ): number => (currency === "USD" ? amountEur * usdPerEur : amountEur);
 
+export const formatCurrencyAmount = (
+  amount: number,
+  currency: Currency,
+  locale: Locale
+): string =>
+  new Intl.NumberFormat(intlLocale(locale), {
+    style: "currency",
+    currency,
+  }).format(amount);
+
 export const formatMoney = (
   amountEur: number,
   currency: Currency,

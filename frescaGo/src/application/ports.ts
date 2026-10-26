@@ -2,7 +2,7 @@ import type { CartItem } from "../domain/cart";
 import type { Category, FeaturedProduct, Product } from "../domain/catalog";
 import type { Currency, ExchangeRate } from "../domain/currency";
 import type { Locale } from "../domain/locale";
-import type { Order } from "../domain/order";
+import type { Order, OrderConfirmation } from "../domain/order";
 import type { ShippingDetails, User } from "../domain/user";
 
 export interface CatalogGateway {
@@ -51,4 +51,5 @@ export interface CheckoutGateway {
     email: string,
     options: CheckoutOptions
   ): Promise<void>;
+  confirm(sessionId: string): Promise<OrderConfirmation>;
 }

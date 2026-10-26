@@ -1,5 +1,9 @@
 import { useCallback } from "react";
-import { defaultCurrencyFor, formatMoney } from "../../domain/currency";
+import {
+  defaultCurrencyFor,
+  formatCurrencyAmount,
+  formatMoney,
+} from "../../domain/currency";
 import type { Currency } from "../../domain/currency";
 import { useAppStore } from "../AppContext";
 import { useLocale } from "../LocaleContext";
@@ -15,5 +19,11 @@ export const useMoney = () => {
     [currency, usdPerEur, locale]
   );
 
-  return { currency, usdPerEur, format };
+  const formatAmount = useCallback(
+    (amount: number, as: Currency = currency) =>
+      formatCurrencyAmount(amount, as, locale),
+    [currency, locale]
+  );
+
+  return { currency, usdPerEur, format, formatAmount };
 };

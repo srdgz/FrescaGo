@@ -1,5 +1,10 @@
 import { loadStripe } from "@stripe/stripe-js";
 import type { CheckoutGateway } from "../../application/ports";
+import {
+  OrderNotFoundError,
+  PaymentNotCompletedError,
+} from "../../domain/order";
+import type { OrderConfirmation } from "../../domain/order";
 
 export const createStripeCheckoutGateway = (
   baseUrl: string,
@@ -32,5 +37,22 @@ export const createStripeCheckoutGateway = (
     if (result?.error) {
       throw new Error(result.error.message);
     }
+  },
+
+  async confirm(sessionId) {
+    const response = await fetch(
+      `${baseUrl}/checkout/sessions/${encodeURIComponent(sessionId)}`,
+      { headers: { "Cache-Control": "no-cache" } }
+    );
+    if (response.status === 402) {
+      throw new PaymentNotCompletedError();
+    }
+    if (response.status === 404 || response.status === 400) {
+      throw new OrderNotFoundError();
+    }
+    if (!response.ok) {
+      throw new Error(`Order confirmation failed (${response.status})`);
+    }
+    return (await response.json()) as OrderConfirmation;
   },
 });
