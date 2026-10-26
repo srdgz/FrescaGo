@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import Label from "../Utils/Label";
 import Login from "./Login";
 import AvatarUploader from "../Utils/AvatarUploader";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { AuthError } from "../../../domain/user";
+import PasswordInput from "../Utils/PasswordInput";
+import { useTranslation } from "react-i18next";
+import {
+  AuthError,
+  MIN_PASSWORD_LENGTH,
+  checkNewPassword,
+} from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
 import { registrationErrorKey } from "../../authMessages";
-import { useTranslation } from "react-i18next";
 
 const Registration = () => {
   const { t } = useTranslation();
@@ -17,6 +21,29 @@ const Registration = () => {
   const [errMsg, setErrMsg] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [touched, setTouched] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmRef = useRef<HTMLInputElement>(null);
+
+  const setValue = (name: keyof typeof values) => (value: string) =>
+    setValues((current) => ({ ...current, [name]: value }));
+
+  const passwordTooShort =
+    touched.password && values.password.length < MIN_PASSWORD_LENGTH;
+  const confirmMismatch =
+    touched.confirmPassword &&
+    values.confirmPassword.length > 0 &&
+    values.password !== values.confirmPassword;
 
   const handleFileChange = (file: File) => {
     setAvatarFile(file);
@@ -24,13 +51,24 @@ const Registration = () => {
 
   const handleRegistration = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const { firstName, lastName, email, password } = Object.fromEntries(
-      formData
-    ) as Record<string, string>;
+    setErrMsg("");
+    const check = checkNewPassword(values.password, values.confirmPassword);
+    if (check !== "ok") {
+      setTouched({ password: true, confirmPassword: true });
+      (check === "too-short" ? passwordRef : confirmRef).current?.focus();
+      return;
+    }
     try {
       setLoading(true);
-      await register({ firstName, lastName, email, password }, avatarFile);
+      await register(
+        {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          password: values.password,
+        },
+        avatarFile
+      );
       setLogin(true);
     } catch (error) {
       console.log("Error", error);
@@ -49,10 +87,13 @@ const Registration = () => {
   return (
     <div>
       {!login ? (
-        <div className="card max-w-md lg:max-w-3xl mx-auto my-14 p-6 sm:p-10 md:p-14">
-          <form onSubmit={handleRegistration} className="text-secondary">
+        <div className="card mx-auto my-14 max-w-md p-6 sm:p-10 md:p-14 lg:max-w-3xl">
+          <form onSubmit={handleRegistration} aria-labelledby="register-title">
             <div className="border-b border-gray-200 pb-5">
-              <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
+              <h2
+                id="register-title"
+                className="text-lg font-bold uppercase leading-7"
+              >
                 {t("registration.crearUnaCuenta")}
               </h2>
               <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -61,52 +102,104 @@ const Registration = () => {
             </div>
             <div className="mt-5 grid grid-cols-1 gap-y-5 lg:grid-cols-2 lg:gap-x-6">
               <div>
-                <Label title={t("registration.nombre")} htmlFor="firstName" />
+                <Label title={t("registration.nombre")} htmlFor="register-firstName" />
                 <input
+                  id="register-firstName"
                   type="text"
                   name="firstName"
+                  autoComplete="given-name"
+                  required
+                  value={values.firstName}
+                  onChange={(event) => setValue("firstName")(event.target.value)}
                   className="field mt-2"
                 />
               </div>
               <div>
-                <Label title={t("registration.apellido")} htmlFor="lastName" />
+                <Label title={t("registration.apellido")} htmlFor="register-lastName" />
                 <input
+                  id="register-lastName"
                   type="text"
                   name="lastName"
+                  autoComplete="family-name"
+                  required
+                  value={values.lastName}
+                  onChange={(event) => setValue("lastName")(event.target.value)}
                   className="field mt-2"
                 />
               </div>
               <div className="col-span-full lg:col-span-2">
-                <Label title={t("registration.email")} htmlFor="email" />
+                <Label title={t("registration.email")} htmlFor="register-email" />
                 <input
+                  id="register-email"
                   type="email"
                   name="email"
+                  autoComplete="email"
+                  required
+                  value={values.email}
+                  onChange={(event) => setValue("email")(event.target.value)}
                   className="field mt-2"
                 />
               </div>
-              <div className="relative col-span-full lg:col-span-2">
-                <Label title={t("registration.contrasena")} htmlFor="password" />
-                <input
-                  type={showPassword ? "text" : "password"}
+              <div>
+                <PasswordInput
+                  id="register-password"
                   name="password"
-                  className="field mt-2"
+                  label={t("registration.contrasena")}
+                  value={values.password}
+                  onChange={setValue("password")}
+                  onBlur={() =>
+                    setTouched((current) => ({ ...current, password: true }))
+                  }
+                  autoComplete="new-password"
+                  visible={showPassword}
+                  onToggleVisible={() => setShowPassword((value) => !value)}
+                  describedBy="register-password-hint"
+                  invalid={passwordTooShort}
+                  minLength={MIN_PASSWORD_LENGTH}
+                  inputRef={passwordRef}
                 />
-                <div
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
-                  onClick={() => setShowPassword(!showPassword)}
+                <p
+                  id="register-password-hint"
+                  className={`mt-1 text-xs ${passwordTooShort ? "font-semibold text-danger" : "text-gray-600"}`}
                 >
-                  {showPassword ? (
-                    <AiOutlineEyeInvisible className="text-gray-500 text-2xl hover:text-secondary" />
-                  ) : (
-                    <AiOutlineEye className="text-gray-500 text-2xl hover:text-secondary" />
-                  )}
-                </div>
+                  {t("registration.passwordHint", { min: MIN_PASSWORD_LENGTH })}
+                </p>
+              </div>
+              <div>
+                <PasswordInput
+                  id="register-confirmPassword"
+                  name="confirmPassword"
+                  label={t("registration.confirmPassword")}
+                  value={values.confirmPassword}
+                  onChange={setValue("confirmPassword")}
+                  onBlur={() =>
+                    setTouched((current) => ({
+                      ...current,
+                      confirmPassword: true,
+                    }))
+                  }
+                  autoComplete="new-password"
+                  visible={showPassword}
+                  onToggleVisible={() => setShowPassword((value) => !value)}
+                  describedBy="register-confirm-feedback"
+                  invalid={confirmMismatch}
+                  inputRef={confirmRef}
+                />
+                <p
+                  id="register-confirm-feedback"
+                  aria-live="polite"
+                  className="mt-1 min-h-4 text-xs font-semibold text-danger"
+                >
+                  {confirmMismatch ? t("registration.passwordMismatch") : ""}
+                </p>
               </div>
               <div className="col-span-full lg:col-span-2">
                 <div className="mt-2 flex items-center gap-x-3">
                   <div className="flex-1">
-                    <Label title={t("registration.fotoDePerfil")} />
-                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-4">
+                    <p id="register-avatar-label" className="block text-sm font-medium">
+                      {t("registration.fotoDePerfil")}
+                    </p>
+                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-400 px-6 py-4">
                       <AvatarUploader
                         onFileChange={handleFileChange}
                         currentUrl={""}
@@ -117,7 +210,10 @@ const Registration = () => {
               </div>
             </div>
             {errMsg && (
-              <p className="bg-danger-soft text-danger text-center py-2 rounded-md tracking-wide font-semibold mt-4">
+              <p
+                role="alert"
+                className="mt-4 rounded-md bg-danger-soft py-2 text-center font-semibold tracking-wide text-danger"
+              >
                 {errMsg}
               </p>
             )}
@@ -129,11 +225,12 @@ const Registration = () => {
               {loading ? t("common.loading") : t("common.register")}
             </button>
           </form>
-          <p className="text-sm leading-6 text-gray-600 text-center mt-4">
+          <p className="mt-4 text-center text-sm leading-6 text-gray-600">
             {t("registration.yaTienesUnaCuenta")}{" "}
             <button
+              type="button"
               onClick={() => setLogin(true)}
-              className="text-brand font-semibold underline underline-offset-2 decoration-[1px] hover:text-brand duration-200"
+              className="font-semibold text-brand underline underline-offset-2 decoration-[1px] duration-200"
             >
               {t("registration.iniciarSesion")}
             </button>

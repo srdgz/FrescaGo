@@ -60,6 +60,19 @@ export class AuthError extends Error {
   }
 }
 
+export const MIN_PASSWORD_LENGTH = 8;
+
+export type PasswordCheck = "ok" | "too-short" | "mismatch";
+
+export const checkNewPassword = (
+  password: string,
+  confirmation: string
+): PasswordCheck => {
+  if (password.length < MIN_PASSWORD_LENGTH) return "too-short";
+  if (password !== confirmation) return "mismatch";
+  return "ok";
+};
+
 const POSTAL_CODE = /^[A-Za-z0-9][A-Za-z0-9 -]{2,9}$/;
 
 export const isPostalCode = (value: string): boolean =>

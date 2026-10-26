@@ -16,7 +16,10 @@
     "contrasena": "Password",
     "fotoDePerfil": "Profile picture",
     "yaTienesUnaCuenta": "Already have an account?",
-    "iniciarSesion": "Sign in"
+    "iniciarSesion": "Sign in",
+    "confirmPassword": "Repeat the password",
+    "passwordHint": "At least {{min}} characters.",
+    "passwordMismatch": "The passwords do not match."
   },
   "userInfo": {
     "bienvenid": "Welcome",
@@ -284,9 +287,13 @@
     "registration": {
       "invalid-email": "Please enter a valid email",
       "missing-password": "Please enter a password",
-      "weak-password": "The password must be at least 6 characters long",
+      "weak-password": "The password is too weak. Use at least 8 characters",
       "email-already-in-use": "This email is already registered. Please try another one"
     },
     "unknown": "Something went wrong. Please try again"
+  },
+  "password": {
+    "show": "Show password",
+    "hide": "Hide password"
   }
 }

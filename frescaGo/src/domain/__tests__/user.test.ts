@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { countryName, isShippingCountry } from "../countries";
 import {
+  MIN_PASSWORD_LENGTH,
+  checkNewPassword,
   formatShippingAddress,
   isPostalCode,
   isShippingAddressComplete,
@@ -121,5 +123,29 @@ describe("profile form", () => {
 
   it("is empty without a user", () => {
     expect(profileFormOf(null)).toMatchObject({ firstName: "", street: "", country: "ES" });
+  });
+});
+
+describe("new password check", () => {
+  it("accepts a long enough password that matches its confirmation", () => {
+    expect(checkNewPassword("secret123", "secret123")).toBe("ok");
+    expect(checkNewPassword("a".repeat(MIN_PASSWORD_LENGTH), "a".repeat(MIN_PASSWORD_LENGTH))).toBe("ok");
+  });
+
+  it("asks for at least eight characters", () => {
+    expect(MIN_PASSWORD_LENGTH).toBe(8);
+    expect(checkNewPassword("short12", "short12")).toBe("too-short");
+    expect(checkNewPassword("", "")).toBe("too-short");
+  });
+
+  it("reports a mismatch only when the length is fine", () => {
+    expect(checkNewPassword("secret123", "secret124")).toBe("mismatch");
+    expect(checkNewPassword("secret123", "")).toBe("mismatch");
+    expect(checkNewPassword("short", "different")).toBe("too-short");
+  });
+
+  it("is case and space sensitive", () => {
+    expect(checkNewPassword("Secret123", "secret123")).toBe("mismatch");
+    expect(checkNewPassword("secret123 ", "secret123")).toBe("mismatch");
   });
 });

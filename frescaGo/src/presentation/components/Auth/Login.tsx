@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import Label from "../Utils/Label";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import PasswordInput from "../Utils/PasswordInput";
+import { useTranslation } from "react-i18next";
 import { AuthError } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
 import { loginErrorKey } from "../../authMessages";
-import { useTranslation } from "react-i18next";
 
 interface LoginProps {
   setLogin: (login: boolean) => void;
@@ -17,16 +17,14 @@ const Login = ({ setLogin }: LoginProps) => {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const formData = new FormData(e.currentTarget);
-      const { email, password } = Object.fromEntries(formData) as Record<
-        string,
-        string
-      >;
+      setErrMsg("");
       await signIn(email, password);
     } catch (error) {
       console.log("Error", error);
@@ -39,10 +37,13 @@ const Login = ({ setLogin }: LoginProps) => {
   };
 
   return (
-    <div className="card max-w-md lg:max-w-lg mx-auto my-14 p-6 sm:p-10 md:p-14 min-h-[400px] flex flex-col justify-between">
-      <form onSubmit={handleLogin} className="text-secondary">
+    <div className="card mx-auto my-14 flex min-h-[400px] max-w-md flex-col justify-between p-6 sm:p-10 md:p-14 lg:max-w-lg">
+      <form onSubmit={handleLogin} aria-labelledby="login-title">
         <div className="border-b border-gray-200 pb-5">
-          <h2 className="text-lg font-bold uppercase leading-7 text-secondary">
+          <h2
+            id="login-title"
+            className="text-lg font-bold uppercase leading-7"
+          >
             {t("login.iniciarSesion")}
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -51,34 +52,34 @@ const Login = ({ setLogin }: LoginProps) => {
         </div>
         <div className="mt-5 grid grid-cols-1 gap-y-5">
           <div>
-            <Label title={t("login.email")} htmlFor="email" />
+            <Label title={t("login.email")} htmlFor="login-email" />
             <input
+              id="login-email"
               type="email"
               name="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               className="field mt-2"
             />
           </div>
-          <div className="relative">
-            <Label title={t("login.contrasena")} htmlFor="password" />
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              className="field mt-2"
-            />
-            <div
-              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer mt-6"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <AiOutlineEyeInvisible className="text-gray-500 text-2xl hover:text-secondary" />
-              ) : (
-                <AiOutlineEye className="text-gray-500 text-2xl hover:text-secondary" />
-              )}
-            </div>
-          </div>
+          <PasswordInput
+            id="login-password"
+            name="password"
+            label={t("login.contrasena")}
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+            visible={showPassword}
+            onToggleVisible={() => setShowPassword((value) => !value)}
+          />
         </div>
         {errMsg && (
-          <p className="bg-danger-soft text-danger text-center py-2 rounded-md tracking-wide font-semibold mt-4">
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-danger-soft py-2 text-center font-semibold tracking-wide text-danger"
+          >
             {errMsg}
           </p>
         )}
@@ -90,11 +91,12 @@ const Login = ({ setLogin }: LoginProps) => {
           {t("login.iniciarSesion")}
         </button>
       </form>
-      <p className="text-sm leading-6 text-gray-600 text-center mt-4">
+      <p className="mt-4 text-center text-sm leading-6 text-gray-600">
         {t("login.noTienesUnaCuenta")}{" "}
         <button
+          type="button"
           onClick={() => setLogin(false)}
-          className="text-brand font-semibold underline underline-offset-2 decoration-[1px] hover:text-brand duration-200"
+          className="font-semibold text-brand underline underline-offset-2 decoration-[1px] duration-200"
         >
           {t("login.registrarse")}
         </button>
@@ -102,6 +104,5 @@ const Login = ({ setLogin }: LoginProps) => {
     </div>
   );
 };
-
 
 export default Login;

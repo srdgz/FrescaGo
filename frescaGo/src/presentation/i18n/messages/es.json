@@ -16,7 +16,10 @@
     "contrasena": "Contraseña",
     "fotoDePerfil": "Foto de perfil",
     "yaTienesUnaCuenta": "¿Ya tienes una cuenta?",
-    "iniciarSesion": "Iniciar sesión"
+    "iniciarSesion": "Iniciar sesión",
+    "confirmPassword": "Repite la contraseña",
+    "passwordHint": "Mínimo {{min}} caracteres.",
+    "passwordMismatch": "Las contraseñas no coinciden."
   },
   "userInfo": {
     "bienvenid": "Bienvenid@",
@@ -284,9 +287,13 @@
     "registration": {
       "invalid-email": "Por favor, introduce un email válido",
       "missing-password": "Por favor, introduce una contraseña",
-      "weak-password": "La contraseña debe tener al menos 6 caracteres",
+      "weak-password": "La contraseña es demasiado débil. Usa al menos 8 caracteres",
       "email-already-in-use": "Este email ya está registrado. Por favor, prueba con otro"
     },
     "unknown": "Algo no ha funcionado. Por favor, inténtalo de nuevo"
+  },
+  "password": {
+    "show": "Mostrar contraseña",
+    "hide": "Ocultar contraseña"
   }
 }
