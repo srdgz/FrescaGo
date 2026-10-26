@@ -65,7 +65,7 @@ const SingleProductScreen = () => {
               <img width={200} height={200} fetchPriority="high" decoding="async"
                 src={productData.image}
                 alt={productData.title}
-                className="w-auto max-w-xs object-contain mix-blend-multiply"
+                className="aspect-square w-full max-w-xs object-contain mix-blend-multiply"
               />
             </div>
 

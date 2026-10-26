@@ -58,9 +58,9 @@ const Hero = () => {
         </div>
         <div className="relative flex items-center justify-center">
           <motion.img width={500} height={500} fetchPriority="high" decoding="async"
-            initial={{ opacity: 0, x: 200, rotate: 75 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            initial={{ x: 120, rotate: 25 }}
+            animate={{ x: 0, rotate: 0 }}
+            transition={{ duration: 0.8 }}
             src={heroEnsalada}
             alt=""
             className="relative z-10 w-[300px] fruit-shadow sm:w-[380px] md:w-[500px]"
