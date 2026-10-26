@@ -21,7 +21,7 @@ export const createStripePaymentGateway = (
     const stripe = new Stripe(getSecretKey() as string);
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      allowed_payment_method_types: ["card"],
       locale,
       line_items: [
         ...lines.map(({ product, quantity, unitAmountCents }) => ({
