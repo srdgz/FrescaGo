@@ -2,10 +2,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import request from "supertest";
 
 const createSession = vi.hoisted(() => vi.fn());
+const retrieveSession = vi.hoisted(() => vi.fn());
 
 vi.mock("stripe", () => ({
   default: class {
-    checkout = { sessions: { create: createSession } };
+    checkout = {
+      sessions: { create: createSession, retrieve: retrieveSession },
+    };
   },
 }));
 
@@ -312,6 +315,197 @@ describe("POST /checkout", () => {
       items: [{ id: product.id, quantity: 1 }],
       email: "buyer@example.com",
     });
+    expect(res.status).toBe(500);
+    expect(JSON.stringify(res.body)).not.toContain("sk_live_secret");
+  });
+});
+
+describe("checkout metadata", () => {
+  beforeEach(() => {
+    createSession.mockReset();
+    createSession.mockResolvedValue({ id: "cs_test_123" });
+  });
+
+  it("records what is needed to rebuild the order after the payment", async () => {
+    await request(app)
+      .post("/checkout")
+      .send({
+        shipping,
+        items: [
+          { id: product.id, quantity: 2 },
+          { id: products[1].id, quantity: 1 },
+        ],
+        email: "buyer@example.com",
+        currency: "USD",
+        locale: "en",
+      });
+
+    const { metadata } = createSession.mock.calls[0][0];
+    expect(JSON.parse(metadata.items)).toEqual([
+      [product.id, 2],
+      [products[1].id, 1],
+    ]);
+    expect(metadata).toMatchObject({
+      email: "buyer@example.com",
+      currency: "USD",
+      locale: "en",
+      usdPerEur: "1.1",
+      ship_recipient: "Ana Pérez",
+      ship_street: "Calle Mayor 12, 3ºB",
+      ship_postalCode: "28013",
+      ship_city: "Madrid",
+      ship_country: "ES",
+    });
+  });
+
+  it("rejects carts with too many lines", async () => {
+    const res = await request(app)
+      .post("/checkout")
+      .send({
+        shipping,
+        items: Array.from({ length: 41 }, () => ({
+          id: product.id,
+          quantity: 1,
+        })),
+        email: "buyer@example.com",
+      });
+
+    expect(res.status).toBe(400);
+    expect(createSession).not.toHaveBeenCalled();
+  });
+});
+
+describe("GET /checkout/sessions/:id", () => {
+  const sessionId = "cs_test_a1B2c3D4e5F6g7H8";
+  const url = (id = sessionId) => "/checkout/sessions/" + encodeURIComponent(id);
+  const paidSession = (overrides = {}) => ({
+    id: sessionId,
+    payment_status: "paid",
+    amount_total: 877,
+    created: 1_790_000_000,
+    metadata: {
+      email: "buyer@example.com",
+      currency: "EUR",
+      locale: "es",
+      usdPerEur: "1.1",
+      items: JSON.stringify([[product.id, 2]]),
+      ship_recipient: "Ana Pérez",
+      ship_phone: "",
+      ship_street: "Calle Mayor 12, 3ºB",
+      ship_postalCode: "28013",
+      ship_city: "Madrid",
+      ship_country: "ES",
+    },
+    ...overrides,
+  });
+
+  beforeEach(() => {
+    retrieveSession.mockReset();
+  });
+
+  it("returns the order rebuilt from what was paid", async () => {
+    retrieveSession.mockResolvedValue(paidSession());
+
+    const res = await request(app).get(url());
+
+    expect(res.status).toBe(200);
+    expect(res.headers["cache-control"]).toBe("no-store");
+    expect(res.body).toMatchObject({
+      paymentId: sessionId,
+      email: "buyer@example.com",
+      currency: "EUR",
+      exchangeRate: 1.1,
+      amountPaid: 8.77,
+      shippingCost: 4.99,
+      createdAt: new Date(1_790_000_000 * 1000).toISOString(),
+      shipping: { recipient: "Ana Pérez", city: "Madrid", country: "ES" },
+    });
+    expect(res.body.items).toEqual([
+      expect.objectContaining({
+        id: product.id,
+        title: "Plátanos de Canarias",
+        price: product.price,
+        quantity: 2,
+      }),
+    ]);
+    expect(retrieveSession).toHaveBeenCalledWith(sessionId);
+  });
+
+  it("rebuilds the order in the language of the purchase", async () => {
+    retrieveSession.mockResolvedValue(
+      paidSession({ metadata: { ...paidSession().metadata, locale: "en" } })
+    );
+
+    const res = await request(app).get(url());
+
+    expect(res.body.items[0].title).toBe("Canary Islands bananas");
+    expect(res.body.items[0].categoryLabel).toBe("Fruit");
+  });
+
+  it("fails loudly when a paid session points outside the catalog", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    retrieveSession.mockResolvedValue(
+      paidSession({
+        metadata: {
+          ...paidSession().metadata,
+          items: JSON.stringify([[999999, 1]]),
+        },
+      })
+    );
+
+    const res = await request(app).get(url());
+
+    expect(res.status).toBe(500);
+  });
+
+  it("refuses an order that has not been paid", async () => {
+    retrieveSession.mockResolvedValue(paidSession({ payment_status: "unpaid" }));
+
+    const res = await request(app).get(url());
+
+    expect(res.status).toBe(402);
+    expect(res.body.error).toBe("El pago todavía no se ha completado.");
+  });
+
+  it("answers 404 when Stripe does not know the session", async () => {
+    retrieveSession.mockRejectedValue(
+      Object.assign(new Error("No such session"), { code: "resource_missing" })
+    );
+
+    const res = await request(app).get(url());
+
+    expect(res.status).toBe(404);
+  });
+
+  it("answers 404 for sessions created before the order data was recorded", async () => {
+    retrieveSession.mockResolvedValue(
+      paidSession({ metadata: { email: "buyer@example.com", currency: "EUR" } })
+    );
+
+    const res = await request(app).get(url());
+
+    expect(res.status).toBe(404);
+  });
+
+  it.each([
+    "abc",
+    "cs_test_",
+    "../../etc/passwd",
+    "cs_test_a b",
+    "pi_test_a1B2c3D4e5F6",
+  ])("rejects the malformed id %s without calling Stripe", async (id) => {
+    const res = await request(app).get(url(id));
+
+    expect(res.status).toBe(400);
+    expect(retrieveSession).not.toHaveBeenCalled();
+  });
+
+  it("does not leak Stripe errors", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    retrieveSession.mockRejectedValue(new Error("sk_live_secret exploded"));
+
+    const res = await request(app).get(url());
+
     expect(res.status).toBe(500);
     expect(JSON.stringify(res.body)).not.toContain("sk_live_secret");
   });

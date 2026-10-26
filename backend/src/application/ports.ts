@@ -19,12 +19,27 @@ export interface CheckoutSessionRequest {
   locale: Locale;
   shipping: ShippingInfo;
   shippingCents: number;
+  usdPerEur: number;
   successUrl: string;
   cancelUrl: string;
 }
 
+export interface CheckoutRecord {
+  id: string;
+  paid: boolean;
+  email: string;
+  currency: Currency;
+  locale: Locale;
+  usdPerEur: number;
+  items: { id: number; quantity: number }[];
+  amountTotalCents: number;
+  shipping: ShippingInfo | null;
+  createdAtSeconds: number;
+}
+
 export interface PaymentGateway {
   createCheckoutSession(request: CheckoutSessionRequest): Promise<string>;
+  retrieveCheckout(sessionId: string): Promise<CheckoutRecord | null>;
 }
 
 export interface ExchangeRateProvider {

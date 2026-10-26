@@ -6,6 +6,7 @@ import { products } from "../src/infrastructure/catalog/data.js";
 const setup = () => {
   const payments = {
     createCheckoutSession: vi.fn().mockResolvedValue("cs_test_1"),
+    retrieveCheckout: vi.fn(),
   };
   const rates = {
     getRate: vi
@@ -77,6 +78,14 @@ describe("createCheckout use case", () => {
     const request = payments.createCheckoutSession.mock.calls[0][0];
     expect(request.currency).toBe("EUR");
     expect(request.locale).toBe("es");
+  });
+
+  it("hands the exchange rate used to the gateway so the order can be rebuilt", async () => {
+    const { payments, createCheckout } = setup();
+
+    await createCheckout(input({ currency: "USD" }));
+
+    expect(payments.createCheckoutSession.mock.calls[0][0].usdPerEur).toBe(1.1);
   });
 
   it("passes the shipping address to the gateway", async () => {

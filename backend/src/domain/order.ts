@@ -4,6 +4,8 @@ import type { LocalizedProduct } from "./catalog.js";
 
 export const MAX_QUANTITY = 99;
 
+export const MAX_LINES = 40;
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export interface CartItemRequest {
@@ -48,7 +50,7 @@ export const buildOrderLines = (
   findProduct: (id: number) => LocalizedProduct | undefined,
   pricing: Pricing = { currency: "EUR", usdPerEur: 1 }
 ): OrderLine[] => {
-  if (!Array.isArray(items) || items.length === 0) {
+  if (!Array.isArray(items) || items.length === 0 || items.length > MAX_LINES) {
     throw new InvalidCartError();
   }
 

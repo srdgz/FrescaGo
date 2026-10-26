@@ -47,6 +47,7 @@ export const makeCreateCheckout =
       locale,
       shipping,
       shippingCents,
+      usdPerEur,
       successUrl: `${frontendUrl}/${locale}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${frontendUrl}/${locale}/cancel`,
     });

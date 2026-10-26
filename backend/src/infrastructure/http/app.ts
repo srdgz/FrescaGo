@@ -4,6 +4,11 @@ import cors from "cors";
 import express from "express";
 import { parseLocale } from "../../domain/locale.js";
 import { InvalidCartError, InvalidEmailError } from "../../domain/order.js";
+import {
+  InvalidSessionError,
+  PaymentNotCompletedError,
+  SessionNotFoundError,
+} from "../../domain/orderConfirmation.js";
 import { InvalidShippingError } from "../../domain/shipping.js";
 import { createContainer } from "../container.js";
 import type { Container } from "../container.js";
@@ -89,6 +94,25 @@ export const createApp = (container: Container = createContainer()) => {
       }
       console.error("Checkout error:", (error as Error).message);
       res.status(500).json({ error: "No se pudo crear la sesión de pago." });
+    }
+  });
+
+  app.get("/checkout/sessions/:id", async (req, res) => {
+    try {
+      const confirmation = await container.getOrderConfirmation(req.params.id);
+      res.set("Cache-Control", "no-store").json(confirmation);
+    } catch (error) {
+      if (error instanceof InvalidSessionError) {
+        return res.status(400).json({ error: error.message });
+      }
+      if (error instanceof SessionNotFoundError) {
+        return res.status(404).json({ error: error.message });
+      }
+      if (error instanceof PaymentNotCompletedError) {
+        return res.status(402).json({ error: error.message });
+      }
+      console.error("Order confirmation error:", (error as Error).message);
+      res.status(500).json({ error: "No se pudo confirmar el pedido." });
     }
   });
 

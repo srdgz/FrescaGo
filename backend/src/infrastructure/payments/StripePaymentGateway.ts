@@ -1,5 +1,8 @@
 import Stripe from "stripe";
-import type { PaymentGateway } from "../../application/ports.js";
+import type { CheckoutRecord, PaymentGateway } from "../../application/ports.js";
+import { parseCurrency } from "../../domain/currency.js";
+import { parseLocale } from "../../domain/locale.js";
+import { parseShippingInfo } from "../../domain/shipping.js";
 
 export const createStripePaymentGateway = (
   getSecretKey: () => string | undefined
@@ -11,6 +14,7 @@ export const createStripePaymentGateway = (
     locale,
     shipping,
     shippingCents,
+    usdPerEur,
     successUrl,
     cancelUrl,
   }) {
@@ -62,9 +66,81 @@ export const createStripePaymentGateway = (
       },
       success_url: successUrl,
       cancel_url: cancelUrl,
-      metadata: { email, currency },
+      metadata: {
+        email,
+        currency,
+        locale,
+        usdPerEur: String(usdPerEur),
+        items: JSON.stringify(lines.map((line) => [line.product.id, line.quantity])),
+        ship_recipient: shipping.recipient,
+        ship_phone: shipping.phone ?? "",
+        ship_street: shipping.street,
+        ship_postalCode: shipping.postalCode,
+        ship_city: shipping.city,
+        ship_country: shipping.country,
+      },
     });
 
     return session.id;
   },
+
+  async retrieveCheckout(sessionId): Promise<CheckoutRecord | null> {
+    const stripe = new Stripe(getSecretKey() as string);
+
+    let session: Stripe.Checkout.Session;
+    try {
+      session = await stripe.checkout.sessions.retrieve(sessionId);
+    } catch (error) {
+      if ((error as { code?: string }).code === "resource_missing") {
+        return null;
+      }
+      throw error;
+    }
+
+    const metadata = session.metadata ?? {};
+    const rate = Number(metadata.usdPerEur);
+
+    return {
+      id: session.id,
+      paid: session.payment_status === "paid",
+      email: metadata.email ?? "",
+      currency: parseCurrency(metadata.currency),
+      locale: parseLocale(metadata.locale),
+      usdPerEur: rate > 0 ? rate : 1,
+      items: parseItems(metadata.items),
+      amountTotalCents: session.amount_total ?? 0,
+      shipping: parseShipping(metadata),
+      createdAtSeconds: session.created,
+    };
+  },
 });
+
+const parseItems = (raw: string | undefined): { id: number; quantity: number }[] => {
+  try {
+    const parsed: unknown = JSON.parse(raw ?? "[]");
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+    return parsed.map((entry) => ({
+      id: Number(entry?.[0]),
+      quantity: Number(entry?.[1]),
+    }));
+  } catch {
+    return [];
+  }
+};
+
+const parseShipping = (metadata: Stripe.Metadata) => {
+  try {
+    return parseShippingInfo({
+      recipient: metadata.ship_recipient,
+      phone: metadata.ship_phone,
+      street: metadata.ship_street,
+      postalCode: metadata.ship_postalCode,
+      city: metadata.ship_city,
+      country: metadata.ship_country,
+    });
+  } catch {
+    return null;
+  }
+};
