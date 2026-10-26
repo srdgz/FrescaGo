@@ -3,7 +3,7 @@ import type { Category, FeaturedProduct, Product } from "../domain/catalog";
 import type { Currency, ExchangeRate } from "../domain/currency";
 import type { Locale } from "../domain/locale";
 import type { Order } from "../domain/order";
-import type { User } from "../domain/user";
+import type { ShippingDetails, User } from "../domain/user";
 
 export interface CatalogGateway {
   getFeatured(locale: Locale): Promise<FeaturedProduct[]>;
@@ -42,6 +42,7 @@ export interface ImageStorage {
 export interface CheckoutOptions {
   currency: Currency;
   locale: Locale;
+  shipping: ShippingDetails;
 }
 
 export interface CheckoutGateway {

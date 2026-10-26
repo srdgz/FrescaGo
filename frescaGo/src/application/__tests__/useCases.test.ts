@@ -77,11 +77,14 @@ describe("updateProfile", () => {
     avatar: "old.png",
     firstName: "Ana",
     lastName: "López",
-    address: "Calle 1",
-    phone: "600",
+    phone: " 600 ",
+    street: " Calle 1 ",
+    postalCode: "28001",
+    city: "Madrid",
+    country: "ES" as const,
   };
 
-  it("keeps the current avatar when no file is chosen", async () => {
+  it("keeps the current avatar and saves a trimmed shipping address", async () => {
     const { deps, useCases } = setup();
 
     await useCases.updateProfile(buyer, form, null);
@@ -91,8 +94,13 @@ describe("updateProfile", () => {
     expect(deps.users.update).toHaveBeenCalledWith(buyer.id, {
       firstName: "Ana",
       lastName: "López",
-      address: "Calle 1",
       phone: "600",
+      shippingAddress: {
+        street: "Calle 1",
+        postalCode: "28001",
+        city: "Madrid",
+        country: "ES",
+      },
       avatar: "old.png",
     });
   });
@@ -109,14 +117,13 @@ describe("updateProfile", () => {
 });
 
 describe("saveOrder", () => {
-  it("stores a Stripe order under the buyer email", async () => {
+  const pricing = { currency: "USD" as const, usdPerEur: 1.1 };
+
+  it("stores a Stripe order with currency, date and where to ship it", async () => {
     const { deps, useCases } = setup();
     const items = [{ ...apple, quantity: 2 }];
 
-    await useCases.saveOrder(buyer, "cs_123", items, {
-      currency: "USD",
-      usdPerEur: 1.1,
-    });
+    await useCases.saveOrder(buyer, "cs_123", items, pricing);
 
     expect(deps.orders.add).toHaveBeenCalledWith(buyer.email, {
       userEmail: buyer.email,
@@ -126,14 +133,42 @@ describe("saveOrder", () => {
       userId: buyer.id,
       currency: "USD",
       exchangeRate: 1.1,
+      createdAt: expect.stringMatching(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T/),
+      shipping: {
+        recipient: "Ana Pérez",
+        phone: "600123123",
+        address: buyer.shippingAddress,
+      },
     });
+  });
+
+  it("never sends undefined fields to the database", async () => {
+    const { deps, useCases } = setup();
+
+    await useCases.saveOrder(
+      { ...buyer, shippingAddress: undefined, phone: undefined },
+      "cs_124",
+      [apple],
+      pricing
+    );
+
+    const order = deps.orders.add.mock.calls[0][1];
+    expect(Object.values(order)).not.toContain(undefined);
+    expect("shipping" in order).toBe(false);
   });
 });
 
 describe("startCheckout", () => {
-  it("delegates to the checkout gateway with currency and language", async () => {
+  it("delegates to the checkout gateway with currency, language and shipping", async () => {
     const { deps, useCases } = setup();
-    const options = { currency: "USD" as const, locale: "en" as const };
+    const options = {
+      currency: "USD" as const,
+      locale: "en" as const,
+      shipping: {
+        recipient: "Ana Pérez",
+        address: buyer.shippingAddress!,
+      },
+    };
 
     await useCases.startCheckout([apple], buyer.email, options);
 

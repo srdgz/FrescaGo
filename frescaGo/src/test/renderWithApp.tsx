@@ -7,17 +7,18 @@ import type { UseCases } from "../application/useCases";
 import { AppProvider } from "../presentation/AppContext";
 import { LocaleProvider } from "../presentation/LocaleContext";
 import { createAppStore } from "../presentation/store";
+import type { AppState } from "../presentation/store";
 
 interface Options {
-  route?: string;
+  route?: string | { pathname: string; state?: unknown };
   locale?: Locale;
-  withLocale?: boolean;
+  state?: Partial<AppState>;
 }
 
 export const renderWithApp = (
   ui: ReactElement,
   overrides: Partial<UseCases> = {},
-  { route = "/", locale = "es" }: Options = {}
+  { route = "/", locale = "es", state }: Options = {}
 ) => {
   const useCases = {
     loadUser: async () => null,
@@ -29,6 +30,9 @@ export const renderWithApp = (
     ...overrides,
   } as UseCases;
   const store = createAppStore(useCases);
+  if (state) {
+    store.setState(state);
+  }
 
   return {
     store,

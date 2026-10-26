@@ -1,6 +1,8 @@
 import Button from "../Utils/Button";
 import UserAvatar from "../Utils/UserAvatar";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { isShippingAddressComplete } from "../../../domain/user";
 import type { User } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
 import { useLocalePath } from "../../LocaleContext";
@@ -37,6 +39,17 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
               </p>
             </div>
           </div>
+          {!isShippingAddressComplete(currentUser?.shippingAddress) && (
+            <p className="mt-8 rounded-xl bg-accent-soft px-4 py-3 text-sm font-medium text-accent">
+              {t("userInfo.addressNotice")}{" "}
+              <Link
+                to={path("editProfile")}
+                className="font-bold underline underline-offset-4"
+              >
+                {t("userInfo.addAddress")}
+              </Link>
+            </p>
+          )}
           <hr className="my-8 border-gray-300" />
           <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Button

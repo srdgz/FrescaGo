@@ -1,6 +1,7 @@
 import type { CartItem } from "./cart";
 import { itemTotal } from "./cart";
 import type { Currency } from "./currency";
+import type { ShippingDetails } from "./user";
 
 export interface Order {
   userEmail: string;
@@ -10,6 +11,8 @@ export interface Order {
   userId?: string;
   currency?: Currency;
   exchangeRate?: number;
+  shipping?: ShippingDetails;
+  createdAt?: string;
 }
 
 export const orderTotal = (order: Order): number =>

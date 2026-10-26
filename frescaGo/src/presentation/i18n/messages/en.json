@@ -24,7 +24,9 @@
     "aquiPodrasGestionarTu": "! Here you can manage your profile, update your information and enjoy a fast, efficient shopping experience. Our goal is to make your shopping fresh, easy and hassle free. Thank you for choosing us!",
     "editarPerfil": "Edit profile",
     "misPedidos": "My orders",
-    "cerrarSesion": "Sign out"
+    "cerrarSesion": "Sign out",
+    "addressNotice": "Add your shipping address to be able to place orders.",
+    "addAddress": "Add address"
   },
   "banner": {
     "sobreNosotros": "About us",
@@ -80,7 +82,11 @@
   "checkout": {
     "pagar": "Pay",
     "necesitasIniciarSesionPara": "You need to sign in to complete your purchase",
-    "error": "The payment could not be started. Please try again in a few minutes."
+    "error": "The payment could not be started. Please try again in a few minutes.",
+    "addressRequired": "Add your shipping address to be able to pay.",
+    "addAddress": "Add shipping address",
+    "shipTo": "Ship to:",
+    "changeAddress": "Change address"
   },
   "about": {
     "sobreFresca": "About Fresca",
@@ -130,12 +136,20 @@
     "editarPerfil": "Edit profile",
     "nombre": "First name",
     "apellidos": "Last name",
-    "direccionCompleta": "Full address",
     "telefono": "Phone",
     "email": "Email",
-    "contrasena": "Password",
     "guardar": "Save",
-    "cancelar": "Cancel"
+    "cancelar": "Cancel",
+    "personalData": "Personal details",
+    "shippingTitle": "Shipping address",
+    "shippingHelp": "We need your address to deliver your orders. It is required to place an order.",
+    "street": "Street and number",
+    "postalCode": "Postal code",
+    "postalCodeHint": "3 to 10 letters, numbers, spaces or hyphens",
+    "phoneHint": "6 to 20 digits, with + ( ) spaces or hyphens",
+    "city": "City",
+    "country": "Country",
+    "needAddress": "Complete your shipping address to finish your purchase."
   },
   "notFound": {
     "error": "Error",
@@ -162,7 +176,9 @@
     "subtotal": "Subtotal",
     "aunNoTienesPedidos": "You don't have any orders yet",
     "noHasRealizadoNinguna": "You haven't made any purchases with us",
-    "irDeCompras": "Go shopping"
+    "irDeCompras": "Go shopping",
+    "orderDate": "Order date:",
+    "shippingAddress": "Shipping address:"
   },
   "catalog": {
     "buscarProductos": "Search products...",

@@ -5,7 +5,7 @@ export const createStripeCheckoutGateway = (
   baseUrl: string,
   publishableKey: string
 ): CheckoutGateway => ({
-  async start(items, email, { currency, locale }) {
+  async start(items, email, { currency, locale, shipping }) {
     const stripe = await loadStripe(publishableKey);
     const response = await fetch(`${baseUrl}/checkout`, {
       method: "POST",
@@ -15,6 +15,11 @@ export const createStripeCheckoutGateway = (
         email,
         currency,
         locale,
+        shipping: {
+          recipient: shipping.recipient,
+          phone: shipping.phone,
+          ...shipping.address,
+        },
       }),
     });
     const session = await response.json().catch(() => null);

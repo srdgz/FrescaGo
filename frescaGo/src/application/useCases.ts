@@ -2,7 +2,13 @@ import type { CartItem } from "../domain/cart";
 import type { Currency } from "../domain/currency";
 import type { Locale } from "../domain/locale";
 import type { Order } from "../domain/order";
-import type { ProfileForm, Registration, User } from "../domain/user";
+import { normalizeShippingAddress, recipientOf } from "../domain/user";
+import type {
+  ProfileForm,
+  Registration,
+  ShippingDetails,
+  User,
+} from "../domain/user";
 import type {
   AuthService,
   CatalogGateway,
@@ -69,8 +75,8 @@ export const makeUseCases = ({
     await users.update(user.id, {
       firstName: form.firstName,
       lastName: form.lastName,
-      address: form.address,
-      phone: form.phone,
+      phone: form.phone.trim(),
+      shippingAddress: normalizeShippingAddress(form),
       avatar: avatarUrl,
     });
   },
@@ -83,6 +89,11 @@ export const makeUseCases = ({
     items: CartItem[],
     pricing: { currency: Currency; usdPerEur: number }
   ) => {
+    const shipping: ShippingDetails | undefined = user.shippingAddress && {
+      recipient: recipientOf(user),
+      ...(user.phone ? { phone: user.phone } : {}),
+      address: user.shippingAddress,
+    };
     const order: Order = {
       userEmail: user.email,
       paymentId,
@@ -91,6 +102,8 @@ export const makeUseCases = ({
       userId: user.id,
       currency: pricing.currency,
       exchangeRate: pricing.usdPerEur,
+      createdAt: new Date().toISOString(),
+      ...(shipping ? { shipping } : {}),
     };
     return orders.add(user.email, order);
   },
@@ -98,7 +111,7 @@ export const makeUseCases = ({
   startCheckout: (
     items: CartItem[],
     email: string,
-    options: { currency: Currency; locale: Locale }
+    options: { currency: Currency; locale: Locale; shipping: ShippingDetails }
   ) => checkout.start(items, email, options),
 });
 

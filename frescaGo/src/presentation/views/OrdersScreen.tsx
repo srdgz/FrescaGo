@@ -16,14 +16,17 @@ import {
   orderTotal,
 } from "../../domain/order";
 import { SHIPPING_AMOUNT } from "../../domain/cart";
+import { intlLocale } from "../../domain/locale";
+import { formatShippingAddress } from "../../domain/user";
 import { useMoney } from "../hooks/useMoney";
 import { useAppStore, useUseCases } from "../AppContext";
 import { useTranslation } from "react-i18next";
-import { useLocalePath } from "../LocaleContext";
+import { useLocale, useLocalePath } from "../LocaleContext";
 
 const Orders = () => {
   const { t } = useTranslation();
   const path = useLocalePath();
+  const locale = useLocale();
   const { currentUser } = useAppStore();
   const { listOrders } = useUseCases();
   const { format } = useMoney();
@@ -135,6 +138,29 @@ const Orders = () => {
                                     {format(SHIPPING_AMOUNT, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
+                                {order.createdAt && (
+                                  <p className="text-sm sm:text-base text-gray-600">
+                                    {t("orders.orderDate")}{" "}
+                                    <span className="text-ink font-medium">
+                                      {new Date(order.createdAt).toLocaleDateString(
+                                        intlLocale(locale),
+                                        { dateStyle: "long" }
+                                      )}
+                                    </span>
+                                  </p>
+                                )}
+                                {order.shipping && (
+                                  <p className="text-sm sm:text-base text-gray-600">
+                                    {t("orders.shippingAddress")}{" "}
+                                    <span className="text-ink font-medium">
+                                      {order.shipping.recipient},{" "}
+                                      {formatShippingAddress(
+                                        order.shipping.address,
+                                        locale
+                                      )}
+                                    </span>
+                                  </p>
+                                )}
                               </div>
                               {order?.orderItems?.map((item) => (
                                 <div

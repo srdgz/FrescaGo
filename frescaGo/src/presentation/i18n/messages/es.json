@@ -24,7 +24,9 @@
     "aquiPodrasGestionarTu": "! Aquí podrás gestionar tu perfil, actualizar tu información y disfrutar de una experiencia de compra rápida y eficiente. Nuestro objetivo es hacer que tus compras sean frescas, fáciles y sin complicaciones. ¡Gracias por elegirnos!",
     "editarPerfil": "Editar perfil",
     "misPedidos": "Mis pedidos",
-    "cerrarSesion": "Cerrar sesión"
+    "cerrarSesion": "Cerrar sesión",
+    "addressNotice": "Añade tu dirección de envío para poder hacer pedidos.",
+    "addAddress": "Añadir dirección"
   },
   "banner": {
     "sobreNosotros": "Sobre nosotros",
@@ -80,7 +82,11 @@
   "checkout": {
     "pagar": "Pagar",
     "necesitasIniciarSesionPara": "Necesitas iniciar sesión para completar la compra",
-    "error": "No se pudo iniciar el pago. Inténtalo de nuevo en unos minutos."
+    "error": "No se pudo iniciar el pago. Inténtalo de nuevo en unos minutos.",
+    "addressRequired": "Añade tu dirección de envío para poder pagar.",
+    "addAddress": "Añadir dirección de envío",
+    "shipTo": "Enviar a:",
+    "changeAddress": "Cambiar dirección"
   },
   "about": {
     "sobreFresca": "Sobre Fresca",
@@ -130,12 +136,20 @@
     "editarPerfil": "Editar Perfil",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "direccionCompleta": "Dirección Completa",
     "telefono": "Teléfono",
     "email": "Email",
-    "contrasena": "Contraseña",
     "guardar": "Guardar",
-    "cancelar": "Cancelar"
+    "cancelar": "Cancelar",
+    "personalData": "Datos personales",
+    "shippingTitle": "Dirección de envío",
+    "shippingHelp": "Necesitamos tu dirección para enviarte los pedidos. Es obligatoria para poder comprar.",
+    "street": "Calle y número",
+    "postalCode": "Código postal",
+    "postalCodeHint": "Entre 3 y 10 letras, números, espacios o guiones",
+    "phoneHint": "Entre 6 y 20 dígitos, con + ( ) espacios o guiones",
+    "city": "Ciudad",
+    "country": "País",
+    "needAddress": "Completa tu dirección de envío para poder terminar la compra."
   },
   "notFound": {
     "error": "Error",
@@ -162,7 +176,9 @@
     "subtotal": "Subtotal",
     "aunNoTienesPedidos": "Aún no tienes pedidos",
     "noHasRealizadoNinguna": "No has realizado ninguna compra con nosotros",
-    "irDeCompras": "Ir de compras"
+    "irDeCompras": "Ir de compras",
+    "orderDate": "Fecha del pedido:",
+    "shippingAddress": "Dirección de envío:"
   },
   "catalog": {
     "buscarProductos": "Buscar productos...",

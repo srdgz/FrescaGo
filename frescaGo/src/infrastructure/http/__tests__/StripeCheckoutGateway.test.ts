@@ -10,7 +10,20 @@ vi.mock("@stripe/stripe-js", () => ({
 const { createStripeCheckoutGateway } = await import("../StripeCheckoutGateway");
 
 const gateway = createStripeCheckoutGateway("https://api.test", "pk_test_fake");
-const options = { currency: "USD" as const, locale: "en" as const };
+const options = {
+  currency: "USD" as const,
+  locale: "en" as const,
+  shipping: {
+    recipient: "Ana Pérez",
+    phone: "600123123",
+    address: {
+      street: "Calle Mayor 12",
+      postalCode: "28013",
+      city: "Madrid",
+      country: "ES" as const,
+    },
+  },
+};
 
 const respond = (ok: boolean, status: number, body: unknown) =>
   vi.fn().mockResolvedValue({
@@ -25,7 +38,7 @@ describe("StripeCheckoutGateway", () => {
     redirectToCheckout.mockResolvedValue({});
   });
 
-  it("sends only ids, quantities, email, currency and language", async () => {
+  it("sends only ids, quantities, email, currency, language and shipping", async () => {
     globalThis.fetch = respond(true, 200, { id: "cs_test_1" });
 
     await gateway.start([{ ...apple, quantity: 3 }], "buyer@example.com", options);
@@ -37,6 +50,14 @@ describe("StripeCheckoutGateway", () => {
       email: "buyer@example.com",
       currency: "USD",
       locale: "en",
+      shipping: {
+        recipient: "Ana Pérez",
+        phone: "600123123",
+        street: "Calle Mayor 12",
+        postalCode: "28013",
+        city: "Madrid",
+        country: "ES",
+      },
     });
     expect(redirectToCheckout).toHaveBeenCalledWith({ sessionId: "cs_test_1" });
   });

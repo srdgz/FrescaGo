@@ -27,4 +27,19 @@ export const buyer: User = {
   firstName: "Ana",
   lastName: "Pérez",
   avatar: null,
+  phone: "600123123",
+  shippingAddress: {
+    street: "Calle Mayor 12, 3ºB",
+    postalCode: "28013",
+    city: "Madrid",
+    country: "ES",
+  },
+};
+
+export const newcomer: User = {
+  id: "uid-2",
+  email: "new@example.com",
+  firstName: "Luis",
+  lastName: "Gómez",
+  avatar: null,
 };
