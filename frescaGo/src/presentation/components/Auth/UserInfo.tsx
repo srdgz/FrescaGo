@@ -16,7 +16,7 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
   const path = useLocalePath();
   const { signOut } = useUseCases();
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div className="card mx-auto max-w-3xl border-gray-300 p-6 shadow-lg sm:p-10">
           <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:gap-10 sm:text-start">
@@ -73,7 +73,7 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

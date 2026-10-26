@@ -22,7 +22,7 @@ const LanguageSwitcher = () => {
           hrefLang={locale}
           lang={locale}
           aria-current={locale === current ? "true" : undefined}
-          aria-label={t(`language.${locale}`)}
+          aria-label={`${locale.toUpperCase()} ${t(`language.${locale}`)}`}
           className={`px-3 py-1 uppercase ${
             locale === current
               ? "bg-primary text-white"

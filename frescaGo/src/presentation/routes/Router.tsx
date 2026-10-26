@@ -1,36 +1,58 @@
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { LOCALES } from "../../domain/locale";
 import type { Locale } from "../../domain/locale";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
+import SkipLink from "../components/Utils/SkipLink";
 import { useAppStore } from "../AppContext";
 import { LocaleProvider } from "../LocaleContext";
 import HomeScreen from "../views/HomeScreen";
-import ProductsScreen from "../views/ProductsScreen";
-import SingleProductScreen from "../views/SingleProductScreen";
-import ShopScreen from "../views/ShopScreen";
-import AboutScreen from "../views/AboutScreen";
-import ContactScreen from "../views/ContactScreen";
-import UserScreen from "../views/UserScreen";
-import EditProfileScreen from "../views/EditProfileScreen";
-import OrdersScreen from "../views/OrdersScreen";
-import SuccessScreen from "../views/SuccessScreen";
-import CancelScreen from "../views/CancelScreen";
 import ErrorScreen from "../views/ErrorScreen";
+import Loading from "../components/Utils/Loading";
 import { ROUTE_SLUGS, detectBrowserLocale } from "./paths";
 
+const ProductsScreen = lazy(() => import("../views/ProductsScreen"));
+const SingleProductScreen = lazy(() => import("../views/SingleProductScreen"));
+const ShopScreen = lazy(() => import("../views/ShopScreen"));
+const AboutScreen = lazy(() => import("../views/AboutScreen"));
+const ContactScreen = lazy(() => import("../views/ContactScreen"));
+const UserScreen = lazy(() => import("../views/UserScreen"));
+const EditProfileScreen = lazy(() => import("../views/EditProfileScreen"));
+const OrdersScreen = lazy(() => import("../views/OrdersScreen"));
+const SuccessScreen = lazy(() => import("../views/SuccessScreen"));
+const CancelScreen = lazy(() => import("../views/CancelScreen"));
+
 const LocaleLayout = ({ locale }: { locale: Locale }) => {
+  const { t } = useTranslation();
   const { loadRate } = useAppStore();
+  const { pathname } = useLocation();
+  const content = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
 
   useEffect(() => {
     loadRate();
   }, [loadRate]);
 
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    window.scrollTo(0, 0);
+    content.current?.focus({ preventScroll: true });
+  }, [pathname]);
+
   return (
     <LocaleProvider locale={locale}>
+      <SkipLink />
       <Navbar />
-      <Outlet />
+      <main id="main-content" ref={content} tabIndex={-1} className="min-h-svh outline-hidden">
+        <Suspense fallback={<Loading title={t("common.loading")} />}>
+          <Outlet />
+        </Suspense>
+      </main>
       <Footer />
     </LocaleProvider>
   );

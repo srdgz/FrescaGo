@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const ContactScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.contact"));
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-secondary">{t("contact.contactanos")}</h1>
@@ -14,9 +16,9 @@ const ContactScreen = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-semibold text-gray-800">
+            <h2 className="text-2xl font-semibold text-gray-800">
               {t("contact.informacionDeContacto")}
-            </h3>
+            </h2>
             <ul className="mt-6 space-y-4">
               <li>
                 <strong className="text-gray-700">{t("contact.direccion")}</strong>
@@ -41,9 +43,9 @@ const ContactScreen = () => {
             </ul>
           </div>
           <div>
-            <h3 className="text-2xl font-semibold text-gray-800">
+            <h2 className="text-2xl font-semibold text-gray-800">
               {t("contact.envianosUnMensaje")}
-            </h3>
+            </h2>
             <form className="mt-6 space-y-6">
               <div>
                 <label
@@ -102,9 +104,9 @@ const ContactScreen = () => {
           </div>
         </div>
         <div className="mt-12">
-          <h3 className="text-2xl font-semibold text-gray-800 text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 text-center">
             {t("contact.visitUs")}
-          </h3>
+          </h2>
           <div className="mt-6 flex justify-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
@@ -125,7 +127,7 @@ const ContactScreen = () => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

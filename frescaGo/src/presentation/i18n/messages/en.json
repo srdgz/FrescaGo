@@ -37,14 +37,16 @@
     "creemosEnLaImportancia": "We believe in the importance of healthy eating and in the power of nature to nourish us.",
     "cadaPedidoEsCuidadosamente": "Every order is carefully selected so you only receive the best. FrescaGo is more than a shop, it is a bridge between the countryside and your home, making sure you enjoy fresh, nutritious and flavourful food every day.",
     "confiaEnNosotrosPara": "Trust us to bring freshness into your life!",
-    "saberMas": "Learn more"
+    "saberMas": "Discover more about FrescaGo"
   },
   "bannerApp": {
     "descargaNuestraApp": "Download our app",
     "llevaLaFrescuraDel": "Take the freshness of the countryside in your pocket. With our app you can order fresh fruit and vegetables at any time, straight from your phone.",
     "disponibleTantoEnGoogle": "Available on both Google Play and the App Store, our app gives you a fast and convenient shopping experience.",
     "descubreLoFacilQue": "Discover how easy it is to eat healthily with high quality fresh products, selected especially for you.",
-    "imagenPromocionalDeLa": "Promotional image of the FrescaGo app"
+    "imagenPromocionalDeLa": "Promotional image of the FrescaGo app",
+    "googlePlay": "Get it on Google Play",
+    "appStore": "Download on the App Store"
   },
   "bannerOrder": {
     "hazTuPedidoHoy": "Order today",
@@ -67,7 +69,8 @@
     "algunosDeNuestrosProductos": "Some of our products"
   },
   "cartItem": {
-    "categoria": "Category:"
+    "categoria": "Category:",
+    "remove": "Remove {{title}} from the cart"
   },
   "avatar": {
     "avatar": "Avatar",
@@ -234,12 +237,14 @@
     "retry": "Try again"
   },
   "meta": {
-    "title": "FrescaGo | Order today and enjoy fresh fruit and vegetables!"
+    "title": "FrescaGo | Order today and enjoy fresh fruit and vegetables!",
+    "description": "FrescaGo is an online shop for fresh fruit and vegetables from local farmers. Order today and get it delivered to your home."
   },
   "common": {
     "perKg": "{{price}}/kg",
     "loading": "Loading...",
-    "register": "Sign up"
+    "register": "Sign up",
+    "newTab": "(opens in a new tab)"
   },
   "nav": {
     "home": "Home",
@@ -250,7 +255,8 @@
     "account": "My account",
     "mainMenu": "Main menu",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to main content"
   },
   "theme": {
     "toLight": "Switch to light theme",
@@ -295,5 +301,17 @@
   "password": {
     "show": "Show password",
     "hide": "Hide password"
+  },
+  "pageTitle": {
+    "products": "Products",
+    "about": "About us",
+    "contact": "Contact",
+    "shop": "Your cart",
+    "user": "My account",
+    "editProfile": "Edit profile",
+    "orders": "My orders",
+    "success": "Order confirmed",
+    "cancel": "Payment cancelled",
+    "notFound": "Page not found"
   }
 }

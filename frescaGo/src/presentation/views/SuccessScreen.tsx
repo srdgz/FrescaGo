@@ -4,6 +4,7 @@ import Button from "../components/Utils/Button";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 import {
   OrderNotFoundError,
   OrderOwnerMismatchError,
@@ -31,6 +32,7 @@ const statusOf = (error: unknown): Status => {
 
 const SuccessScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.success"));
   const path = useLocalePath();
   const location = useLocation();
   const navigate = useNavigate();
@@ -83,7 +85,7 @@ const SuccessScreen = () => {
   );
 
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div
           aria-live="polite"
@@ -152,7 +154,7 @@ const SuccessScreen = () => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

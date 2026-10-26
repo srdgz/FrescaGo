@@ -37,14 +37,16 @@
     "creemosEnLaImportancia": "Creemos en la importancia de una alimentación saludable y en el poder de la naturaleza para nutrirnos.",
     "cadaPedidoEsCuidadosamente": "Cada pedido es cuidadosamente seleccionado para garantizar que recibas solo lo mejor. FrescaGo no es solo una tienda, es un puente entre el campo y tu hogar, asegurando que disfrutes de alimentos frescos, nutritivos y llenos de sabor todos los días.",
     "confiaEnNosotrosPara": "¡Confía en nosotros para llevar la frescura a tu vida!",
-    "saberMas": "Saber más"
+    "saberMas": "Conoce más sobre FrescaGo"
   },
   "bannerApp": {
     "descargaNuestraApp": "Descarga nuestra App",
     "llevaLaFrescuraDel": "Lleva la frescura del campo a tu bolsillo. Con nuestra app, podrás hacer pedidos de frutas y verduras frescas en cualquier momento, directamente desde tu teléfono.",
     "disponibleTantoEnGoogle": "Disponible tanto en Google Play como en App Store, nuestra aplicación te ofrece una experiencia de compra rápida y conveniente.",
     "descubreLoFacilQue": "Descubre lo fácil que es mantener una alimentación saludable con productos frescos de alta calidad, seleccionados especialmente para ti.",
-    "imagenPromocionalDeLa": "Imagen promocional de la app FrescaGo"
+    "imagenPromocionalDeLa": "Imagen promocional de la app FrescaGo",
+    "googlePlay": "Disponible en Google Play",
+    "appStore": "Disponible en App Store"
   },
   "bannerOrder": {
     "hazTuPedidoHoy": "Haz tu pedido hoy",
@@ -67,7 +69,8 @@
     "algunosDeNuestrosProductos": "Algunos de nuestros productos"
   },
   "cartItem": {
-    "categoria": "Categoría:"
+    "categoria": "Categoría:",
+    "remove": "Quitar {{title}} del carrito"
   },
   "avatar": {
     "avatar": "Avatar",
@@ -234,12 +237,14 @@
     "retry": "Reintentar"
   },
   "meta": {
-    "title": "FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!"
+    "title": "FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!",
+    "description": "FrescaGo es una tienda online de frutas y verduras frescas de agricultores locales. Haz tu pedido hoy y recíbelo en casa."
   },
   "common": {
     "perKg": "{{price}}/kg",
     "loading": "Cargando...",
-    "register": "Registrar"
+    "register": "Registrar",
+    "newTab": "(se abre en una pestaña nueva)"
   },
   "nav": {
     "home": "Inicio",
@@ -250,7 +255,8 @@
     "account": "Mi cuenta",
     "mainMenu": "Menú principal",
     "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+    "closeMenu": "Cerrar menú",
+    "skipToContent": "Saltar al contenido principal"
   },
   "theme": {
     "toLight": "Cambiar a tema claro",
@@ -295,5 +301,17 @@
   "password": {
     "show": "Mostrar contraseña",
     "hide": "Ocultar contraseña"
+  },
+  "pageTitle": {
+    "products": "Productos",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "shop": "Tu cesta",
+    "user": "Mi cuenta",
+    "editProfile": "Editar perfil",
+    "orders": "Mis pedidos",
+    "success": "Pedido confirmado",
+    "cancel": "Pago cancelado",
+    "notFound": "Página no encontrada"
   }
 }

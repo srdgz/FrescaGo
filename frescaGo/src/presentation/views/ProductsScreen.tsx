@@ -11,9 +11,11 @@ import {
 import { useUseCases } from "../AppContext";
 import { useLocale } from "../LocaleContext";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const ProductsScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.products"));
   const { listCategories, listProducts } = useUseCases();
   const locale = useLocale();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -51,10 +53,10 @@ const ProductsScreen = () => {
     [categories, products, searchProduct]
   );
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading title={t("pageTitle.products")} />;
 
   return (
-    <main className="overflow-x-hidden min-h-screen">
+    <div className="overflow-x-hidden min-h-screen">
       <h1 className="sr-only">{t("nav.products")}</h1>
       <section className="container py-10 md:py-18">
         <div className="relative flex justify-end mb-8">
@@ -119,7 +121,7 @@ const ProductsScreen = () => {
           </div>
         ))}
       </section>
-    </main>
+    </div>
   );
 };
 

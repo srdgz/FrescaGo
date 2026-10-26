@@ -22,6 +22,7 @@ export const renderWithApp = (
 ) => {
   const useCases = {
     loadUser: async () => null,
+    observeAuth: () => () => {},
     getExchangeRate: async () => ({
       usdPerEur: FALLBACK_USD_PER_EUR,
       date: "2026-10-23",

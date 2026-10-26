@@ -4,19 +4,22 @@ import Loading from "../components/Utils/Loading";
 import AvatarUploader from "../components/Utils/AvatarUploader";
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { SHIPPING_COUNTRIES, countryName } from "../../domain/countries";
 import { profileFormOf } from "../../domain/user";
 import type { ProfileForm } from "../../domain/user";
-import { useAppStore, useUseCases } from "../AppContext";
+import { useUseCases } from "../AppContext";
+import { useAuthSession } from "../hooks/useAuthSession";
 import { useLocale, useLocalePath } from "../LocaleContext";
 
 const EditProfileScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.editProfile"));
   const path = useLocalePath();
   const locale = useLocale();
-  const { currentUser, isLoading } = useAppStore();
+  const { currentUser, isLoading } = useAuthSession();
   const { updateProfile } = useUseCases();
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,12 +60,13 @@ const EditProfileScreen = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading title={t("pageTitle.editProfile")} />;
+  if (!currentUser) return <Navigate to={path("user")} replace />;
 
   const cancelTarget = returnTo === "shop" ? path("shop") : path("user");
 
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div className="card relative mx-auto max-w-md px-6 py-12 sm:px-12 lg:max-w-3xl">
           <h1 className="mb-6 text-3xl font-bold tracking-tight">
@@ -243,7 +247,7 @@ const EditProfileScreen = () => {
           </form>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

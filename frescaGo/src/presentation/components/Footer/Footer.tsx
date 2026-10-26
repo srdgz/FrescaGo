@@ -28,12 +28,13 @@ const Footer = () => {
               className="font-medium text-brand underline-offset-4 hover:underline"
             >
               {t("footer.sandraRodriguez")}
+              <span className="sr-only"> {t("common.newTab")}</span>
             </a>
           </p>
         </div>
         <div className="text-3xl flex items-center gap-4 text-gray-700 mt-6 md:mt-0">
           <a
-            href="https://www.facebook.com" aria-label="Facebook"
+            href="https://www.facebook.com" aria-label={`Facebook ${t("common.newTab")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors duration-300 hover:text-brand"
@@ -41,7 +42,7 @@ const Footer = () => {
             <RiFacebookCircleFill />
           </a>
           <a
-            href="https://www.twitter.com" aria-label="Twitter"
+            href="https://www.twitter.com" aria-label={`Twitter ${t("common.newTab")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors duration-300 hover:text-brand"
@@ -49,7 +50,7 @@ const Footer = () => {
             <RiTwitterFill />
           </a>
           <a
-            href="https://www.instagram.com" aria-label="Instagram"
+            href="https://www.instagram.com" aria-label={`Instagram ${t("common.newTab")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors duration-300 hover:text-brand"

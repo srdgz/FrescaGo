@@ -3,16 +3,18 @@ import Products from "../components/Products/Products";
 import Banner from "../components/Banners/Banner";
 import BannerSecond from "../components/Banners/BannerSecond";
 import BannerThird from "../components/Banners/BannerThird";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const HomeScreen = () => {
+  usePageTitle();
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <Hero />
       <Products />
       <Banner />
       <BannerSecond />
       <BannerThird />
-    </main>
+    </div>
   );
 };
 

@@ -23,7 +23,7 @@ const CurrencySwitcher = () => {
           type="button"
           onClick={() => setCurrency(option)}
           aria-pressed={option === currency}
-          aria-label={t(`currency.${option}`)}
+          aria-label={`${SYMBOLS[option]} ${t(`currency.${option}`)}`}
           className={`px-3 py-1 ${
             option === currency
               ? "bg-primary text-white"

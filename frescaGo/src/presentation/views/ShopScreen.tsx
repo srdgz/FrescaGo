@@ -11,10 +11,12 @@ import {
 import { useAppStore } from "../AppContext";
 import { useMoney } from "../hooks/useMoney";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { useLocalePath } from "../LocaleContext";
 
 const ShopScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.shop"));
   const path = useLocalePath();
   const { cartProduct } = useAppStore();
   const { format } = useMoney();
@@ -23,7 +25,7 @@ const ShopScreen = () => {
   const shippingAmt = shippingCost(cartProduct);
 
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         {cartProduct.length > 0 ? (
           <>
@@ -90,7 +92,7 @@ const ShopScreen = () => {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 };
 

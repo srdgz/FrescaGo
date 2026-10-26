@@ -18,15 +18,19 @@ import {
 import { intlLocale } from "../../domain/locale";
 import { formatShippingAddress } from "../../domain/user";
 import { useMoney } from "../hooks/useMoney";
-import { useAppStore, useUseCases } from "../AppContext";
+import { Navigate } from "react-router-dom";
+import { useUseCases } from "../AppContext";
+import { useAuthSession } from "../hooks/useAuthSession";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { useLocale, useLocalePath } from "../LocaleContext";
 
 const Orders = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.orders"));
   const path = useLocalePath();
   const locale = useLocale();
-  const { currentUser } = useAppStore();
+  const { currentUser, isLoading } = useAuthSession();
   const { listOrders } = useUseCases();
   const { format, formatAmount } = useMoney();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -47,8 +51,11 @@ const Orders = () => {
     loadOrders();
   }, [currentUser, listOrders]);
 
+  if (isLoading) return <Loading title={t("pageTitle.orders")} />;
+  if (!currentUser) return <Navigate to={path("user")} replace />;
+
   return (
-    <main className="overflow-x-hidden min-h-screen">
+    <div className="overflow-x-hidden min-h-screen">
       <section className="container py-12 md:py-24">
         {loading ? (
           <Loading />
@@ -71,7 +78,7 @@ const Orders = () => {
               {t("orders.aquiPuedesVerLos")}
             </p>
             <div className="flex flex-col gap-3">
-              <div className="space-y-6 divide-y divide-gray-900/10">
+              <dl className="space-y-6 divide-y divide-gray-900/10">
                 {orders.map((order) => {
                   const totalProducts = orderTotal(order);
                   return (
@@ -180,7 +187,7 @@ const Orders = () => {
                                     to={path("products", item?.id)}
                                     className="h-20 w-20 sm:h-32 sm:w-32 md:h-40 md:w-40 flex-none rounded-2xl bg-photo border border-line hover:border-brand overflow-hidden"
                                   >
-                                    <img
+                                    <img width={160} height={160} loading="lazy" decoding="async"
                                       src={item?.image}
                                       alt={t("orders.imagenDelProducto")}
                                       className="h-full w-full object-contain mix-blend-multiply p-2"
@@ -240,11 +247,11 @@ const Orders = () => {
                     </Disclosure>
                   );
                 })}
-              </div>
+              </dl>
             </div>
           </div>
         ) : (
-          <main className="overflow-x-hidden">
+          <div className="overflow-x-hidden">
             <section className="container py-12 md:py-24">
               <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
                 <h1 className="text-2xl md:text-4xl font-bold text-center text-secondary">
@@ -254,10 +261,10 @@ const Orders = () => {
                 <Button text={t("orders.irDeCompras")} to={path("products")} />
               </div>
             </section>
-          </main>
+          </div>
         )}
       </section>
-    </main>
+    </div>
   );
 };
 

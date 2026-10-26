@@ -44,7 +44,7 @@ const Products = () => {
                 className="card flex h-full items-center gap-4 p-4 transition duration-200 hover:-translate-y-1 hover:shadow-md"
               >
                 <span className="flex h-20 w-20 flex-none items-center justify-center rounded-2xl bg-photo">
-                  <img
+                  <img width={56} height={56} loading="lazy" decoding="async"
                     src={product.img}
                     alt=""
                     className="h-14 w-14 object-contain mix-blend-multiply"

@@ -1,37 +1,30 @@
-import { useEffect } from "react";
 import Loading from "../components/Utils/Loading";
 import Registration from "../components/Auth/Registration";
 import UserInfo from "../components/Auth/UserInfo";
 import { useTranslation } from "react-i18next";
-import { useAppStore, useUseCases } from "../AppContext";
+import { usePageTitle } from "../hooks/usePageTitle";
+import { useAuthSession } from "../hooks/useAuthSession";
 
 const UserScreen = () => {
   const { t } = useTranslation();
-  const { currentUser, getUserInfo, isLoading } = useAppStore();
-  const { observeAuth } = useUseCases();
+  usePageTitle(t("pageTitle.user"));
+  const { currentUser, isLoading } = useAuthSession();
 
-  useEffect(() => {
-    const unSub = observeAuth((uid) => {
-      getUserInfo(uid);
-    });
-    return () => {
-      unSub();
-    };
-  }, [getUserInfo, observeAuth]);
-
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading title={t("pageTitle.user")} />;
 
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
-        <h1 className="sr-only">{t("nav.account")}</h1>
         {currentUser ? (
           <UserInfo currentUser={currentUser} />
         ) : (
-          <Registration />
+          <>
+            <h1 className="sr-only">{t("nav.account")}</h1>
+            <Registration />
+          </>
         )}
       </section>
-    </main>
+    </div>
   );
 };
 

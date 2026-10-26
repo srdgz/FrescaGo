@@ -28,8 +28,13 @@ const CartProduct = ({ product }: CartProductProps) => {
 
   return (
     <div className="flex py-6 sm:py-10">
-      <Link to={path("products", product?.id)} className="flex-none self-start rounded-2xl bg-photo p-2">
-        <img
+      <Link
+        to={path("products", product?.id)}
+        tabIndex={-1}
+        aria-hidden="true"
+        className="flex-none self-start rounded-2xl bg-photo p-2"
+      >
+        <img width={160} height={160} loading="lazy" decoding="async"
           src={product?.image}
           alt=""
           className="h-24 w-24 object-contain mix-blend-multiply sm:h-40 sm:w-40"
@@ -38,9 +43,9 @@ const CartProduct = ({ product }: CartProductProps) => {
       <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
         <div className="relative pr-9 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:pr-0">
           <div className="flex flex-col gap-1 col-span-3">
-            <h3 className="text-lg font-semibold w-full text-gray-800">
+            <h2 className="text-lg font-semibold w-full text-gray-800">
               {product?.title}
-            </h3>
+            </h2>
             <p className="text-sm text-gray-600">
               {t("cartItem.categoria")}{" "}
               <span className="font-medium">{product?.categoryLabel ?? product?.category}</span>
@@ -56,6 +61,7 @@ const CartProduct = ({ product }: CartProductProps) => {
             <div className="absolute right-0 top-0">
               <button
                 onClick={handleRemoveProduct}
+                aria-label={t("cartItem.remove", { title: product?.title })}
                 className="-m2 inline-flex p-2 text-gray-600 hover:text-brand"
               >
                 <RiCloseCircleLine className="text-2xl" />

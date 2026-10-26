@@ -1,12 +1,14 @@
-import AboutImage from "../../assets/nosotros.jpg";
+import AboutImage from "../../assets/nosotros.webp";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../utility/animation";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const AboutScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.about"));
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div className="text-center md:text-left">
           <h1 className="text-4xl md:text-6xl font-bold text-brand mb-6">
@@ -49,7 +51,7 @@ const AboutScreen = () => {
             </ul>
           </div>
           <div className="flex justify-center items-center">
-            <motion.img
+            <motion.img width={1000} height={666} decoding="async"
               variants={FadeLeft(0.5)}
               initial="hidden"
               whileInView="visible"
@@ -60,7 +62,7 @@ const AboutScreen = () => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

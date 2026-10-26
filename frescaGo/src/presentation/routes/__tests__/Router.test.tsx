@@ -71,7 +71,7 @@ describe("locale routing", () => {
     const { useCases } = setup("/es/productos");
     await screen.findByPlaceholderText("Buscar productos...");
 
-    const [english] = screen.getAllByRole("link", { name: "English" });
+    const [english] = screen.getAllByRole("link", { name: "EN English" });
     await userEvent.click(english);
 
     expect(await screen.findByPlaceholderText("Search products...")).toBeInTheDocument();

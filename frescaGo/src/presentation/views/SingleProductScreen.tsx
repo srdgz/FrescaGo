@@ -8,6 +8,8 @@ import { useUseCases } from "../AppContext";
 import { useLocale } from "../LocaleContext";
 import { useMoney } from "../hooks/useMoney";
 import { useTranslation } from "react-i18next";
+import { FaCcAmex, FaCcMastercard, FaCcVisa } from "react-icons/fa";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const emptyProduct: Product = {
   id: 0,
@@ -26,6 +28,7 @@ const SingleProductScreen = () => {
   const { format } = useMoney();
   const [productData, setProductData] = useState<Product>(emptyProduct);
   const [loading, setLoading] = useState(false);
+  usePageTitle(productData.title || t("pageTitle.products"));
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -44,10 +47,10 @@ const SingleProductScreen = () => {
     fetchData();
   }, [id, getProduct, locale]);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading title={t("pageTitle.products")} />;
 
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-40 relative">
         <button
           onClick={() => navigate(-1)}
@@ -59,7 +62,7 @@ const SingleProductScreen = () => {
         {productData && productData.id && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-8">
             <div className="flex items-center justify-center rounded-card bg-photo p-8">
-              <img
+              <img width={200} height={200} fetchPriority="high" decoding="async"
                 src={productData.image}
                 alt={productData.title}
                 className="w-auto max-w-xs object-contain mix-blend-multiply"
@@ -90,17 +93,26 @@ const SingleProductScreen = () => {
               </div>
               <div className="flex flex-col items-center justify-center gap-2 rounded-card bg-soft p-5">
                 <p className="font-semibold">{t("product.pagosSeguros")}</p>
-                <img
-                  src="https://www.freshlycosmetics.com/img/paymentlogos/imatge_es.png"
-                  alt={t("product.pagoSeguro")}
-                  className="w-auto rounded-lg bg-white object-cover p-2"
-                />
+                <ul
+                  aria-label={t("product.pagoSeguro")}
+                  className="flex items-center gap-3 text-4xl text-gray-700"
+                >
+                  <li>
+                    <FaCcVisa aria-label="Visa" role="img" />
+                  </li>
+                  <li>
+                    <FaCcMastercard aria-label="Mastercard" role="img" />
+                  </li>
+                  <li>
+                    <FaCcAmex aria-label="American Express" role="img" />
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 };
 

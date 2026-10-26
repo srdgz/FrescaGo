@@ -1,12 +1,14 @@
 import Button from "../components/Utils/Button";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../hooks/usePageTitle";
 import { useLocalePath } from "../LocaleContext";
 
 const CancelScreen = () => {
   const { t } = useTranslation();
+  usePageTitle(t("pageTitle.cancel"));
   const path = useLocalePath();
   return (
-    <main className="overflow-x-hidden">
+    <div className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
         <div className="min-h-[400px] flex flex-col items-center justify-center gap-y-8 my-12">
           <h1 className="text-2xl md:text-4xl font-bold text-center text-brand">
@@ -21,7 +23,7 @@ const CancelScreen = () => {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 
