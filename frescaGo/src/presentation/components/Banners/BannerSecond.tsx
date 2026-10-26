@@ -1,7 +1,8 @@
-import BannerPlato from "../../../assets/banner-plato.png";
+import BannerPlato from "../../../assets/banner-plato.webp";
 import { motion } from "framer-motion";
 import { FadeUp } from "../../utility/animation";
 import { useTranslation } from "react-i18next";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 const BannerSecond = () => {
   const { t } = useTranslation();
@@ -49,39 +50,33 @@ const BannerSecond = () => {
               animate="visible"
               whileInView="visible"
               viewport={{ once: true }}
-              className="flex justify-center md:justify-start space-x-4"
+              className="flex flex-wrap justify-center gap-4 md:justify-start"
             >
               <a
                 href="https://play.google.com/store"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-canvas transition-opacity hover:opacity-90"
               >
-                <img
-                  src="https://cdn1.bodas.net/assets/img/footer/googleplay.png"
-                  alt="Google Play"
-                  srcSet="https://cdn1.bodas.net/assets/img/footer/googleplay@2x.png"
-                  loading="lazy"
-                  className="mx-auto md:mx-0 max-h-12"
-                />
+                <FaGooglePlay className="text-xl" aria-hidden="true" />
+                <span className="font-semibold">{t("bannerApp.googlePlay")}</span>
+                <span className="sr-only">{t("common.newTab")}</span>
               </a>
               <a
-                href={"https://www.apple.com/app-store/"}
+                href="https://www.apple.com/app-store/"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-canvas transition-opacity hover:opacity-90"
               >
-                <img
-                  src="https://cdn1.bodas.net/assets/img/footer/appstore.png"
-                  alt="App Store"
-                  srcSet="https://cdn1.bodas.net/assets/img/footer/appstore@2x.png"
-                  loading="lazy"
-                  className="mx-auto md:mx-0 max-h-12"
-                />
+                <FaApple className="text-2xl" aria-hidden="true" />
+                <span className="font-semibold">{t("bannerApp.appStore")}</span>
+                <span className="sr-only">{t("common.newTab")}</span>
               </a>
             </motion.div>
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <motion.img
+          <motion.img width={1000} height={1023} loading="lazy" decoding="async"
             initial={{ opacity: 0, x: 200, rotate: 75 }}
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}

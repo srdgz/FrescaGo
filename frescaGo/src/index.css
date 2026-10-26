@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/fraunces";
 @import "./theme.css";
 
 @theme inline {
@@ -27,8 +29,8 @@
   --color-gray-800: rgb(var(--gray-800));
   --color-gray-900: rgb(var(--gray-900));
 
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
 
   --radius-card: 1.25rem;
 }

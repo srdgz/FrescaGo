@@ -1,4 +1,4 @@
-import BannerSplash from "../../../assets/banner-frutas.png";
+import BannerSplash from "../../../assets/banner-frutas.webp";
 import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeUp } from "../../utility/animation";
@@ -12,7 +12,7 @@ const Banner = () => {
     <section className="bg-soft">
       <div className="container grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 py-14">
         <div className="flex justify-center items-center">
-          <motion.img
+          <motion.img width={800} height={1276} loading="lazy" decoding="async"
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", stiffness: 100, delay: 0.2 }}

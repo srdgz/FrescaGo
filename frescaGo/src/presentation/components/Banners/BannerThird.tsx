@@ -1,4 +1,4 @@
-import BannerBg from "../../../assets/banner-bg.jpg";
+import BannerBg from "../../../assets/banner-bg.webp";
 import Button from "../Utils/Button";
 import { motion } from "framer-motion";
 import { FadeLeft } from "../../utility/animation";

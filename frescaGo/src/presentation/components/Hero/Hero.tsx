@@ -1,5 +1,5 @@
-import heroEnsalada from "../../../assets/hero-ensalada.png";
-import heroHoja from "../../../assets/hero-hoja.png";
+import heroEnsalada from "../../../assets/hero-ensalada.webp";
+import heroHoja from "../../../assets/hero-hoja.webp";
 import Button from "../Utils/Button";
 import { RiShoppingBasketLine } from "react-icons/ri";
 import { motion } from "framer-motion";
@@ -57,7 +57,7 @@ const Hero = () => {
           </div>
         </div>
         <div className="relative flex items-center justify-center">
-          <motion.img
+          <motion.img width={500} height={500} fetchPriority="high" decoding="async"
             initial={{ opacity: 0, x: 200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -67,7 +67,7 @@ const Hero = () => {
           />
         </div>
         <div aria-hidden="true" className="absolute right-1/2 top-14 rotate-[40deg] opacity-60 blur-xs md:top-0">
-          <motion.img
+          <motion.img width={633} height={394} decoding="async"
             initial={{ opacity: 0, x: -200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
             transition={{ duration: 1, delay: 1.5 }}

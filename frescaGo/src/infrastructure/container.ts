@@ -1,9 +1,11 @@
 import { makeUseCases } from "../application/useCases";
 import { apiBaseUrl } from "./env";
-import { createFirebaseAuthService } from "./firebase/FirebaseAuthService";
-import { createFirebaseImageStorage } from "./firebase/FirebaseImageStorage";
-import { createFirestoreOrderRepository } from "./firebase/FirestoreOrderRepository";
-import { createFirestoreUserRepository } from "./firebase/FirestoreUserRepository";
+import {
+  lazyAuthService,
+  lazyImageStorage,
+  lazyOrderRepository,
+  lazyUserRepository,
+} from "./lazy";
 import {
   createHttpCatalogGateway,
   createHttpRatesGateway,
@@ -14,9 +16,23 @@ export const createUseCases = () =>
   makeUseCases({
     catalog: createHttpCatalogGateway(apiBaseUrl),
     rates: createHttpRatesGateway(apiBaseUrl),
-    auth: createFirebaseAuthService(),
-    users: createFirestoreUserRepository(),
-    orders: createFirestoreOrderRepository(),
-    images: createFirebaseImageStorage(),
+    auth: lazyAuthService(async () =>
+      (await import("./firebase/FirebaseAuthService")).createFirebaseAuthService()
+    ),
+    users: lazyUserRepository(async () =>
+      (
+        await import("./firebase/FirestoreUserRepository")
+      ).createFirestoreUserRepository()
+    ),
+    orders: lazyOrderRepository(async () =>
+      (
+        await import("./firebase/FirestoreOrderRepository")
+      ).createFirestoreOrderRepository()
+    ),
+    images: lazyImageStorage(async () =>
+      (
+        await import("./firebase/FirebaseImageStorage")
+      ).createFirebaseImageStorage()
+    ),
     checkout: createStripeCheckoutGateway(apiBaseUrl),
   });

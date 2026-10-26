@@ -2,14 +2,21 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    <title>
+      FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!
+    </title>
+    <meta
+      name="description"
+      content="FrescaGo es una tienda online de frutas y verduras frescas de agricultores locales. Haz tu pedido hoy y recíbelo en casa."
     />
+    <meta name="theme-color" content="#fbf7f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121a15" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="FrescaGo" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
     <script>
       try {
         var theme = localStorage.getItem("frescago-theme");
@@ -18,11 +25,11 @@
         }
       } catch (error) {}
     </script>
-    <title>
-      FrescaGo | ¡Haz tu Pedido Hoy y Disfruta de Frutas y Verduras Frescas!
-    </title>
   </head>
   <body>
+    <noscript>
+      FrescaGo necesita JavaScript para funcionar. / FrescaGo needs JavaScript to work.
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

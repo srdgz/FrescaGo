@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /es/usuario
+Disallow: /en/account
+Disallow: /es/editar
+Disallow: /en/edit-profile
+Disallow: /es/pedidos
+Disallow: /en/orders
+Disallow: /es/success
+Disallow: /en/success
+Disallow: /es/cancel
+Disallow: /en/cancel
+
+Sitemap: https://frescago.vercel.app/sitemap.xml
