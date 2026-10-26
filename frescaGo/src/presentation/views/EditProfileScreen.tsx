@@ -230,7 +230,7 @@ const EditProfileScreen = () => {
                 text={t("editProfile.cancelar")}
                 to={cancelTarget}
                 variant="outline"
-                className="!mb-0"
+                className="mb-0!"
               />
               <button
                 type="submit"

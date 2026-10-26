@@ -55,13 +55,13 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
             <Button
               text={t("userInfo.editarPerfil")}
               to={path("editProfile")}
-              className="!mb-0"
+              className="mb-0!"
             />
             <Button
               text={t("userInfo.misPedidos")}
               to={path("orders")}
               variant="outline"
-              className="!mb-0"
+              className="mb-0!"
             />
             <button
               type="button"

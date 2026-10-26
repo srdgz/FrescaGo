@@ -1,4 +1,4 @@
-import ReactPaginate from "react-paginate";
+import { Paginate } from "./Paginate";
 import AddToCartBtn from "../Utils/AddToCartBtn";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -66,7 +66,7 @@ const CategoryPagination = ({
               <AddToCartBtn
                 product={product}
                 title={t("pagination.comprar")}
-                className="primary-btn !px-5 !py-2 text-sm"
+                className="primary-btn px-5! py-2! text-sm"
               />
             </div>
           </li>
@@ -77,7 +77,7 @@ const CategoryPagination = ({
           aria-label={t("pagination.label")}
           className="flex flex-col items-center justify-center py-8 md:flex-row md:justify-end"
         >
-          <ReactPaginate
+          <Paginate
             previousLabel={<IoChevronBack className="text-xl" aria-hidden="true" />}
             nextLabel={<IoChevronForward className="text-xl" aria-hidden="true" />}
             previousAriaLabel={t("pagination.previous")}
@@ -89,7 +89,7 @@ const CategoryPagination = ({
             pageCount={pageCount}
             containerClassName="flex gap-2 text-base font-semibold"
             pageLinkClassName="flex h-10 w-10 items-center justify-center rounded-full border border-gray-400 transition-colors duration-200 hover:border-brand hover:text-brand"
-            activeLinkClassName="!border-primary bg-primary !text-white hover:!text-white"
+            activeLinkClassName="border-primary! bg-primary text-white! hover:text-white!"
             previousLinkClassName="flex h-10 w-10 items-center justify-center rounded-full border border-gray-400 hover:border-brand hover:text-brand"
             nextLinkClassName="flex h-10 w-10 items-center justify-center rounded-full border border-gray-400 hover:border-brand hover:text-brand"
             breakLinkClassName="flex h-10 w-10 items-center justify-center"

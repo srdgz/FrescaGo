@@ -79,7 +79,7 @@ const ProductsScreen = () => {
                 onFocus={() => setIsExpanded(true)}
                 onBlur={() => !searchProduct && setIsExpanded(false)}
                 aria-label={t("catalog.buscarProductos")}
-                className="field !rounded-full !py-2 pr-10"
+                className="field rounded-full! py-2! pr-10"
               />
               {!isExpanded && (
                 <button

@@ -25,7 +25,7 @@ const BannerThird = () => {
       <div className="relative z-10 container grid grid-cols-1 md:grid-cols-2 space-y-6 md:space-y-0 py-14 rounded-3xl">
         <div></div>
         <div className="flex flex-col justify-center">
-          <div className="space-y-4 rounded-card bg-surface/90 p-6 text-center shadow-md backdrop-blur-sm md:ms-14 md:text-left lg:max-w-[440px]">
+          <div className="space-y-4 rounded-card bg-surface/90 p-6 text-center shadow-md backdrop-blur-xs md:ms-14 md:text-left lg:max-w-[440px]">
             <motion.h2
               variants={FadeLeft(0.5)}
               initial="hidden"

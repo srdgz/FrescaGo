@@ -106,13 +106,13 @@ const SuccessScreen = () => {
                 <Button
                   text={t("success.misPedidos")}
                   to={path("orders")}
-                  className="!mb-0"
+                  className="mb-0!"
                 />
                 <Button
                   text={t("success.seguirComprando")}
                   to={path("products")}
                   variant="outline"
-                  className="!mb-0"
+                  className="mb-0!"
                 />
               </>
             )}
@@ -123,7 +123,7 @@ const SuccessScreen = () => {
                   text={t("cancel.volverAlInicio")}
                   to={path("home")}
                   variant="outline"
-                  className="!mb-0"
+                  className="mb-0!"
                 />
               </>
             )}
@@ -132,13 +132,13 @@ const SuccessScreen = () => {
                 <Button
                   text={t("success.misPedidos")}
                   to={path("orders")}
-                  className="!mb-0"
+                  className="mb-0!"
                 />
                 <Button
                   text={t("cancel.volverAlInicio")}
                   to={path("home")}
                   variant="outline"
-                  className="!mb-0"
+                  className="mb-0!"
                 />
               </>
             )}
@@ -146,7 +146,7 @@ const SuccessScreen = () => {
               <Button
                 text={t("nav.account")}
                 to={path("user")}
-                className="!mb-0"
+                className="mb-0!"
               />
             )}
           </div>
