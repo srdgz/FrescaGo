@@ -1,4 +1,3 @@
-import { loadStripe } from "@stripe/stripe-js";
 import type { CheckoutGateway } from "../../application/ports";
 import {
   OrderNotFoundError,
@@ -8,10 +7,9 @@ import type { OrderConfirmation } from "../../domain/order";
 
 export const createStripeCheckoutGateway = (
   baseUrl: string,
-  publishableKey: string
+  redirect: (url: string) => void = (url) => window.location.assign(url)
 ): CheckoutGateway => ({
   async start(items, email, { currency, locale, shipping }) {
-    const stripe = await loadStripe(publishableKey);
     const response = await fetch(`${baseUrl}/checkout`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,10 +31,10 @@ export const createStripeCheckoutGateway = (
         session?.error ?? `Checkout request failed (${response.status})`
       );
     }
-    const result = await stripe?.redirectToCheckout({ sessionId: session.id });
-    if (result?.error) {
-      throw new Error(result.error.message);
+    if (typeof session.url !== "string" || !session.url.startsWith("https://")) {
+      throw new Error("The checkout session has no payment page");
     }
+    redirect(session.url);
   },
 
   async confirm(sessionId) {

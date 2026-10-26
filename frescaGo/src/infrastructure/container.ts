@@ -1,5 +1,5 @@
 import { makeUseCases } from "../application/useCases";
-import { apiBaseUrl, stripePublishableKey } from "./env";
+import { apiBaseUrl } from "./env";
 import { createFirebaseAuthService } from "./firebase/FirebaseAuthService";
 import { createFirebaseImageStorage } from "./firebase/FirebaseImageStorage";
 import { createFirestoreOrderRepository } from "./firebase/FirestoreOrderRepository";
@@ -18,5 +18,5 @@ export const createUseCases = () =>
     users: createFirestoreUserRepository(),
     orders: createFirestoreOrderRepository(),
     images: createFirebaseImageStorage(),
-    checkout: createStripeCheckoutGateway(apiBaseUrl, stripePublishableKey),
+    checkout: createStripeCheckoutGateway(apiBaseUrl),
   });

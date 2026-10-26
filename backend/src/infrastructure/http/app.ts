@@ -76,14 +76,14 @@ export const createApp = (container: Container = createContainer()) => {
 
   app.post("/checkout", async (req, res) => {
     try {
-      const id = await container.createCheckout({
+      const { id, url } = await container.createCheckout({
         items: req.body?.items,
         email: req.body?.email,
         currency: req.body?.currency,
         locale: req.body?.locale,
         shipping: req.body?.shipping,
       });
-      res.json({ message: "Server is connected", success: true, id });
+      res.json({ message: "Server is connected", success: true, id, url });
     } catch (error) {
       if (
         error instanceof InvalidEmailError ||

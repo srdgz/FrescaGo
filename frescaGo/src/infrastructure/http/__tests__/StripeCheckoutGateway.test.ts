@@ -1,19 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createStripeCheckoutGateway } from "../StripeCheckoutGateway";
 import {
   OrderNotFoundError,
   PaymentNotCompletedError,
 } from "../../../domain/order";
 import { apple } from "../../../test/fixtures";
 
-const redirectToCheckout = vi.hoisted(() => vi.fn());
-
-vi.mock("@stripe/stripe-js", () => ({
-  loadStripe: vi.fn(async () => ({ redirectToCheckout })),
-}));
-
-const { createStripeCheckoutGateway } = await import("../StripeCheckoutGateway");
-
-const gateway = createStripeCheckoutGateway("https://api.test", "pk_test_fake");
+const redirect = vi.fn();
+const gateway = createStripeCheckoutGateway("https://api.test", redirect);
 const options = {
   currency: "USD" as const,
   locale: "en" as const,
@@ -36,14 +30,15 @@ const respond = (ok: boolean, status: number, body: unknown) =>
     json: async () => body,
   });
 
+const PAYMENT_PAGE = "https://checkout.stripe.com/c/pay/cs_test_1";
+
 describe("StripeCheckoutGateway", () => {
   beforeEach(() => {
-    redirectToCheckout.mockReset();
-    redirectToCheckout.mockResolvedValue({});
+    redirect.mockReset();
   });
 
   it("sends only ids, quantities, email, currency, language and shipping", async () => {
-    globalThis.fetch = respond(true, 200, { id: "cs_test_1" });
+    globalThis.fetch = respond(true, 200, { id: "cs_test_1", url: PAYMENT_PAGE });
 
     await gateway.start([{ ...apple, quantity: 3 }], "buyer@example.com", options);
 
@@ -63,7 +58,15 @@ describe("StripeCheckoutGateway", () => {
         country: "ES",
       },
     });
-    expect(redirectToCheckout).toHaveBeenCalledWith({ sessionId: "cs_test_1" });
+  });
+
+  it("sends the shopper to the Stripe payment page", async () => {
+    globalThis.fetch = respond(true, 200, { id: "cs_test_1", url: PAYMENT_PAGE });
+
+    await gateway.start([apple], "buyer@example.com", options);
+
+    expect(redirect).toHaveBeenCalledTimes(1);
+    expect(redirect).toHaveBeenCalledWith(PAYMENT_PAGE);
   });
 
   it("fails with the server message when the backend rejects the cart", async () => {
@@ -72,10 +75,10 @@ describe("StripeCheckoutGateway", () => {
     await expect(
       gateway.start([apple], "buyer@example.com", options)
     ).rejects.toThrow("Carrito no válido.");
-    expect(redirectToCheckout).not.toHaveBeenCalled();
+    expect(redirect).not.toHaveBeenCalled();
   });
 
-  it("fails when the backend answers 500 without a session id", async () => {
+  it("fails when the backend answers 500 without a payment page", async () => {
     globalThis.fetch = respond(false, 500, {
       error: "No se pudo crear la sesión de pago.",
     });
@@ -83,7 +86,7 @@ describe("StripeCheckoutGateway", () => {
     await expect(
       gateway.start([apple], "buyer@example.com", options)
     ).rejects.toThrow("No se pudo crear la sesión de pago.");
-    expect(redirectToCheckout).not.toHaveBeenCalled();
+    expect(redirect).not.toHaveBeenCalled();
   });
 
   it("fails when the response is not json", async () => {
@@ -100,13 +103,18 @@ describe("StripeCheckoutGateway", () => {
     ).rejects.toThrow("Checkout request failed (502)");
   });
 
-  it("fails when Stripe cannot redirect", async () => {
-    globalThis.fetch = respond(true, 200, { id: "cs_test_1" });
-    redirectToCheckout.mockResolvedValue({ error: { message: "Blocked" } });
+  it.each([
+    ["no url", { id: "cs_test_1" }],
+    ["an empty url", { id: "cs_test_1", url: "" }],
+    ["an insecure url", { id: "cs_test_1", url: "http://evil.example/pay" }],
+    ["a javascript url", { id: "cs_test_1", url: "javascript:alert(1)" }],
+  ])("never redirects with %s", async (_label, body) => {
+    globalThis.fetch = respond(true, 200, body);
 
     await expect(
       gateway.start([apple], "buyer@example.com", options)
-    ).rejects.toThrow("Blocked");
+    ).rejects.toThrow();
+    expect(redirect).not.toHaveBeenCalled();
   });
 
   describe("confirm", () => {

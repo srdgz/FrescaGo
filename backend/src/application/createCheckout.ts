@@ -26,7 +26,7 @@ interface CheckoutInput {
 
 export const makeCreateCheckout =
   ({ catalog, payments, rates, getFrontendUrl }: Dependencies) =>
-  async (input: CheckoutInput): Promise<string> => {
+  async (input: CheckoutInput): Promise<{ id: string; url: string }> => {
     const email = assertValidEmail(input.email);
     const currency = parseCurrency(input.currency);
     const locale = parseLocale(input.locale);

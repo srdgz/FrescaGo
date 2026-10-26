@@ -136,7 +136,10 @@ describe("GET /rates", () => {
 describe("POST /checkout", () => {
   beforeEach(() => {
     createSession.mockReset();
-    createSession.mockResolvedValue({ id: "cs_test_123" });
+    createSession.mockResolvedValue({
+      id: "cs_test_123",
+      url: "https://checkout.stripe.com/c/pay/cs_test_123",
+    });
   });
 
   const send = (body: object) =>
@@ -151,7 +154,11 @@ describe("POST /checkout", () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({ success: true, id: "cs_test_123" });
+    expect(res.body).toMatchObject({
+      success: true,
+      id: "cs_test_123",
+      url: "https://checkout.stripe.com/c/pay/cs_test_123",
+    });
 
     const params = createSession.mock.calls[0][0];
     expect(params.line_items[0].quantity).toBe(2);
@@ -159,6 +166,7 @@ describe("POST /checkout", () => {
     expect(params.line_items[0].price_data.unit_amount).toBe(
       Math.round(product.price * 100)
     );
+    expect(params.allowed_payment_method_types).toEqual(["card"]);
     expect(params.locale).toBe("es");
     expect(params.success_url).toBe(
       "https://shop.test/es/success?session_id={CHECKOUT_SESSION_ID}"
@@ -195,6 +203,19 @@ describe("POST /checkout", () => {
     const res = await send({ items, email: "buyer@example.com" });
     expect(res.status).toBe(400);
     expect(createSession).not.toHaveBeenCalled();
+  });
+
+  it("fails without leaking details when Stripe returns no payment page", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    createSession.mockResolvedValue({ id: "cs_test_123", url: null });
+
+    const res = await send({
+      items: [{ id: product.id, quantity: 1 }],
+      email: "buyer@example.com",
+    });
+
+    expect(res.status).toBe(500);
+    expect(res.body.url).toBeUndefined();
   });
 
   it("sends the shipping address to Stripe", async () => {
@@ -323,7 +344,10 @@ describe("POST /checkout", () => {
 describe("checkout metadata", () => {
   beforeEach(() => {
     createSession.mockReset();
-    createSession.mockResolvedValue({ id: "cs_test_123" });
+    createSession.mockResolvedValue({
+      id: "cs_test_123",
+      url: "https://checkout.stripe.com/c/pay/cs_test_123",
+    });
   });
 
   it("records what is needed to rebuild the order after the payment", async () => {

@@ -38,7 +38,9 @@ export interface CheckoutRecord {
 }
 
 export interface PaymentGateway {
-  createCheckoutSession(request: CheckoutSessionRequest): Promise<string>;
+  createCheckoutSession(
+    request: CheckoutSessionRequest
+  ): Promise<{ id: string; url: string }>;
   retrieveCheckout(sessionId: string): Promise<CheckoutRecord | null>;
 }
 

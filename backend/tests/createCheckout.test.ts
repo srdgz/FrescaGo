@@ -5,7 +5,10 @@ import { products } from "../src/infrastructure/catalog/data.js";
 
 const setup = () => {
   const payments = {
-    createCheckoutSession: vi.fn().mockResolvedValue("cs_test_1"),
+    createCheckoutSession: vi.fn().mockResolvedValue({
+      id: "cs_test_1",
+      url: "https://checkout.stripe.com/c/pay/cs_test_123",
+    }),
     retrieveCheckout: vi.fn(),
   };
   const rates = {
@@ -41,9 +44,9 @@ describe("createCheckout use case", () => {
   it("prices in euros and returns to the Spanish site by default", async () => {
     const { payments, createCheckout } = setup();
 
-    const id = await createCheckout(input());
+    const session = await createCheckout(input());
 
-    expect(id).toBe("cs_test_1");
+    expect(session).toEqual({ id: "cs_test_1", url: "https://checkout.stripe.com/c/pay/cs_test_123" });
     const request = payments.createCheckoutSession.mock.calls[0][0];
     expect(request.currency).toBe("EUR");
     expect(request.locale).toBe("es");

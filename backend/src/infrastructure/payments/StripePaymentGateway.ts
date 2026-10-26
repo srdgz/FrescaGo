@@ -81,7 +81,11 @@ export const createStripePaymentGateway = (
       },
     });
 
-    return session.id;
+    if (!session.url) {
+      throw new Error("Stripe did not return a checkout url");
+    }
+
+    return { id: session.id, url: session.url };
   },
 
   async retrieveCheckout(sessionId): Promise<CheckoutRecord | null> {
