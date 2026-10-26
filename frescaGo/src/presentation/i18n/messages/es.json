@@ -75,7 +75,8 @@
   },
   "checkout": {
     "pagar": "Pagar",
-    "necesitasIniciarSesionPara": "Necesitas iniciar sesión para completar la compra"
+    "necesitasIniciarSesionPara": "Necesitas iniciar sesión para completar la compra",
+    "error": "No se pudo iniciar el pago. Inténtalo de nuevo en unos minutos."
   },
   "about": {
     "sobreFresca": "Sobre Fresca",

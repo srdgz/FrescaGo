@@ -17,7 +17,12 @@ export const createStripeCheckoutGateway = (
         locale,
       }),
     });
-    const session = await response.json();
+    const session = await response.json().catch(() => null);
+    if (!response.ok || !session?.id) {
+      throw new Error(
+        session?.error ?? `Checkout request failed (${response.status})`
+      );
+    }
     const result = await stripe?.redirectToCheckout({ sessionId: session.id });
     if (result?.error) {
       throw new Error(result.error.message);

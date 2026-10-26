@@ -30,6 +30,7 @@ describe("CheckoutBtn", () => {
   });
 
   it("alerts the user when the checkout fails", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
     const alert = vi.spyOn(window, "alert").mockImplementation(() => {});
     const startCheckout = vi.fn().mockRejectedValue(new Error("Tarjeta rechazada"));
     const { store } = renderWithApp(<CheckoutBtn products={products} />, {
@@ -39,6 +40,8 @@ describe("CheckoutBtn", () => {
 
     await userEvent.click(await screen.findByRole("button", { name: /pagar/i }));
 
-    expect(alert).toHaveBeenCalledWith("Tarjeta rechazada");
+    expect(alert).toHaveBeenCalledWith(
+      "No se pudo iniciar el pago. Inténtalo de nuevo en unos minutos."
+    );
   });
 });

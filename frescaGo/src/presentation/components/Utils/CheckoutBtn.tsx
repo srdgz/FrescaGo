@@ -20,7 +20,8 @@ const CheckoutBtn = ({ products }: CheckoutBtnProps) => {
     try {
       await startCheckout(products, currentUser.email, { currency, locale });
     } catch (error) {
-      window.alert(error instanceof Error ? error.message : String(error));
+      console.error("Checkout error:", error);
+      window.alert(t("checkout.error"));
     }
   };
 

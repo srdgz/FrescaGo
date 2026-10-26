@@ -75,7 +75,8 @@
   },
   "checkout": {
     "pagar": "Pay",
-    "necesitasIniciarSesionPara": "You need to sign in to complete your purchase"
+    "necesitasIniciarSesionPara": "You need to sign in to complete your purchase",
+    "error": "The payment could not be started. Please try again in a few minutes."
   },
   "about": {
     "sobreFresca": "About Fresca",
