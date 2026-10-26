@@ -117,6 +117,7 @@ const ProductsScreen = () => {
             <CategoryPagination
               products={category.products}
               itemsPerPage={itemsPerPage}
+              label={category.title}
             />
           </div>
         ))}

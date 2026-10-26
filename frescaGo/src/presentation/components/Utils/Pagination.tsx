@@ -5,20 +5,23 @@ import { pageItems } from "../../../domain/pagination";
 interface PaginationProps {
   page: number;
   pageCount: number;
+  label?: string;
   onChange: (page: number) => void;
 }
 
 const control =
   "flex h-10 w-10 items-center justify-center rounded-full border border-gray-400 transition-colors duration-200 hover:border-brand hover:text-brand disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-gray-400 disabled:hover:text-inherit";
 
-const Pagination = ({ page, pageCount, onChange }: PaginationProps) => {
+const Pagination = ({ page, pageCount, label, onChange }: PaginationProps) => {
   const { t } = useTranslation();
 
   if (pageCount <= 1) return null;
 
   return (
     <nav
-      aria-label={t("pagination.label")}
+      aria-label={
+        label ? `${t("pagination.label")}: ${label}` : t("pagination.label")
+      }
       className="flex justify-center py-8 md:justify-end"
     >
       <ul className="flex flex-wrap items-center gap-2 text-base font-semibold">

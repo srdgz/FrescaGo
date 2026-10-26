@@ -10,11 +10,13 @@ import { useLocalePath } from "../../LocaleContext";
 interface CategoryPaginationProps {
   products: Product[];
   itemsPerPage: number;
+  label?: string;
 }
 
 const CategoryPagination = ({
   products,
   itemsPerPage,
+  label,
 }: CategoryPaginationProps) => {
   const { t } = useTranslation();
   const { format } = useMoney();
@@ -70,6 +72,7 @@ const CategoryPagination = ({
       <Pagination
         page={currentPage}
         pageCount={pageCount}
+        label={label}
         onChange={setCurrentPage}
       />
     </div>

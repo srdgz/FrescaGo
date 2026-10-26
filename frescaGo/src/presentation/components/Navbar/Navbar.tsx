@@ -54,9 +54,9 @@ const Navbar = () => {
                 <Link
                   to={path("shop")}
                   className="relative block"
-                  aria-label={t("nav.cart")}
                 >
                   <RiShoppingCart2Line className="hover:text-brand duration-200 text-2xl" />
+                  <span className="sr-only">{t("nav.cart")}</span>
                   <span className="inline-flex items-center justify-center absolute -right-2 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
                     {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                   </span>

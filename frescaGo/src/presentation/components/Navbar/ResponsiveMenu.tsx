@@ -55,9 +55,9 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                 <button
                   onClick={() => handleNavigation("shop")}
                   className="relative"
-                  aria-label={t("nav.cart")}
                 >
                   <RiShoppingCart2Line className="text-2xl" />
+                  <span className="sr-only">{t("nav.cart")}</span>
                   <span className="absolute -right-2 -top-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
                     {cartProduct?.length > 0 ? cartProduct?.length : "0"}
                   </span>
