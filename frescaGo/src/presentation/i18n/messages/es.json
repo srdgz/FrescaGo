@@ -192,7 +192,9 @@
     "envio": "Envío",
     "tuCarritoEstaVacio": "Tu carrito está vacío. Empieza a añadir productos frescos y saludables.",
     "hacerLaCompra": "Hacer la compra",
-    "total": "TOTAL"
+    "total": "TOTAL",
+    "shippingInfoLabel": "Más información sobre el envío",
+    "shippingInfo": "Coste de envío de tu pedido. Es el mismo sea cual sea el número de productos y se muestra ya sumado al total."
   },
   "product": {
     "volverAtras": "Volver atrás",

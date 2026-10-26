@@ -192,7 +192,9 @@
     "envio": "Shipping",
     "tuCarritoEstaVacio": "Your cart is empty. Start adding fresh and healthy products.",
     "hacerLaCompra": "Start shopping",
-    "total": "TOTAL"
+    "total": "TOTAL",
+    "shippingInfoLabel": "More information about shipping",
+    "shippingInfo": "Shipping cost for your order. It is the same whatever the number of items and is already added to the total."
   },
   "product": {
     "volverAtras": "Go back",

@@ -1,7 +1,7 @@
 import CartProduct from "../components/Products/CartProduct";
 import CheckoutBtn from "../components/Utils/CheckoutBtn";
 import Button from "../components/Utils/Button";
-import { RiQuestionLine } from "react-icons/ri";
+import Tooltip from "../components/Utils/Tooltip";
 import { SHIPPING_AMOUNT, cartSubtotal } from "../../domain/cart";
 import { useAppStore } from "../AppContext";
 import { useMoney } from "../hooks/useMoney";
@@ -49,10 +49,9 @@ const ShopScreen = () => {
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <dt className="flex items-center text-sm text-gray-600">
                       <span>{t("shop.envio")}</span>
-                      <RiQuestionLine
-                        className="h-5 w-5 text-gray-400 ml-2"
-                        aria-hidden="true"
-                      />
+                      <Tooltip label={t("shop.shippingInfoLabel")}>
+                        {t("shop.shippingInfo")}
+                      </Tooltip>
                     </dt>
                     <dd className="text-sm font-medium text-gray-900">
                       {format(shippingAmt)}
