@@ -66,7 +66,7 @@ const Hero = () => {
             className="relative z-10 w-[300px] fruit-shadow sm:w-[380px] md:w-[500px]"
           />
         </div>
-        <div aria-hidden="true" className="absolute right-1/2 top-14 rotate-[40deg] opacity-60 blur-xs md:top-0">
+        <div aria-hidden="true" className="absolute right-1/2 top-0 hidden rotate-[40deg] opacity-60 blur-xs md:block">
           <motion.img width={633} height={394} decoding="async"
             initial={{ opacity: 0, x: -200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
