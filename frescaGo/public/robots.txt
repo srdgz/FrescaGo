@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /es/usuario
-Disallow: /en/account
 Disallow: /es/editar
 Disallow: /en/edit-profile
 Disallow: /es/pedidos

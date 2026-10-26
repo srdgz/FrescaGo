@@ -27,9 +27,9 @@ const SingleProductScreen = () => {
   const locale = useLocale();
   const { format } = useMoney();
   const [productData, setProductData] = useState<Product>(emptyProduct);
-  const [loading, setLoading] = useState(false);
-  usePageTitle(productData.title || t("pageTitle.products"));
   const { id } = useParams();
+  const [loading, setLoading] = useState(Boolean(id));
+  usePageTitle(productData.title || t("pageTitle.products"));
   const navigate = useNavigate();
 
   useEffect(() => {
