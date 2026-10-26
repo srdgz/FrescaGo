@@ -82,7 +82,7 @@ const BannerSecond = () => {
             transition={{ duration: 1, delay: 0.2 }}
             src={BannerPlato}
             alt={t("bannerApp.imagenPromocionalDeLa")}
-            className="w-[450px] md:max-w-[500px] h-full object-cover fruit-shadow"
+            className="w-[450px] md:max-w-[500px] h-auto fruit-shadow"
           />
         </div>
       </div>

@@ -19,7 +19,7 @@ const Banner = () => {
             viewport={{ once: true }}
             src={BannerSplash}
             alt=""
-            className="w-[300px] md:max-w-[400px] h-full object-cover fruit-shadow"
+            className="w-[300px] md:max-w-[400px] h-auto fruit-shadow"
           />
         </div>
         <div className="flex flex-col justify-center">
