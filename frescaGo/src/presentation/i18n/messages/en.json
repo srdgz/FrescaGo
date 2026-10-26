@@ -194,7 +194,8 @@
     "hacerLaCompra": "Start shopping",
     "total": "TOTAL",
     "shippingInfoLabel": "More information about shipping",
-    "shippingInfo": "Shipping cost for your order. It is the same whatever the number of items and is already added to the total."
+    "shippingInfo": "Shipping costs {{fee}} per order. It is free on orders over {{threshold}}.",
+    "free": "Free"
   },
   "product": {
     "volverAtras": "Go back",

@@ -16,6 +16,7 @@ const order: Order = {
   currency: "USD",
   exchangeRate: 1.1,
   createdAt: "2026-10-26T10:15:00.000Z",
+  shippingCost: 4.99,
   shipping: {
     recipient: "Ana Pérez",
     address: buyer.shippingAddress!,
@@ -62,14 +63,34 @@ describe("OrdersScreen", () => {
     expect(screen.getByText(/28013 Madrid, Spain/)).toBeInTheDocument();
   });
 
-  it("shows the amounts in the currency of the order", async () => {
+  it("shows the amounts and the shipping that was charged, in the currency of the order", async () => {
     setup([order]);
 
     await userEvent.click(await screen.findByRole("button", { name: /FG-W8WCSAOZ/ }));
 
-    expect((await screen.findAllByText(/4,40 US\$/)).length).toBeGreaterThan(0);
-    expect(screen.getByText(/5,49 US\$/)).toBeInTheDocument();
+    expect(await screen.findByText("Importe del envío:")).toBeInTheDocument();
+    expect(screen.getAllByText(/5,49 US[$]/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/9,89 US[$]/).length).toBeGreaterThan(0);
     expect(screen.queryByText(/€/)).not.toBeInTheDocument();
+  });
+
+  it("shows free shipping when none was charged", async () => {
+    setup([{ ...order, shippingCost: 0 }]);
+
+    await userEvent.click(await screen.findByRole("button", { name: /FG-W8WCSAOZ/ }));
+
+    expect(await screen.findByText("Importe del envío:")).toBeInTheDocument();
+    expect(screen.getByText("Gratis")).toBeInTheDocument();
+    expect(screen.queryByText(/5,49 US[$]/)).not.toBeInTheDocument();
+  });
+
+  it("does not show a shipping cost for orders that were not charged any", async () => {
+    setup([{ ...order, shippingCost: undefined }]);
+
+    await userEvent.click(await screen.findByRole("button", { name: /FG-W8WCSAOZ/ }));
+
+    expect(await screen.findByText(/Cantidad de artículos/)).toBeInTheDocument();
+    expect(screen.queryByText("Importe del envío:")).not.toBeInTheDocument();
   });
 
   it("still opens orders saved before the address and the date existed", async () => {

@@ -15,7 +15,6 @@ import {
   orderReference,
   orderTotal,
 } from "../../domain/order";
-import { SHIPPING_AMOUNT } from "../../domain/cart";
 import { intlLocale } from "../../domain/locale";
 import { formatShippingAddress } from "../../domain/user";
 import { useMoney } from "../hooks/useMoney";
@@ -132,12 +131,20 @@ const Orders = () => {
                                     {format(totalProducts, orderCurrency(order), orderRate(order))}
                                   </span>
                                 </p>
-                                <p className="text-sm sm:text-base text-gray-600">
-                                  {t("orders.importeDelEnvio")}{" "}
-                                  <span className="text-ink font-medium">
-                                    {format(SHIPPING_AMOUNT, orderCurrency(order), orderRate(order))}
-                                  </span>
-                                </p>
+                                {order.shippingCost !== undefined && (
+                                  <p className="text-sm sm:text-base text-gray-600">
+                                    {t("orders.importeDelEnvio")}{" "}
+                                    <span className="text-ink font-medium">
+                                      {order.shippingCost === 0
+                                        ? t("shop.free")
+                                        : format(
+                                            order.shippingCost,
+                                            orderCurrency(order),
+                                            orderRate(order)
+                                          )}
+                                    </span>
+                                  </p>
+                                )}
                                 {order.createdAt && (
                                   <p className="text-sm sm:text-base text-gray-600">
                                     {t("orders.orderDate")}{" "}

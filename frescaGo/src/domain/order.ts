@@ -13,10 +13,12 @@ export interface Order {
   exchangeRate?: number;
   shipping?: ShippingDetails;
   createdAt?: string;
+  shippingCost?: number;
 }
 
 export const orderTotal = (order: Order): number =>
-  order.orderItems.reduce((sum, item) => sum + (itemTotal(item) || 0), 0);
+  order.orderItems.reduce((sum, item) => sum + (itemTotal(item) || 0), 0) +
+  (order.shippingCost ?? 0);
 
 export const orderReference = (paymentId: string): string =>
   `FG-${paymentId.slice(-8).toUpperCase()}`;

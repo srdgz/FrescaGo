@@ -2,7 +2,12 @@ import CartProduct from "../components/Products/CartProduct";
 import CheckoutBtn from "../components/Utils/CheckoutBtn";
 import Button from "../components/Utils/Button";
 import Tooltip from "../components/Utils/Tooltip";
-import { SHIPPING_AMOUNT, cartSubtotal } from "../../domain/cart";
+import {
+  FREE_SHIPPING_ABOVE,
+  SHIPPING_AMOUNT,
+  cartSubtotal,
+  shippingCost,
+} from "../../domain/cart";
 import { useAppStore } from "../AppContext";
 import { useMoney } from "../hooks/useMoney";
 import { useTranslation } from "react-i18next";
@@ -15,7 +20,7 @@ const ShopScreen = () => {
   const { format } = useMoney();
 
   const totalAmt = cartSubtotal(cartProduct);
-  const shippingAmt = SHIPPING_AMOUNT;
+  const shippingAmt = shippingCost(cartProduct);
 
   return (
     <main className="overflow-x-hidden">
@@ -50,11 +55,14 @@ const ShopScreen = () => {
                     <dt className="flex items-center text-sm text-gray-600">
                       <span>{t("shop.envio")}</span>
                       <Tooltip label={t("shop.shippingInfoLabel")}>
-                        {t("shop.shippingInfo")}
+                        {t("shop.shippingInfo", {
+                          fee: format(SHIPPING_AMOUNT),
+                          threshold: format(FREE_SHIPPING_ABOVE),
+                        })}
                       </Tooltip>
                     </dt>
                     <dd className="text-sm font-medium text-gray-900">
-                      {format(shippingAmt)}
+                      {shippingAmt === 0 ? t("shop.free") : format(shippingAmt)}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between border-t border-gray-200 pt-4">

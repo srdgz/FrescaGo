@@ -1,3 +1,4 @@
+import { shippingCost } from "../domain/cart";
 import type { CartItem } from "../domain/cart";
 import type { Currency } from "../domain/currency";
 import type { Locale } from "../domain/locale";
@@ -103,6 +104,7 @@ export const makeUseCases = ({
       currency: pricing.currency,
       exchangeRate: pricing.usdPerEur,
       createdAt: new Date().toISOString(),
+      shippingCost: shippingCost(items),
       ...(shipping ? { shipping } : {}),
     };
     return orders.add(user.email, order);

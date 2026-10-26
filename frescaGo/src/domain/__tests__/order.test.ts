@@ -18,6 +18,24 @@ describe("order", () => {
   });
 });
 
+describe("order total", () => {
+  const base: Order = {
+    userEmail: "buyer@example.com",
+    paymentId: "cs_1",
+    paymentMethod: "stripe",
+    orderItems: [{ ...apple, quantity: 2 }],
+  };
+
+  it("adds the shipping that was charged", () => {
+    expect(orderTotal({ ...base, shippingCost: 4.99 })).toBeCloseTo(8.99);
+  });
+
+  it("does not invent shipping for orders saved without it", () => {
+    expect(orderTotal(base)).toBe(4);
+    expect(orderTotal({ ...base, shippingCost: 0 })).toBe(4);
+  });
+});
+
 describe("order reference", () => {
   it("builds a short readable reference from the payment id", () => {
     expect(orderReference("cs_test_b1snxm19HPOxDYkZJNn8Hw0320r8dC1AZtNsJ3IR4rglOdW8WcSaoZ")).toBe(

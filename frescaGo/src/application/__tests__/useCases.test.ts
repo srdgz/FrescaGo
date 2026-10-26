@@ -134,12 +134,21 @@ describe("saveOrder", () => {
       currency: "USD",
       exchangeRate: 1.1,
       createdAt: expect.stringMatching(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T/),
+      shippingCost: 4.99,
       shipping: {
         recipient: "Ana Pérez",
         phone: "600123123",
         address: buyer.shippingAddress,
       },
     });
+  });
+
+  it("records free shipping on orders above 30 euros", async () => {
+    const { deps, useCases } = setup();
+
+    await useCases.saveOrder(buyer, "cs_125", [{ ...apple, quantity: 16 }], pricing);
+
+    expect(deps.orders.add.mock.calls[0][1].shippingCost).toBe(0);
   });
 
   it("never sends undefined fields to the database", async () => {

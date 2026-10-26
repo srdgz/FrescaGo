@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  FREE_SHIPPING_ABOVE,
   SHIPPING_AMOUNT,
   addItem,
   cartSubtotal,
@@ -7,6 +8,7 @@ import {
   decreaseItem,
   itemTotal,
   removeItem,
+  shippingCost,
 } from "../cart";
 import { apple, pear } from "../../test/fixtures";
 
@@ -56,5 +58,44 @@ describe("cart", () => {
 
   it("has a zero subtotal for an empty cart", () => {
     expect(cartSubtotal([])).toBe(0);
+  });
+
+  describe("shipping", () => {
+    const worth = (euros: number) => [{ ...apple, price: euros, quantity: 1 }];
+
+    it("costs the flat fee up to 30 euros", () => {
+      expect(SHIPPING_AMOUNT).toBe(4.99);
+      expect(shippingCost(worth(10))).toBe(SHIPPING_AMOUNT);
+      expect(shippingCost(worth(29.99))).toBe(SHIPPING_AMOUNT);
+    });
+
+    it("is still charged at exactly 30 euros", () => {
+      expect(FREE_SHIPPING_ABOVE).toBe(30);
+      expect(shippingCost(worth(30))).toBe(SHIPPING_AMOUNT);
+      expect(shippingCost([{ ...apple, price: 10, quantity: 3 }])).toBe(SHIPPING_AMOUNT);
+    });
+
+    it("is free above 30 euros", () => {
+      expect(shippingCost(worth(30.01))).toBe(0);
+      expect(shippingCost([{ ...apple, quantity: 16 }])).toBe(0);
+    });
+
+    it("counts every line of the cart", () => {
+      expect(
+        shippingCost([
+          { ...apple, price: 12, quantity: 1 },
+          { ...pear, price: 9.5, quantity: 2 },
+        ])
+      ).toBe(0);
+    });
+
+    it("is zero for an empty cart", () => {
+      expect(shippingCost([])).toBe(0);
+    });
+
+    it("is added to the total only when it applies", () => {
+      expect(cartTotal(worth(20))).toBeCloseTo(24.99);
+      expect(cartTotal(worth(40))).toBe(40);
+    });
   });
 });
