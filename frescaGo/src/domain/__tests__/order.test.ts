@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { orderTotal } from "../order";
+import { orderReference, orderTotal } from "../order";
 import type { Order } from "../order";
 import { apple, pear } from "../../test/fixtures";
 
@@ -15,5 +15,23 @@ describe("order", () => {
       ],
     };
     expect(orderTotal(order)).toBe(7.5);
+  });
+});
+
+describe("order reference", () => {
+  it("builds a short readable reference from the payment id", () => {
+    expect(orderReference("cs_test_b1snxm19HPOxDYkZJNn8Hw0320r8dC1AZtNsJ3IR4rglOdW8WcSaoZ")).toBe(
+      "FG-W8WCSAOZ"
+    );
+  });
+
+  it("is stable for the same payment", () => {
+    expect(orderReference("cs_test_abcdefgh12345678")).toBe(
+      orderReference("cs_test_abcdefgh12345678")
+    );
+  });
+
+  it("copes with short ids", () => {
+    expect(orderReference("abc")).toBe("FG-ABC");
   });
 });

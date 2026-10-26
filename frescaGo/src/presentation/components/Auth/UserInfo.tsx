@@ -1,7 +1,8 @@
 import Button from "../Utils/Button";
+import UserAvatar from "../Utils/UserAvatar";
+import { useTranslation } from "react-i18next";
 import type { User } from "../../../domain/user";
 import { useUseCases } from "../../AppContext";
-import { useTranslation } from "react-i18next";
 import { useLocalePath } from "../../LocaleContext";
 
 interface UserInfoProps {
@@ -15,65 +16,52 @@ const UserInfo = ({ currentUser }: UserInfoProps) => {
   return (
     <main className="overflow-x-hidden">
       <section className="container py-12 md:py-24">
-        <div className="relative isolate overflow-hidden bg-soft px-6 py-24 shadow-2xl rounded-3xl sm:px-16">
-          <div className="flex flex-col sm:flex-row items-center gap-5 sm:gap-10">
-            <img
-              src={
-                currentUser?.avatar
-                  ? currentUser?.avatar
-                  : "https://i.ibb.co/qMpPq5Z/user.png"
-              }
-              alt=""
-              className="w-40 h-40 rounded-full border border-gray-300 object-cover p-1"
+        <div className="card mx-auto max-w-3xl border-gray-300 p-6 shadow-lg sm:p-10">
+          <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:gap-10 sm:text-start">
+            <UserAvatar
+              user={currentUser}
+              className="h-32 w-32 flex-none text-4xl"
             />
-            <div className="text-start flex-1">
-              <h1 className="text-xl font-bold tracking-tight sm:text-4xl text-secondary">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">
                 {t("userInfo.bienvenid")}{" "}
-                <span className="underline underline-offset-2 decoration-[1px] font-medium">
+                <span className="break-words text-brand">
                   {currentUser?.firstName} {currentUser?.lastName}
                 </span>
               </h1>
-              <p className="text-start mt-3 max-w-3xl text-base leading-6 text-gray-700">
+              <p className="mt-3 max-w-prose text-base leading-7 text-gray-700">
                 {t("userInfo.nosAlegraVerteEn")}{" "}
-                <span className="text-brand font-bold">Fresca</span>
-                <span className="font-bold text-accent">Go</span>{t("userInfo.aquiPodrasGestionarTu")}
+                <span className="font-bold text-brand">Fresca</span>
+                <span className="font-bold text-accent">Go</span>
+                {t("userInfo.aquiPodrasGestionarTu")}
               </p>
             </div>
           </div>
-          <div className="mt-10 flex flex-col sm:flex-row items-center gap-5 px-4">
-            <Button text={t("userInfo.editarPerfil")} to={path("editProfile")} />
-            <Button text={t("userInfo.misPedidos")} to={path("orders")} />
+          <hr className="my-8 border-gray-300" />
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <Button
+              text={t("userInfo.editarPerfil")}
+              to={path("editProfile")}
+              className="!mb-0"
+            />
+            <Button
+              text={t("userInfo.misPedidos")}
+              to={path("orders")}
+              variant="outline"
+              className="!mb-0"
+            />
             <button
+              type="button"
               onClick={() => signOut()}
-              className="primary-btn flex items-center gap-2 mb-6"
+              className="rounded-full px-6 py-3 font-semibold text-gray-700 underline-offset-4 transition-colors hover:text-brand hover:underline"
             >
               {t("userInfo.cerrarSesion")}
             </button>
           </div>
-          <svg
-            viewBox="0 0 1024 1024"
-            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
-            aria-hidden="true"
-          >
-            <circle
-              cx={512}
-              cy={512}
-              r={512}
-              fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
-              fillOpacity="0.7"
-            />
-            <defs>
-              <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                <stop stopColor="#1D4ED8" />
-                <stop offset={1} stopColor="#9333EA" />
-              </radialGradient>
-            </defs>
-          </svg>
         </div>
       </section>
     </main>
   );
 };
-
 
 export default UserInfo;

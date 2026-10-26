@@ -47,7 +47,7 @@
     "hazTuPedido": "Place your order"
   },
   "footer": {
-    "2024WebRealizadaPor": "© 2024 | Website by",
+    "webBy": "© {{year}} | Website by",
     "sandraRodriguez": "Sandra Rodríguez"
   },
   "hero": {
@@ -124,7 +124,7 @@
     "email2": "Email",
     "mensaje": "Message",
     "enviar": "Send",
-    "visitanosEnNuestraOficina": "Visit us at our office"
+    "visitUs": "Visit us at our store"
   },
   "editProfile": {
     "editarPerfil": "Edit profile",
@@ -148,9 +148,9 @@
     "nombreDelCliente": "Customer name:",
     "totalDePedidos": "Total orders:",
     "aquiPuedesVerLos": "Here you can see the details of your previous orders. If you have any questions, don't hesitate to contact us.",
-    "numeroDeSeguimiento": "Tracking number:",
+    "numeroDeSeguimiento": "Order number:",
     "tuPedido": "Your order",
-    "haSidoEnviadoY": "has been shipped and will be with you soon.",
+    "haSidoEnviadoY": "has been received and we are getting it ready.",
     "cantidadDeArticulosEn": "Number of items in the order:",
     "estadoDelPago": "Payment status:",
     "pagadoPorStripe": "Paid with Stripe",

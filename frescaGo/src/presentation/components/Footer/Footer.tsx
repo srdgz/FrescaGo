@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="flex flex-col items-center md:items-start md:flex-1">
           <Logo />
           <p className="mt-4 text-center md:text-left text-gray-700">
-            {t("footer.2024WebRealizadaPor")}{" "}
+            {t("footer.webBy", { year: new Date().getFullYear() })}{" "}
             <a
               href="https://github.com/srdgz"
               target="_blank"

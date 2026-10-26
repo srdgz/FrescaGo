@@ -15,6 +15,9 @@ export interface Order {
 export const orderTotal = (order: Order): number =>
   order.orderItems.reduce((sum, item) => sum + (itemTotal(item) || 0), 0);
 
+export const orderReference = (paymentId: string): string =>
+  `FG-${paymentId.slice(-8).toUpperCase()}`;
+
 export const orderCurrency = (order: Order): Currency =>
   order.currency ?? "EUR";
 

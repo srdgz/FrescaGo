@@ -7,6 +7,7 @@ import CurrencySwitcher from "./CurrencySwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { NavbarMenu } from "../../data/navbar";
 import { useAppStore } from "../../AppContext";
+import UserAvatar from "../Utils/UserAvatar";
 import { useLocalePath } from "../../LocaleContext";
 import type { RouteKey } from "../../routes/paths";
 
@@ -46,9 +47,9 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                 </li>
               ))}
               <li className="flex flex-row items-center gap-3">
+                <ThemeSwitcher />
                 <LanguageSwitcher />
                 <CurrencySwitcher />
-                <ThemeSwitcher />
               </li>
               <li className="flex flex-row gap-12 items-center">
                 <button
@@ -66,15 +67,7 @@ function ResponsiveMenu({ open, setOpen }: ResponsiveMenuProps) {
                   aria-label={t("nav.account")}
                 >
                   {currentUser ? (
-                    <img
-                      src={
-                        currentUser?.avatar
-                          ? currentUser?.avatar
-                          : "https://i.ibb.co/qMpPq5Z/user.png"
-                      }
-                      alt=""
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
+                    <UserAvatar user={currentUser} className="h-8 w-8 text-xs" />
                   ) : (
                     <RiUserLine className="text-2xl" />
                   )}

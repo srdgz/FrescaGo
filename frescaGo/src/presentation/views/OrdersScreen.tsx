@@ -9,7 +9,12 @@ import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import type { Order } from "../../domain/order";
-import { orderCurrency, orderRate, orderTotal } from "../../domain/order";
+import {
+  orderCurrency,
+  orderRate,
+  orderReference,
+  orderTotal,
+} from "../../domain/order";
 import { SHIPPING_AMOUNT } from "../../domain/cart";
 import { useMoney } from "../hooks/useMoney";
 import { useAppStore, useUseCases } from "../AppContext";
@@ -80,7 +85,7 @@ const Orders = () => {
                               <span className="flex-1 text-sm sm:text-base md:text-lg lg:text-xl font-semibold leading-7 truncate">
                                 {t("orders.numeroDeSeguimiento")}{" "}
                                 <span className="font-normal break-words">
-                                  {order?.paymentId}
+                                  {orderReference(order.paymentId)}
                                 </span>
                               </span>
                               <span className="ml-4 sm:ml-6">
@@ -97,11 +102,11 @@ const Orders = () => {
                             as="dd"
                             className="mt-5 pr-4 sm:pr-6 md:pr-8 lg:pr-12"
                           >
-                            <div className="flex flex-col gap-2 bg-[#f4f4f480] p-4 sm:p-5 md:p-6 border border-gray-200">
+                            <div className="flex flex-col gap-2 rounded-card border border-line bg-surface p-4 sm:p-5 md:p-6">
                               <p className="text-sm sm:text-base font-semibold">
                                 {t("orders.tuPedido")}{" "}
                                 <span className="text-secondary">
-                                  #{order?.paymentId.substring(0, 20)}...
+                                  {orderReference(order.paymentId)}
                                 </span>{" "}
                                 {t("orders.haSidoEnviadoY")}
                               </p>

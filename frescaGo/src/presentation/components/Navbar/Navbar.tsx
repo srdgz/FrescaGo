@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppStore } from "../../AppContext";
+import UserAvatar from "../Utils/UserAvatar";
 import { useLocalePath } from "../../LocaleContext";
 
 const Navbar = () => {
@@ -41,10 +42,10 @@ const Navbar = () => {
                 </li>
               ))}
               <li>
-                <LanguageSwitcher />
+                <ThemeSwitcher />
               </li>
               <li>
-                <ThemeSwitcher />
+                <LanguageSwitcher />
               </li>
               <li>
                 <CurrencySwitcher />
@@ -64,15 +65,7 @@ const Navbar = () => {
               <li>
                 <Link to={path("user")} aria-label={t("nav.account")}>
                   {currentUser ? (
-                    <img
-                      src={
-                        currentUser?.avatar
-                          ? currentUser?.avatar
-                          : "https://i.ibb.co/qMpPq5Z/user.png"
-                      }
-                      alt=""
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
+                    <UserAvatar user={currentUser} className="h-8 w-8 text-xs" />
                   ) : (
                     <RiUserLine className="hover:text-brand duration-200 text-2xl" />
                   )}

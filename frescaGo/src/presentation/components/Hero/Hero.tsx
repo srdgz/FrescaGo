@@ -57,7 +57,6 @@ const Hero = () => {
           </div>
         </div>
         <div className="relative flex items-center justify-center">
-          <div aria-hidden="true" className="absolute h-[280px] w-[280px] rounded-full bg-soft sm:h-[360px] sm:w-[360px] md:h-[460px] md:w-[460px]"></div>
           <motion.img
             initial={{ opacity: 0, x: 200, rotate: 75 }}
             animate={{ opacity: 1, x: 0, rotate: 0 }}
